@@ -1,0 +1,65 @@
+<!-- <ion-header-bar class="bar-positive">
+  <h1 class="title">My Bucket List</h1>
+  <button class="button button-clear" ng-click="logout()">Logout</button>
+</ion-header-bar>
+<ion-content class="has-header padding" has-tabs="true" on-refresh="onRefresh()"> -->
+    
+  
+<!-- </ion-content> --> 
+
+<!-- <ion-nav-view> -->
+<ion-header-bar class="bar-positive">
+   <button class="button button-clear" ng-click="back()">Back</button>
+  <h1 class="title">BROWSE</h1>
+  <button class="button button-clear" ng-click="logout()">Logout</button>
+
+</ion-header-bar> 
+<ion-view>
+<ion-content class="has-header padding">
+	<ion-list>
+		<div class="row responsive-sm">
+    <div class="col col-90"> 
+  			<ion-item ng-repeat="(id,cat) in category" ng-click = "data(cat.$id)"> <!-- ng-href="#/menu/list/{{cat.$id}}"> -->
+  				<div class="item-thumbnail-left">
+         <!--  <center> -->
+  					<img ng-src="img/ionic.png">
+  					<h2> {{cat.name}} </h2>
+            <!-- <h2> {{::category[i].name}}</h2> -->
+          <!-- </center> -->
+  				</div>
+  			</ion-item>
+        </div>
+  			<!-- <ion-item class="col-50" >
+  				<div class="item-thumbnail-left">
+  					<img ng-src="img/ionic.png">
+  					<h2> Beauty Care </h2>
+  				</div>
+  			</ion-item>
+  		</div>
+  		<div class="row responsive-sm">
+  			<ion-item class="col-50">
+  				<div class="item-thumbnail-left">
+  					<img ng-src="img/ionic.png">
+  					<h2> Boutique </h2>
+  				</div>
+  			</ion-item>
+  			<ion-item class="col-50">
+  				<div class="item-thumbnail-left">
+  					<img ng-src="img/ionic.png">
+  					<h2> Market </h2>
+  				</div>
+  			</ion-item>
+  		</div>
+  		<div class="row responsive-sm">
+  			<ion-item class="col-50">
+  				<div class="item-thumbnail-left">
+  					<img ng-src="img/ionic.png">
+  					<h2> Food and Drink </h2>
+  				</div>
+  			</ion-item> -->
+  		</div>	
+
+	</ion-list>
+</ion-content>
+</ion-view>
+<!-- <ion-nav-view>

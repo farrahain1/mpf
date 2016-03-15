@@ -1,0 +1,57 @@
+<ion-nav-view>
+<ion-header-bar class="bar-positive">
+   <button class="button button-clear" ng-click="back()">Back</button>
+  <h1 class="title">{{data.name}}</h1>
+  <button class="button button-clear" ng-click="logout()">Logout</button>
+</ion-header-bar>
+
+
+
+
+<ion-content class="has-header padding">
+<!-- nama category yg dipilih/key word yg dicari -->
+
+  
+  <ion-list>
+  <div class="row responsive-sm">
+    <center><img ng-src="img/ionic.png"></center>
+  </div>
+    <div class="row responsive-sm">
+        <ion-item class="row">
+          <div class="col" >
+            <h2 align="center">
+            {{data.name}}
+            </h2>
+            <br>
+            <h4 align="center">
+            {{data.address}}
+            <br>
+            {{data.open_hr}} - {{data.close_hr}}
+            <br>
+            <span ng-repeat="day in everyday">
+              {{day}}<br>
+            </span>
+            {{data.phone}}
+            <br>
+            {{data.website}}
+            <br>
+            {{ave}}
+            </h4>
+            <!-- <h4 align="center">
+            <br>Rating : 3 star
+            <br> Ranking : 1
+            <br>Alamat : blok 37, jalan 27, Selangor
+            <br>7 km
+            </h4> -->
+          </div>
+          <div>
+          <a class="button icon-left ion-navigate button-positive" style="width: 200px; height: 20px; margin-top: 5px;" ng-click="show(1)">Navigate<ion-nav-view name="menu-navigate"></ion-nav-view></a><br>
+           
+          <button class="button icon-left ion-star button-positive" style="width: 200px; height: 20px; margin-top: 5px;" ng-click="show(2)">Rate</button><br>
+          <button class="button icon-left ion-clipboard button-positive" style="width: 200px; height: 20px; margin-top: 5px;" ng-click="show(3)">View Review</button>
+        </ion-item>
+      </div>
+  </ion-list>
+  
+</ion-content>
+<ion-nav-view>

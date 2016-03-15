@@ -1,0 +1,65 @@
+<ion-view>
+	<ion-header-bar class="bar-positive">
+		<button class="button button-clear" ng-click="back()">Back</button>
+		<h1 class="title">Edit Place</h1>
+		<button class="button button-clear" ng-click="logout()">Logout</button>
+	</ion-header-bar>
+	<ion-content>
+		<div class="list">
+		  <label class="item item-input item-stacked-label">
+		    <span class="input-label">Business Name</span>
+		    <input type="text" ng-model="data.name">
+		  </label>
+		   <label class="item item-input item-stacked-label">
+		    <span class="input-label">Category</span>
+		        <select disabled="">
+			      <option selected>{{cate}}</option>
+			      <option>HealthCare</option>
+			      <option>Boutique</option>
+			      <option>Food and Drink</option>
+			    </select>
+		  </label>
+		  <label class="item item-input item-stacked-label">
+		    <span class="input-label">Place helpline  No. </span>
+		    <input type="text" ng-model="data.phone"></textarea>
+		  </label>
+		  
+		  <label class="item item-input item-stacked-label">
+		    <span class="input-label">Operation Days</span>
+		     <ion-list>
+				  <ion-checkbox ng-checked="data.open_days.monday == true">Isnin</ion-checkbox>
+				  <ion-checkbox ng-checked="data.open_days.tuesday == true">Selasa</ion-checkbox>
+				  <ion-checkbox ng-checked="data.open_days.wednesday == true">Rabu</ion-checkbox>
+				  <ion-checkbox ng-checked="data.open_days.thursday == true">Khamis</ion-checkbox>
+				  <ion-checkbox ng-checked="data.open_days.friday == true">Jumaat</ion-checkbox>
+				  <ion-checkbox ng-checked="data.open_days.saturday == true">Sabtu</ion-checkbox>
+				  <ion-checkbox ng-checked="data.open_days.sunday == true">Ahad</ion-checkbox>
+				</ion-list>
+		  </label>
+
+		  <label class="item item-input item-stacked-label">
+		    <span class="input-label">Operation Time</span>
+		     <ion-list>
+			        <label class="item item-input">
+			          <span class="input-label">Opening Time</span>
+			          <input type="time" ng-model="model.time" formatted-time>
+			        </label>
+			         <label class="item item-input">
+			          <span class="input-label">Closing Time</span>
+			          <input type="time" ng-model="model.time" formatted-time>
+			        </label>
+			</ion-list>
+		  </label>
+
+		  <label class="item item-input item-stacked-label">
+		    <span class="input-label">Website</span>
+		    <input type="text" ng-model="data.website">
+		  </label>
+		   <div>
+			   <a class="button icon-left ion-navigate button-positive" style="margin-left: 150px" ng-click="editP()">Edit</a><br>
+		    </div>
+		</div>
+
+
+	</ion-content>
+</ion-view>

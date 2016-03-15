@@ -1,0 +1,95 @@
+<!-- <ion-nav-view> -->
+<ion-header-bar class="bar-positive">
+   <button class="button button-clear" ng-click="back()">Back</button>
+  <h1 class="title">{{asHeader.name}}</h1>
+  <button class="button button-clear" ng-click="logout()">Logout</button>
+</ion-header-bar>
+
+
+
+<ion-view>
+
+<ion-content class="has-header padding">
+<!-- nama category yg dipilih/key word yg dicari -->
+
+  
+  <ion-list>
+    <div class="row responsive-sm">
+    <div class="col col-90"> 
+        <ion-item ng-repeat="plc in places | filter: cat" ng-click = "data(plc.$id)"> <!-- ng-href="#/menu/list/{{cat.$id}}"> -->
+          <div class="item-thumbnail-left">
+         <!--  <center> -->
+            <img ng-src="img/ionic.png">
+            <h2> {{plc.name}} </h2>
+            <!-- <h2> {{::category[i].name}}</h2> -->
+          <!-- </center> -->
+          </div>
+        </ion-item>
+        </div>
+        </div>
+    <!-- <div class="row responsive-sm">
+        <ion-item class="col-50">
+          <div class="item-thumbnail-left">
+            <img ng-src="img/ionic.png">
+            <h2> Kedai 1 </h2>
+            <h4> Rating : 3 star</h4>
+            <h4> Ranking : 1 </h4>
+            <h4 align="right">7km</h4>
+          </div>
+        </ion-item>
+        <ion-item class="col-50">
+          <div class="item-thumbnail-left">
+            <img ng-src="img/ionic.png">
+            <h2> Kedai 2 </h2>
+            <h4> Rating : 3 star</h4>
+            <h4> Ranking : 1 </h4>
+            <h4 align="right">7km</h4>
+          </div>
+        </ion-item>
+      </div>
+      <div class="row responsive-sm">
+        <ion-item class="col-50">
+          <div class="item-thumbnail-left">
+            <img ng-src="img/ionic.png">
+            <h2> Kedai 3 </h2>
+            <h4> Rating : 3 star</h4>
+            <h4> Ranking : 1 </h4>
+            <h4 align="right">7km</h4>
+          </div>
+        </ion-item>
+        <ion-item class="col-50">
+          <div class="item-thumbnail-left">
+            <img ng-src="img/ionic.png">
+            <h2> Kedai 4 </h2>
+            <h4> Rating : 3 star</h4>
+            <h4> Ranking : 1 </h4>
+            <h4 align="right">7km</h4>
+          </div>
+        </ion-item>
+      </div>
+      <div class="row responsive-sm">
+        <ion-item class="col-50">
+          <div class="item-thumbnail-left">
+            <img ng-src="img/ionic.png">
+            <h2> Kedai 5 </h2>
+            <h4> Rating : 3 star</h4>
+            <h4> Ranking : 1 </h4>
+            <h4 align="right">7km</h4>
+          </div>
+        </ion-item>
+        <ion-item class="col-50">
+          <div class="item-thumbnail-left">
+            <img ng-src="img/ionic.png">
+            <h2> Kedai 6 </h2>
+            <h4> Rating : 3 star</h4>
+            <h4> Ranking : 1 </h4>
+            <h4 align="right">7km</h4>
+          </div>
+        </ion-item>
+      </div> -->
+  </ion-list>
+  
+</ion-content>
+</ion-view>
+<!-- <ion-nav-view>
+ -->

@@ -1,0 +1,83 @@
+{
+	"Place": {
+		"1": {
+			"name": "Spa Shui",
+			"address": "Blok 25, Jalan 45/B, Skudai",
+			"phone": "017-2199112",
+			"open_hr": "1000",
+			"close_hr": "2200",
+			"website": "www.spashui.com",
+			"open_days": "Monday",
+			"userID": "1",
+			"category": "BC"
+		},
+
+		"2": {
+			"name": "Spa D Embun",
+			"address": "Blok 26, Jalan 45/C, Skudai",
+			"phone": "017-2199113",
+			"open_hr": "1000",
+			"close_hr": "2200",
+			"website": "www.spadembun.com",
+			"open_days": "Monday",
+			"userID": "1",
+			"category": "BC"
+		}
+	},
+
+	"category": {
+		"BC": {
+			"name": "Beautycare",
+			"type": "Business"
+		},
+		"HC": {
+			"name": "Healthcare",
+			"type": "Business"
+		},
+		"BT": {
+			"name": "Boutique",
+			"type": "Business"
+		},
+		"M": {
+			"name": "Market",
+			"type": "Place"
+		},
+		"FD": {
+			"name": "Food and Drink",
+			"type": "Business"
+		},
+		"Mosque": {
+			"name": "Mosque",
+			"type": "Place"
+		}
+
+	},
+
+	"review": {
+		"1": {
+			"1r1": {
+				"user": "mj",
+				"message": "good!"
+			},
+			"1r2": {
+				"user": "ld",
+				"message": "good service"
+			},
+			"1r3": {
+				"user": "djK",
+				"message": "not bad"
+			}
+		},
+		"2": {
+			"2r1": {
+				"user": "mj",
+				"message": "2 good!"
+			},
+			"2r2": {
+				"user": "ld",
+				"message": "2 good service"
+			}
+		}
+	}
+
+}

@@ -1,0 +1,141 @@
+<ion-view>
+	<ion-header-bar class="bar-positive">
+		<button class="button button-clear" ng-click="back()">Back</button>
+		<h1 class="title">Add Place</h1>
+		<button class="button button-clear" ng-click="logout()">Logout</button>
+	</ion-header-bar>
+	<ion-content>
+	
+		<div class="list">
+			<h4>Do you wish to add a place or a business?</h4>
+			<label class="item item-input item-stacked-label">
+				<ion-radio ng-model="choice"  ng-click="place(1)">Place</ion-radio>
+				<ion-radio ng-model="choice"  ng-click="place(2)">Business</ion-radio>
+			</label>
+		</div>
+		
+		<div class="list" ng-hide="addPlace">
+		  <label class="item item-input item-stacked-label">
+		    <span class="input-label">Place Name</span>
+		    <input ng-model="name">
+		  </label>
+		  <label class="item item-input item-stacked-label">
+		    <span class="input-label">Category</span>
+		        <select>
+			      <option selected ng-model="category">Mosque</option>
+			      <option ng-model="category">Market</option>
+			      <!-- <option>Taman Rekreasi</option> -->
+			      <!-- <option>Miscellaneous</option> -->
+			    </select>
+		  </label>
+		  <label class="item item-input item-stacked-label">
+		    <span class="input-label">Place helpline  No. </span>
+		    <textarea placeholder="john@suhr.com" ng-model="phone"></textarea>
+		  </label>
+		  
+		  <label class="item item-input item-stacked-label">
+		    <span class="input-label">Operation Days</span>
+		     <ion-list>
+				  <ion-checkbox >Isnin</ion-checkbox>
+				  <ion-checkbox>Selasa</ion-checkbox>
+				  <ion-checkbox>Rabu</ion-checkbox>
+				  <ion-checkbox>Khamis</ion-checkbox>
+				  <ion-checkbox>Jumaat</ion-checkbox>
+				  <ion-checkbox>Sabtu</ion-checkbox>
+				  <ion-checkbox>Ahad</ion-checkbox>
+				</ion-list>
+		  </label>
+
+		  <label class="item item-input item-stacked-label">
+		    <span class="input-label">Operation Time</span>
+		     <ion-list>
+			        <label class="item item-input">
+			          <span class="input-label">Opening Time</span>
+			          <input type="time" ng-model="model.time" formatted-time>
+			        </label>
+			         <label class="item item-input">
+			          <span class="input-label">Closing Time</span>
+			          <input type="time" ng-model="model.time" formatted-time>
+			        </label>
+			</ion-list>
+		  </label>
+
+		  <label class="item item-input item-stacked-label">
+		    <span class="input-label">Website</span>
+		    <input type="text" placeholder="John" ng-model="website"> 
+		  </label>
+		    <div>
+			   <button class="button icon-left ion-navigate button-positive" style="margin-left: 150px" ng-click="addP()">Submit</button><br>
+		    </div>
+		</div>
+		
+
+		<div class="list" ng-hide="addBusiness">
+		  <label class="item item-input item-stacked-label">
+		    <span class="input-label">Business Name</span>
+		    <input type="text" placeholder="John">
+		  </label>
+		   <label class="item item-input item-stacked-label">
+		    <span class="input-label">Category</span>
+		        <select>
+			      <option selected>Healthcare</option>
+			      <option>Beautycare</option>
+			      <option>Boutique</option>
+			      <option>Food and Drink</option>
+			    </select>
+		  </label>
+		  <label class="item item-input item-stacked-label">
+		    <span class="input-label">Place helpline  No. </span>
+		    <textarea placeholder="john@suhr.com"></textarea>
+		  </label>
+		  
+		  <label class="item item-input item-stacked-label">
+		    <span class="input-label">Operation Days</span>
+		     <ion-list>
+				  <ion-checkbox>Isnin</ion-checkbox>
+				  <ion-checkbox>Selasa</ion-checkbox>
+				  <ion-checkbox>Rabu</ion-checkbox>
+				  <ion-checkbox>Khamis</ion-checkbox>
+				  <ion-checkbox>Jumaat</ion-checkbox>
+				  <ion-checkbox>Sabtu</ion-checkbox>
+				  <ion-checkbox>Ahad</ion-checkbox>
+				</ion-list>
+		  </label>
+
+		  <label class="item item-input item-stacked-label">
+		    <span class="input-label">Operation Time</span>
+		     <ion-list>
+			        <label class="item item-input">
+			          <span class="input-label">Opening Time</span>
+			          <input type="time" ng-model="model.time" formatted-time>
+			        </label>
+			         <label class="item item-input">
+			          <span class="input-label">Closing Time</span>
+			          <input type="time" ng-model="model.time" formatted-time>
+			        </label>
+			</ion-list>
+		  </label>
+
+		  <label class="item item-input item-stacked-label">
+		    <span class="input-label">Website</span>
+		    <input type="text" placeholder="John">
+		  </label>
+		  <label class="item item-input item-stacked-label">
+		    <span class="input-label">Is this your own business?</span>
+		    <ion-radio>Yes</ion-radio>
+		    <ion-radio>No</ion-radio>
+		  </label>
+		  <label class="item item-input item-stacked-label">
+		    <span class="input-label">Company Reg. No</span>
+		    <input type="text" placeholder="John">
+		  </label>
+		   <div>
+			   <a class="button icon-left ion-navigate button-positive" style="margin-left: 150px">Submit</a><br>
+			   <!-- <input type="submit" value="Save" class="btn btn-primary"> -->
+		    </div>
+		</div>
+
+		
+		</ion-content>
+	
+</ion-view>

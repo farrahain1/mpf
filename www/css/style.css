@@ -1,0 +1,116 @@
+.margin {
+  margin-left: 9px;
+  margin-right: 9px;
+}
+.icon-actions {
+  font-size: 23px;
+}
+.checkbox {
+  vertical-align: middle;
+}
+.actions {
+  float: right;
+}
+.item-text-wrap {
+  overflow: auto;
+}
+.ion-checkmark-circled.icon-actions.margin{
+  margin-right: 35px;
+}
+
+.search{
+	background: transparent !important;
+     top: 45%; 
+     left: 20%; 
+     right: 10%; 
+     bottom:45%;
+}
+
+.placeDetail img {
+    position:absolute;
+    left: 0;
+    right: 0;
+    margin:0 auto;
+    top:50%;
+    transform:translateY(-50%);
+}
+
+.nav {
+  background-color: white;
+  width: 400px;
+}
+
+.modal-transparent {
+ /* background-color: transparent !important;*/
+   position:absolute;
+  z-index:9999;
+  width:80%;
+  max-height:80%;
+  overflow: scroll;
+  /*background-color: transparent !important;*/
+  opacity: 0.9;
+  top: 50%;
+  left: 50%;
+  /*transform: translate(-50%, -50%);*/
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+
+}
+
+.transparent {
+  background-color: transparent !important;
+ }
+
+
+.close-modal {
+  position: absolute;
+  right: 0;
+  top: 5px;
+  font-size: 1.8em;
+  text-align: center;
+  z-index: 10;
+  background-color: #f5f5f5;
+  border-radius: 30px;
+  width: 26px;
+  cursor: pointer;
+  line-height: 0px;
+  border: 1px solid #ddd;
+}
+
+@media (max-width: 679px) {
+  .active .modal-backdrop-bg {
+    opacity: .5;
+  }
+  .modal-backdrop-bg {
+    -webkit-transition: opacity 300ms ease-in-out;
+    transition: opacity 300ms ease-in-out;
+    background-color: #000;
+    opacity: 0;
+  }
+}
+
+
+
+.star-rate {
+   font-size: 3em;
+}
+
+.divider-transparent.item-divider  {
+   background-color: transparent !important;
+}
+
+.tabs .icon.addPlace {
+  background-repeat: no-repeat;
+  background-position: 50%;
+  height: 65%;
+  background-image: url('http://simpleicon.com/wp-content/uploads/add-location.png');
+  background-size:contain;
+}
+
+.ionic_ratings .icon {
+  font-size: 50px;
+}
+
+.ionic_ratings .read_only {
+    pointer-events:none !important;
+  }

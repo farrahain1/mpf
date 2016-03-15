@@ -1,0 +1,28 @@
+     <div class="modal transparent">
+     	<div class="card">
+     		<i class="icon ion-ios-close close-modal" ng-click="closeSearch(2)"></i>
+     		 <div class="item item-divider">
+			   <!-- <i class="icon ion-star star-rate"></i>
+			   <i class="icon ion-star star-rate"></i>
+			   <i class="icon ion-star star-rate"></i>
+			   <i class="icon ion-star star-rate"></i>
+			   <i class="icon ion-star star-rate"></i> -->
+			  <!--  <rating ng-model="rating.rate" max="rating.max"></rating> -->
+			  <ionic-ratings ratingsobj='ratingsObject'></ionic-ratings>
+			 </div>
+			 <div class="item item-divider">
+			   <button class="button button-full button-stable" ng-model="collapsed" ng-click="collapsed=!collapsed">Add Review</button>
+			 </div>
+			 <div class="item item-divider" ng-show="collapsed">
+			 <!-- <form > -->
+			 	<label class="item item-input">
+			 		<textarea placeholder="Add Review" ng-model="message"></textarea>
+			 	</label>
+			 <!-- </form> -->
+			 </div>
+			 <div class="item item-divider">
+			   <center><a class="button icon-left button-positive" style="margin-top: 10px; margin-bottom: 10px;" ng-click="addRate(2)">Submit</a></center>
+			 </div>
+		</div> 
+     </div>
+

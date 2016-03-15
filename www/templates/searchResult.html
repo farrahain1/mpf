@@ -1,0 +1,34 @@
+<!-- <ion-nav-view> -->
+<ion-header-bar class="bar-positive">
+   <button class="button button-clear" ng-click="back()">Back</button>
+  <h1 class="title">Search Result</h1>
+  <button class="button button-clear" ng-click="logout()">Logout</button>
+</ion-header-bar>
+
+
+
+<ion-view>
+
+<ion-content class="has-header padding">
+
+  
+  <ion-list>
+    <div class="row responsive-sm">
+    <div class="col col-90">         
+        <h4 ng-if="(plc| filter: result).length == 0">No result found</h4>
+        <ion-item ng-repeat="place in plc | filter: result" ng-click="placeData(place.$id)">                
+          <div class="item-thumbnail-left">
+            <img ng-src="img/ionic.png">
+            <h2> {{place.name}} </h2>
+           
+          </div>
+        </ion-item>
+        </div>
+        </div>
+    
+  </ion-list>
+  
+</ion-content>
+</ion-view>
+<!-- <ion-nav-view>
+ -->

@@ -25,7 +25,7 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings'])
         email: email,
         password: password
       }).then(function(userData) {    
-        console.log("User " + userData.uid + " created successfully!");
+        console.log("User " + userData.uid + " created successfully!"); 
         $rootScope.hide();
 
         return $scope.auth.$authWithPassword({
@@ -714,25 +714,38 @@ console.log($scope.det);
     /*$scope.listRev();*/
   };
 
-  $scope.rating = function(rat) { 
+ /* $scope.rating = function(rat) { 
     if(rat)
       return parseInt(rat);
-}
+}*/
+
+  $scope.star=function(n){
+     return new Array(n);
+};
+
  // $scope.listRev = function(){
      rev.orderByChild("placeId").equalTo($scope.det).on("value", function(snapshot) {
     console.log(snapshot.val());
     console.log("okay");
       $scope.revData = snapshot.val();
 
-      /* snapshot.forEach(function(childSnapshot) {
-    
+
+     /* console.log($scope.revData.key());*/
+         //var specRev = new Firebase("https://mpf.firebaseio.com/review/" + $scope.plcId);
+
+
+
+ /*    snapshot.forEach(function(childSnapshot) {
+    var l =0;
       $scope.key = childSnapshot.key();
     console.log($scope.key);
      //dapatkan key setiap review utk setiap rating
      rev.orderByKey().equalTo($scope.key).on("child_added", function(snapshot) {
       $scope.rating = snapshot.val();
-      $scope.ratings = parseInt($scope.rating.rating);
-      console.log($scope.ratings);            
+      $scope.ratings = [];
+      $scope.ratings[l] = parseInt($scope.rating.rating);
+      console.log($scope.ratings);  
+      l++;          
        $scope.ratingsDisplay = {
         iconOnColor: 'rgb(255, 255, 0)',
         iconOffColor:  'rgb(0, 0, 0)',

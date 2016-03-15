@@ -600,18 +600,20 @@ console.log($scope.det);
      ref.orderByKey().equalTo($scope.det).on("child_added", function(snapshot) {
    console.log(snapshot.val());
    $scope.data = snapshot.val();
+   var j = 0;
+   $scope.everyday = [];
     if($scope.data.open_days.everyday){
-        $scope.everyday = "Everyday";
+        $scope.everyday[j] = "Everyday";
     }
     else if($scope.data.open_days.notFriday){
-      $scope.everyday = "Close on Friday only";
+      $scope.everyday[j] = "Close on Friday only";
     }
     else if($scope.data.open_days.notSaturday){
-      $scope.everyday = "Close on Saturday only";
+      $scope.everyday[j] = "Close on Saturday only";
     }
     else{
-      $scope.everyday = [];
-      var j = 0;
+      
+      
       if($scope.data.open_days.other.monday){
         $scope.everyday[j] = "Monday";
         j++;
@@ -720,6 +722,7 @@ console.log($scope.det);
 }*/
 
   $scope.star=function(n){
+    if(n)
      return new Array(n);
 };
 

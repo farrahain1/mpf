@@ -28,7 +28,7 @@
             <br>
             {{data.open_hr}} - {{data.close_hr}}
             <br>
-            <span ng-repeat="day in everyday">
+            <span ng-repeat="day in everyday track by $index">
               {{day}}<br>
             </span>
             {{data.phone}}

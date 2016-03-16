@@ -1,4 +1,4 @@
-<!-- <ion-nav-view> -->
+<ion-nav-view> -->
 <ion-header-bar class="bar-positive">
    <button class="button button-clear" ng-click="back()">Back</button>
   <h1 class="title">{{asHeader.name}}</h1>
@@ -16,11 +16,14 @@
   <ion-list>
     <div class="row responsive-sm">
     <div class="col col-90"> 
-        <ion-item ng-repeat="plc in places | filter: cat" ng-click = "data(plc.$id)"> <!-- ng-href="#/menu/list/{{cat.$id}}"> -->
+        <ion-item ng-repeat="(id,plc) in places | filter: cat | orderObjectBy: 'rankVal' : true " ng-click = "data(plc.$id)"> <!-- ng-href="#/menu/list/{{cat.$id}}"> -->
           <div class="item-thumbnail-left">
+
          <!--  <center> -->
             <img ng-src="img/ionic.png">
             <h2> {{plc.name}} </h2>
+           <!--  <h2> {{plc.rankVal}} </h2> -->
+            <h2> Rank : {{id + 1}}
             <!-- <h2> {{::category[i].name}}</h2> -->
           <!-- </center> -->
           </div>
@@ -92,4 +95,3 @@
 </ion-content>
 </ion-view>
 <!-- <ion-nav-view>
- -->

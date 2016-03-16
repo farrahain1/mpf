@@ -329,8 +329,10 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings'])
   var ref = new Firebase("https://mpf.firebaseio.com/category");
      ref.orderByKey().equalTo($scope.cat).on("child_added", function(snapshot) {
     console.log(snapshot.val());
-    $scope.asHeader = snapshot.val();
+    $scope.asHeader = snapshot.val(); 
   })
+
+    
 
    //untuk digunakan oleh ng-repeat = tentukan berapa kali loop
      //$scope.data = snapshot.key();
@@ -377,6 +379,8 @@ $scope.book = LSFactory.get(bookId);*/
 
 
 })
+
+
 
 .controller('editPlaceCtrl', function($rootScope, $scope, $state, $stateParams, $firebaseArray, $firebaseObject, Place) {
 
@@ -456,6 +460,20 @@ $scope.editP = function(){
     }
   };
   
+})
+
+.filter('orderObjectBy', function() {
+  return function(items, field, reverse) {
+    var filtered = [];
+    angular.forEach(items, function(item) {
+      filtered.push(item);
+    });
+    filtered.sort(function (a, b) {
+      return (a[field] > b[field] ? 1 : -1);
+    });
+    if(reverse) filtered.reverse();
+    return filtered;
+  };
 })
 
 .controller('completedCtrl', function($rootScope, $scope, $window, $firebase) {
@@ -580,6 +598,8 @@ $scope.editP = function(){
 
 .controller('detailsCtrl', function($rootScope, $scope, $firebaseAuth, $state, $stateParams, $window, $ionicModal, $timeout, $ionicHistory, Place, review) {
   console.log("inside detailsCtrl");
+         
+
   $ionicHistory.clearCache();
   $ionicHistory.clearHistory();
 
@@ -645,41 +665,7 @@ console.log($scope.det);
     }
     /*console.log("key : " + snapshot.key());  */
   })
-     var i = 0;
-  //display review berdasarkan id
-  /* rev.orderByChild("placeId").equalTo($scope.det).on("value", function(snapshot) {
-    console.log(snapshot.val());
-    console.log("okay");
-      $scope.revData = snapshot.val();*/
-   /* console.log($scope.revData.)*/
-
-    /*  rev.on("child_added", function(snapshot) {
-      var info = snapshot.val();
-      $scope.star = [];
-      if($scope.star == undefined){
-        i=0;
-        console.log("ini undefined")
-      }
-      $scope.star[i] = info.rating;
-      i++;
-      console.log($scope.star);
-
-       $scope.ratingsDisplay = {
-        iconOnColor: 'rgb(255, 255, 0)',
-        iconOffColor:  'rgb(0, 0, 0)',
-        rating:  $scope.star,
-        minRating:1,
-        max:5,
-        readOnly: true
-        
-      };
-});*/
-      /*rev.orderByKey().equalTo().on("child_added", function(snapshot){
-        $scope.star = snapshot.val();
-      })*/
-      /*console.log($scope.revData.user);*/
-    /*  console.log($scope.star);
-    })*/
+     
 
   //nav modal
   $ionicModal.fromTemplateUrl('templates/navigate.html', {
@@ -728,41 +714,13 @@ console.log($scope.det);
 
  // $scope.listRev = function(){
      rev.orderByChild("placeId").equalTo($scope.det).on("value", function(snapshot) {
+       //update overallStar & rankVal in firebase
+          var placeStar = new Firebase("https://mpf.firebaseio.com/Place/" + $scope.det);
     console.log(snapshot.val());
     console.log("okay");
       $scope.revData = snapshot.val();
 
 
-     /* console.log($scope.revData.key());*/
-         //var specRev = new Firebase("https://mpf.firebaseio.com/review/" + $scope.plcId);
-
-
-
- /*    snapshot.forEach(function(childSnapshot) {
-    var l =0;
-      $scope.key = childSnapshot.key();
-    console.log($scope.key);
-     //dapatkan key setiap review utk setiap rating
-     rev.orderByKey().equalTo($scope.key).on("child_added", function(snapshot) {
-      $scope.rating = snapshot.val();
-      $scope.ratings = [];
-      $scope.ratings[l] = parseInt($scope.rating.rating);
-      console.log($scope.ratings);  
-      l++;          
-       $scope.ratingsDisplay = {
-        iconOnColor: 'rgb(255, 255, 0)',
-        iconOffColor:  'rgb(0, 0, 0)',
-        rating:  $scope.ratings,
-        minRating:1,
-        max:5,
-        readOnly: true
-        
-      };
-
-  })
-   
-  });*/
-      //console.log($scope.key);
       
 
       /////////////////////////////
@@ -781,14 +739,33 @@ console.log($scope.det);
       if(!rateTotalNan){
         rateTotal =  rateTotal + parseInt(totalRate.rating);
         i++;
-         /*console.log("RATE TOTAL : " + rateTotal);
-         console.log(i);*/
+         console.log("RATE TOTAL : " + rateTotal);
+         console.log(i);
       }
-
-      var average = rateTotal/i;
-    $scope.ave = Number((average).toFixed(0));
-    
-      });
+      console.log(i);
+      $scope.average = rateTotal/i;
+    $scope.ave = Number(($scope.average).toFixed(0));
+          
+          
+      
+         if($scope.ave){
+         
+          console.log("masuk");
+          placeStar.update ({
+            overallStar : $scope.ave
+          });
+        }
+     
+      }); //penutup angular ForEach
+      console.log(i);
+      $scope.rankV = rateTotal/i;
+      console.log(rateTotal);
+      if($scope.rankV){
+        console.log("masuk sini");
+       placeStar.update ({
+            rankVal: $scope.rankV
+          });
+      }
 
       ///// end rating /////
 

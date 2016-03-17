@@ -1,8 +1,18 @@
-<ion-header-bar class="bar-positive">
+<!-- <ion-header-bar class="bar-positive">
   <h1 class="title">Sign Up</h1>
-</ion-header-bar>
+</ion-header-bar> -->
 <ion-content class="has-header padding">
-  <div class="list">
+
+<section class="sectionSignIn">
+<span class="spanSignIn"></span>
+<h1 class="h1SignIn">Sign Up</h1>
+
+<input class="textbox1" type="text" ng-model="user.email" placeholder="Email">
+ <input class="textbox1" type="password" ng-model="user.password" placeholder="Password">
+
+  <button class="buttonSignIn" ng-click="createUser()">Sign Up</button> 
+  </section>
+  <!-- <div class="list">
     <label class="item item-input">
       <span class="input-label">Email</span>
       <input type="text" ng-model="user.email">
@@ -16,5 +26,5 @@
         Sign Up
       </button>
     </label>
-  </div>
+  </div> -->
 </ion-content>

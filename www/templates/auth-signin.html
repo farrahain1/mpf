@@ -1,18 +1,30 @@
-<ion-header-bar class="bar-positive">
-  <h1 class="title">Sign In</h1>
-</ion-header-bar>
 <ion-content class="has-header padding">
-  <div class="list">
-    <label class="item item-input">
-      <span class="input-label">Email</span>
-      <input type="text" ng-model="user.email">
+<section class="sectionSignIn">
+<span class="spanSignIn"></span>
+<h1 class="h1SignIn">Sign In</h1>
+
+<input class="textbox1" type="text" ng-model="user.email" placeholder="Email">
+ <input class="textbox1" type="password" ng-model="user.password" placeholder="Password">
+
+  <button class="buttonSignIn" ng-click="validateUser()">Sign In</button> 
+<!-- <div class="signin">
+  
+  <img ng-src="img/logo.png" class="logo">
+   
+    <div >
+      <input class="textbox1" type="text" ng-model="user.email" placeholder="Email">
+    
+    </div>
+     <div class="item item-input-inset">
+    <label class="item-input-wrapper">
+     
+      <input type="password" ng-model="user.password" placeholder="Password">
     </label>
-    <label class="item item-input">
-      <span class="input-label">Password</span>
-      <input type="password" ng-model="user.password">
-    </label>
-    <label class="item item-input">
-      <button class="button button-block button-positive" ng-click="validateUser()">Sign In</button>
-    </label>
-  </div>
+    </div>
+    <div class="centered">
+      <button class="button button-block button-positive" ng-click="validateUser()">Sign In</button> 
+    </div>
+  
+  </div> -->
+  </section>
 </ion-content>

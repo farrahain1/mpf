@@ -85,16 +85,7 @@ angular.module('mpf', ['ionic', 'firebase', 'mpf.controllers'])
 
     $rootScope.back = function(){
     console.log("masuk back");    
-    window.history.back(); 
-      
-      //console.log($rootScope.previousState);
-     /* if($rootScope.previousState == "auth.signin"){
-        console.log("masuk semula");
-        $rootScope.notify('No no');              
-      }
-      else{
-        window.history.back();    
-      }*/
+    window.history.back();      
    }
 
     $rootScope.checkUser = function(){

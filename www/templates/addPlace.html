@@ -6,11 +6,12 @@
 	</ion-header-bar>
 	<ion-content>
 	
+
 		<div class="list">
 			<h4>Do you wish to add a place or a business?</h4>
 			<label class="item item-input item-stacked-label">
-				<ion-radio ng-model="choice"  ng-click="place(1)">Place</ion-radio>
-				<ion-radio ng-model="choice"  ng-click="place(2)">Business</ion-radio>
+				<ion-radio name="tempat" ng-model="pilihan.tempat"  ng-click="place(1)" value="place">Place</ion-radio>
+				<ion-radio name="tempat" ng-model="pilihan.tempat"  ng-click="place(2)" value="buss">Business</ion-radio>
 			</label>
 		</div>
 		 <form name="placeForm">
@@ -21,10 +22,12 @@
 		    <p class="ion-information-circled col satu" ng-show="placeForm.name.$error.required">This field is required</p>
 		  </label>
 
+		   <label class="item item-input item-stacked-label">
+		    <span class="input-label">Address </span>
+		    <input class="col col-50 inline" ng-model="address" name="address" required>
+		    <p class="ion-information-circled col satu" ng-show="placeForm.address.$error.required">This field is required</p>
+		  </label>
 		  
-		 <!--  <div class="items error">
-            
-          </div>   --> 
 		  <label class="item item-input item-stacked-label">
 		    <span class="input-label">Category</span>
 		        <select class="col col-50 inline" name="category" ng-model="category" required>
@@ -41,7 +44,7 @@
 		  </label>
 		  
 		  <label class="item item-input item-stacked-label">
-		    <span class="input-label col col-15 inline">Operation Days</span>
+		    <span class="input-label col col-15 inline" ng-init="formData.open_days='everyday'">Operation Days</span>
 		   
 		     <ion-list>
 		     	  <ion-radio name="open_days" ng-model="formData.open_days" ng-click="closeDay()" value="everyday" >Everyday</ion-radio>
@@ -83,12 +86,101 @@
 		    <input type="text" placeholder="John" ng-model="website"> 
 		  </label>
 		    <div>
-			   <button class="button icon-left ion-navigate button-positive" style="margin-left: 150px" ng-click="addP()" ng-disabled="!name || !category">Submit</button><br>
+			   <button class="button icon-left button-positive" style="margin-left: 150px" ng-click="addP()" ng-disabled="!name || !category || !address">Submit</button><br>
 		    </div>
 		</div>
 		</form>
 
+	 <form name="businessForm">
 		<div class="list" ng-hide="addBusiness">
+		  <label class="item item-input item-stacked-label">
+		    <span class="input-label">Business Name </span>
+		    <input class="col col-50 inline" ng-model="name" name="name" placeholder="Business Name" required>
+		    <p class="ion-information-circled col satu" ng-show="businessForm.name.$error.required">This field is required</p>
+		  </label>
+          
+		  <label class="item item-input item-stacked-label">
+		    <span class="input-label">Category</span>
+		        <select class="col col-50 inline" name="category" ng-model="category" required>
+			      <option ng-value="HC">Healthcare</option>
+			      <option ng-value="BC">Beautycare</option>
+			      <option ng-value="BT">Boutique</option>
+			      <option ng-value="FD">Food and Drink</option>
+			     <!-- <option>Taman Rekreasi</option> 
+			     <option>Miscellaneous</option> -->
+			    </select>
+			     <p class="ion-information-circled col satu" ng-show="businessForm.category.$error.required">This field is required</p>
+		  </label>
+
+		  <label class="item item-input item-stacked-label">
+		    <span class="input-label">Address </span>
+		    <input class="col col-50 inline" ng-model="address" name="address" required>
+		    <p class="ion-information-circled col satu" ng-show="businessForm.address.$error.required">This field is required</p>
+		  </label>
+
+		  <label class="item item-input item-stacked-label">
+		    <span class="input-label">Support Helpline  No. </span>
+		    <input placeholder="0761881999" ng-model="phone">
+		  </label>
+		  
+		  <label class="item item-input item-stacked-label">
+		    <span class="input-label col col-15 inline" ng-init="formData.open_days='everyday'">Operation Days</span>
+		   
+		     <ion-list>
+		     	  <ion-radio name="open_days" ng-model="formData.open_days" ng-click="closeDay()" value="everyday" >Everyday</ion-radio>
+		     	  <ion-radio name="open_days" ng-model="formData.open_days" ng-click="closeDay()" value="notFriday">Everyday except Friday</ion-radio>
+		     	  <ion-radio name="open_days" ng-model="formData.open_days" ng-click="closeDay()" value="notSaturday" >Everyday except Saturday</ion-radio>
+		     	  <ion-radio name="open_days" ng-model="formData.open_days" ng-click="day()" value="other">Other operation days</ion-radio>				  
+				  
+				  <label class="item item-input item-stacked-label" ng-hide="days">
+				   <ion-checkbox name="hari" ng-init="formDatas.hari.sunday=false" ng-model="formDatas.hari.sunday" >Sunday</ion-checkbox>
+				 <ion-checkbox name="hari" ng-init="formDatas.hari.monday=false" ng-model="formDatas.hari.monday">Monday</ion-checkbox>
+				  <ion-checkbox name="hari" ng-init="formDatas.hari.tuesday=false" ng-model="formDatas.hari.tuesday">Tuesday</ion-checkbox>
+				  <ion-checkbox name="hari" ng-init="formDatas.hari.wednesday=false" ng-model="formDatas.hari.wednesday">Wednesday</ion-checkbox>
+				  <ion-checkbox name="hari" ng-init="formDatas.hari.thursday=false" ng-model="formDatas.hari.thursday">Thursday</ion-checkbox>
+				  <ion-checkbox name="hari" ng-init="formDatas.hari.friday=false" ng-model="formDatas.hari.friday">Friday</ion-checkbox>
+				  <ion-checkbox name="hari" ng-init="formDatas.hari.saturday=false" ng-model="formDatas.hari.saturday">Saturday</ion-checkbox>
+				  </label>
+			</ion-list>
+		  </label>
+
+		  <label class="item item-input item-stacked-label">
+		    <span class="input-label">Operation Time</span>
+		     <ion-list>
+		     	 <ion-radio name="time" ng-model="formTime.time" value="specific" ng-click="spTime()">Specific Time</ion-radio>
+			        <label class="item item-input item-stacked-label" ng-hide="sTime">
+			          
+			          <span class="input-label">Opening Time</span>
+			          <input type="time"  ng-model="openTime">
+			          </label>
+			      <label class="item item-input item-stacked-label" ng-hide="sTime">
+			          <span class="input-label">Closing Time</span>
+			          <input type="time" ng-model="closeTime">
+			        </label>
+			     <ion-radio name="time" ng-model="formTime.time" value="allTime" ng-click="closeSPTime()">24 hours</ion-radio>
+			</ion-list>
+		  </label>
+
+		  <label class="item item-input item-stacked-label">
+		    <span class="input-label">Website</span>
+		    <input type="text" placeholder="John" ng-model="website"> 
+		  </label>
+		   <label class="item item-input item-stacked-label">		   
+		    <span class="input-label" ng-init="own.owner='yes'">Is this your own business?</span>
+		    <ion-radio name="owner" ng-model="own.owner" value="yes">Yes</ion-radio>
+		    <ion-radio name="owner" ng-model="own.owner" value="no">No</ion-radio>
+		  </label>
+		  <label class="item item-input item-stacked-label">
+		    <span class="input-label">Company Reg. No</span>
+		    <input type="text" ng-model="regNo">
+		  </label>
+		    <div>
+			   <button class="button icon-left button-positive" style="margin-left: 150px" ng-click="addP()" ng-disabled="!name || !category || !address">Submit</button><br>
+		    </div>
+		</div>
+		</form> 
+
+		<!-- <div class="list" ng-hide="addBusiness">
 		  <label class="item item-input item-stacked-label">
 		    <span class="input-label">Business Name</span>
 		    <input type="text" placeholder="John">
@@ -149,9 +241,9 @@
 		  </label>
 		   <div>
 			   <a class="button icon-left button-positive" style="margin-left: 150px">Submit</a><br>
-			   <!-- <input type="submit" value="Save" class="btn btn-primary"> -->
+			   <input type="submit" value="Save" class="btn btn-primary"> 
 		    </div>
-		</div>
+		</div> -->
 
 		
 		</ion-content>

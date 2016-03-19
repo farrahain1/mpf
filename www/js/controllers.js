@@ -291,6 +291,7 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings'])
   
 
   $scope.places = Place;
+ 
 
 
   if ($stateParams.id) {
@@ -316,9 +317,11 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings'])
 
 })
 
-.controller('addPlaceCtrl', function($rootScope, $scope, $state, $stateParams, $firebaseArray, Place) {
+.controller('addPlaceCtrl', function($rootScope, $scope, $state, $window, $stateParams, $ionicHistory, $firebaseArray, Place) {
    /*var placeRef = new Firebase("https://mpf.firebaseio.com/" + $stateParams.id);
     $scope.placeLink = $firebaseArray(placeRef);*/
+    $ionicHistory.clearCache();
+    //$window.location.reload();
 
     $scope.addPlace = true;  
     $scope.addBusiness = true;
@@ -328,14 +331,15 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings'])
   $scope.place = function(index){
     if(index == 1){
       $scope.addPlace = false;  
-      $scope.addBusiness = true;
+      $scope.addBusiness = true;      
     }
     else if(index == 2){
       $scope.addBusiness = false;
       $scope.addPlace = true;
     }
+   
   }
-
+   
   $scope.day = function(){
     $scope.days = false;
   }
@@ -375,6 +379,9 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings'])
   //for time checkbox
   $scope.formTime = {};
 
+  //for choice place/business
+  $scope.pilihan = {};
+
   $scope.validate = function(){
     if(!this.phone){
       this.phone = false;
@@ -390,7 +397,7 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings'])
       $scope.evTime = false;
       console.log("takde time");
     }
-    if(!$scope.formData.open_days){
+   /* if(!$scope.formData.open_days){
       console.log("Takde hari");
       $scope.formData.open_days = false;
        $scope.formDatas.hari.sunday = false;
@@ -400,12 +407,21 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings'])
       $scope.formDatas.hari.thursday = false;
       $scope.formDatas.hari.friday = false;
       $scope.formDatas.hari.saturday = false;
+    }*/
+    if($scope.pilihan.tempat === "buss"){
+      if(!$scope.regNo){
+        console.log("takde time");
+        $scope.regNo = false;
+      }
     }
 
   }
   
 
+ 
+    
   $scope.addP = function(){
+     
     $scope.validate();
     console.log($scope.formTime.time);
     if($scope.formTime.time === "specific"){
@@ -426,13 +442,6 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings'])
     $scope.notFriday = false;
     $scope.notSaturday = false;
 
-    /*$scope.formDatas.hari.sunday = false
-  $scope.formDatas.hari.monday = false
-  $scope.formDatas.hari.tuesday = false
-  $scope.formDatas.hari.wednesday = false
-  $scope.formDatas.hari.thursday = false
-  $scope.formDatas.hari.friday = false
-  $scope.formDatas.hari.saturday = false*/
     
     console.log($scope.formData.open_days);
     if($scope.formData.open_days === "everyday"){
@@ -453,6 +462,8 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings'])
       $scope.notSaturday = false;
     }
     console.log("add place");
+
+    if($scope.pilihan.tempat === "place"){
     $scope.places.$add({
       name : this.name,
       category: this.category,
@@ -481,10 +492,63 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings'])
           friday: $scope.formDatas.hari.friday,
           saturday: $scope.formDatas.hari.saturday
         }
-      }
+      },
+      address: this.address
       
-    });
+    })
+   
+   /* $window.location.reload();
+     $rootScope.notify('Successfully Add');
+     window.history.back(); */
+    }
+    else if($scope.pilihan.tempat === "buss"){
+      console.log("masuk bussiness yeah");
+      if(this.own.owner == "true"){
+        //add data kat owner profile tu
+      }
+      $scope.places.$add({
+      name : this.name,
+      category: this.category,
+      phone :  this.phone, 
+      website : this.website,
+      open_hr : {
+        specific : {
+          open_hr : $scope.openHr,
+          close_hr : $scope.closeHr
+        },
+        allTime : $scope.evTime
+      },
+      /*open_hr: $scope.openHr,
+      close_hr: $scope.closeHr,
+      opHr: $scope.allTime,*/
+      open_days: {
+        everyday: $scope.everyday,
+        notFriday: $scope.notFriday,
+        notSaturday: $scope.notSaturday,
+        other: {
+          sunday: $scope.formDatas.hari.sunday,
+          monday: $scope.formDatas.hari.monday,
+          tuesday:$scope.formDatas.hari.tuesday,
+          wednesday: $scope.formDatas.hari.wednesday,
+          thursday: $scope.formDatas.hari.thursday,
+          friday: $scope.formDatas.hari.friday,
+          saturday: $scope.formDatas.hari.saturday
+        }
+      },
+      owner : this.own.owner,
+      regNo: this.regNo,
+      address: this.address
+      
+    })
+      /* $rootScope.notify('Successfully Add');
+      window.history.back(); */
+    }
+    
+    $rootScope.notify('Successfully Add');
+    $window.location.reload();
+    /*$window.history.back();*/
   }
+
 
    $scope.data = {
     category: null

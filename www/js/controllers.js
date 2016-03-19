@@ -288,38 +288,10 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings'])
 })
 
 .controller('placeCtrl', function($rootScope, $scope, $state, $stateParams, $firebaseArray, Place) {
-   /*var placeRef = new Firebase("https://mpf.firebaseio.com/" + $stateParams.id);
-    $scope.placeLink = $firebaseArray(placeRef);*/
-
-    $scope.addPlace = true;  
-    $scope.addBusiness = true;
   
-  $scope.place = function(index){
-    if(index == 1){
-      $scope.addPlace = false;  
-      $scope.addBusiness = true;
-    }
-    else if(index == 2){
-      $scope.addBusiness = false;
-      $scope.addPlace = true;
-    }
-  }
-
-   $scope.model = {
-    time1 : new Date()
-  };
 
   $scope.places = Place;
 
-  $scope.addP = function(){
-    console.log("add place");
-    $scope.places.$add({
-      name : this.name,
-      phone :  this.phone,
-      category: "BC",
-      website : this.website
-    });
-  }
 
   if ($stateParams.id) {
             $scope.cat = $stateParams.id;
@@ -332,42 +304,6 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings'])
     $scope.asHeader = snapshot.val(); 
   })
 
-    
-
-   //untuk digunakan oleh ng-repeat = tentukan berapa kali loop
-     //$scope.data = snapshot.key();
-     
-     //untuk ambik data berdasarkan key $scope.data
-     /*$scope.data = snapshot.key();*/
-     //console.log($scope.data);
-
-     // })*/
-
-     //console.log($scope.data);
-     
-/*  $scope.placeWcat = function() {
-    console.log("okay");
-        //display place berdasarkan selected category 
-    if ($stateParams.id) {
-            $scope.cat = $stateParams.id;
-            console.log($scope.cat);
-        }
-     var ref = new Firebase("https://mpf.firebaseio.com/Place");
-     ref.orderByChild("category").equalTo($scope.cat).on("child_added", function(snapshot) {
-    console.log(snapshot.key());    
-     })
-
-    /*var data = [{id:(snaphost.key())}];
-     $scope.selPlace = data;
-     console.log(data);
-
-}*/
-
-        // Do anything you want with the ID inside $scope.yourParam
-/*  var catName = $state.params.catName;
-  console.log(catName);*/
-  /*var bookId = $state.params.bookId;
-$scope.book = LSFactory.get(bookId);*/
 
  $scope.data = function(plcId) {
             console.log(plcId);
@@ -380,6 +316,184 @@ $scope.book = LSFactory.get(bookId);*/
 
 })
 
+.controller('addPlaceCtrl', function($rootScope, $scope, $state, $stateParams, $firebaseArray, Place) {
+   /*var placeRef = new Firebase("https://mpf.firebaseio.com/" + $stateParams.id);
+    $scope.placeLink = $firebaseArray(placeRef);*/
+
+    $scope.addPlace = true;  
+    $scope.addBusiness = true;
+    $scope.days = true;
+    $scope.sTime = true;
+  
+  $scope.place = function(index){
+    if(index == 1){
+      $scope.addPlace = false;  
+      $scope.addBusiness = true;
+    }
+    else if(index == 2){
+      $scope.addBusiness = false;
+      $scope.addPlace = true;
+    }
+  }
+
+  $scope.day = function(){
+    $scope.days = false;
+  }
+
+   $scope.spTime = function(){
+    $scope.sTime = false;
+  }
+
+  $scope.closeSPTime = function(){
+    $scope.sTime = true;
+    $scope.openHr = 0;
+  }
+
+  $scope.closeDay = function(){
+    $scope.days = true;
+    $scope.formDatas.hari.sunday = false;
+    $scope.formDatas.hari.monday = false;
+    $scope.formDatas.hari.tuesday = false;
+    $scope.formDatas.hari.wednesday = false;
+    $scope.formDatas.hari.thursday = false;
+    $scope.formDatas.hari.friday = false;
+    $scope.formDatas.hari.saturday = false;
+  }
+
+  //  $scope.model = {
+  //   time1 : new Date()
+  // };
+
+  $scope.places = Place;
+
+  //for radioButton
+  $scope.formData = {};
+
+  //for checkboxes
+  $scope.formDatas = {};
+
+  //for time checkbox
+  $scope.formTime = {};
+
+  $scope.validate = function(){
+    if(!this.phone){
+      this.phone = false;
+      console.log("takde phone");
+    }
+    if(!this.website){
+      this.website = false;
+      console.log("takde website");
+    }
+    if(!$scope.formTime.time){
+      $scope.openHr = false;
+      $scope.closeHr = false;
+      $scope.evTime = false;
+      console.log("takde time");
+    }
+    if(!$scope.formData.open_days){
+      console.log("Takde hari");
+      $scope.formData.open_days = false;
+       $scope.formDatas.hari.sunday = false;
+      $scope.formDatas.hari.monday = false;
+      $scope.formDatas.hari.tuesday = false;
+      $scope.formDatas.hari.wednesday = false;
+      $scope.formDatas.hari.thursday = false;
+      $scope.formDatas.hari.friday = false;
+      $scope.formDatas.hari.saturday = false;
+    }
+
+  }
+  
+
+  $scope.addP = function(){
+    $scope.validate();
+    console.log($scope.formTime.time);
+    if($scope.formTime.time === "specific"){
+      $scope.openHr = this.openTime.getHours() + ":" + ((this.openTime.getMinutes()<10?'0':'') + this.openTime.getMinutes());
+     $scope.closeHr = this.closeTime.getHours() + ":" + ((this.closeTime.getMinutes()<10?'0':'') + this.closeTime.getMinutes());
+     $scope.evTime = false;
+    }
+    else if($scope.formTime.time === "allTime"){
+      $scope.openHr = false;
+      $scope.closeHr = false;
+      $scope.evTime = true;
+    }
+    
+    console.log($scope.openHr);
+    console.log(this.openTime);
+    //letak validation kat sini
+    $scope.everyday = false;
+    $scope.notFriday = false;
+    $scope.notSaturday = false;
+
+    /*$scope.formDatas.hari.sunday = false
+  $scope.formDatas.hari.monday = false
+  $scope.formDatas.hari.tuesday = false
+  $scope.formDatas.hari.wednesday = false
+  $scope.formDatas.hari.thursday = false
+  $scope.formDatas.hari.friday = false
+  $scope.formDatas.hari.saturday = false*/
+    
+    console.log($scope.formData.open_days);
+    if($scope.formData.open_days === "everyday"){
+      $scope.everyday = true;
+      console.log("everyday");
+    }
+    else if($scope.formData.open_days === "notFriday"){
+      $scope.notFriday = true;
+      console.log("notFriday");
+    }
+    else if($scope.formData.open_days === "notSaturday"){
+      $scope.notSaturday = true;
+      console.log("notSaturday");
+    }
+    else if($scope.formData.open_days === "other"){
+      $scope.everyday = false;
+      $scope.notFriday = false;
+      $scope.notSaturday = false;
+    }
+    console.log("add place");
+    $scope.places.$add({
+      name : this.name,
+      category: this.category,
+      phone :  this.phone, 
+      website : this.website,
+      open_hr : {
+        specific : {
+          open_hr : $scope.openHr,
+          close_hr : $scope.closeHr
+        },
+        allTime : $scope.evTime
+      },
+      /*open_hr: $scope.openHr,
+      close_hr: $scope.closeHr,
+      opHr: $scope.allTime,*/
+      open_days: {
+        everyday: $scope.everyday,
+        notFriday: $scope.notFriday,
+        notSaturday: $scope.notSaturday,
+        other: {
+          sunday: $scope.formDatas.hari.sunday,
+          monday: $scope.formDatas.hari.monday,
+          tuesday:$scope.formDatas.hari.tuesday,
+          wednesday: $scope.formDatas.hari.wednesday,
+          thursday: $scope.formDatas.hari.thursday,
+          friday: $scope.formDatas.hari.friday,
+          saturday: $scope.formDatas.hari.saturday
+        }
+      }
+      
+    });
+  }
+
+   $scope.data = {
+    category: null
+   };
+
+ 
+
+
+})
 
 
 .controller('editPlaceCtrl', function($rootScope, $scope, $state, $stateParams, $firebaseArray, $firebaseObject, Place) {
@@ -443,24 +557,24 @@ $scope.editP = function(){
 
 
 
+/*
+  .directive('formattedTime', function ($filter) {
 
-.directive('formattedTime', function ($filter) {
-
-  return {
-    require: '?ngModel',
-    link: function(scope, elem, attr, ngModel) {
-        if( !ngModel )
-            return;
-        if( attr.type !== 'time' )
-            return;
-                
-        ngModel.$formatters.unshift(function(value) {
-            return value.replace(/:[0-9]+.[0-9]+$/, '');
-        });
-    }
-  };
-  
-})
+    return {
+      require: '?ngModel',
+      link: function(scope, elem, attr, ngModel) {
+          if( !ngModel )
+              return;
+          if( attr.type !== 'time' )
+              return;
+                  
+          ngModel.$formatters.unshift(function(value) {
+              return value.replace(/:[0-9]+.[0-9]+$/, '');
+          });
+      }
+    };
+    
+  })*/
 
 .filter('orderObjectBy', function() {
   return function(items, field, reverse) {
@@ -625,12 +739,15 @@ console.log($scope.det);
     if($scope.data.open_days.everyday){
         $scope.everyday[j] = "Everyday";
     }
+    else if($scope.data.open_days.notFriday && $scope.data.open_days.notSaturday){
+      $scope.everyday[j] = "Close on Friday and Saturday";
+    }
     else if($scope.data.open_days.notFriday){
       $scope.everyday[j] = "Close on Friday only";
     }
     else if($scope.data.open_days.notSaturday){
       $scope.everyday[j] = "Close on Saturday only";
-    }
+    }    
     else{
       
       

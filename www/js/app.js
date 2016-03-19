@@ -261,7 +261,7 @@ angular.module('mpf', ['ionic', 'firebase', 'mpf.controllers'])
       views: {
         'menuPlace': {
           templateUrl: 'templates/addPlace.html',
-          controller: 'placeCtrl'
+          controller: 'addPlaceCtrl'
         }
       }
     })

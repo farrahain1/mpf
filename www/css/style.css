@@ -211,3 +211,21 @@
   font: 16px Helvetica;
   background: rgb(224,245,248);
 } 
+
+.errors p {
+  color: red;
+}
+
+.help {
+    display:none;
+    font-size:90%;
+}
+input.inline {
+    display:inline-block;
+}
+
+
+p.satu { 
+  display: inline; 
+  color: red;
+}

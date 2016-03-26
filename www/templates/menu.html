@@ -1,6 +1,6 @@
 <ion-tabs class="tabs-icon-top">
   <ion-tab title="Browse" icon="icon ion-filing" href="#/menu/browse">
-    <ion-nav-view name="menuContent"></ion-nav-view>
+    <ion-nav-view name="menu-browse"></ion-nav-view>
   </ion-tab>
   <!-- <ion-tab title="Completed" icon-on="ion-ios7-checkmark"
     icon-off="ion-ios7-checkmark-outline" href="#/bucket/completed">
@@ -14,7 +14,7 @@
     <ion-nav-view name="menuPlace"></ion-nav-view>
   </ion-tab>
 
-    <ion-tab title="Profile" icon="icon ion-person" href="#/menu/profile">
+    <ion-tab title="Profile" icon="icon ion-person" ng-click="uProf(uid)">
     <ion-nav-view name="menuProfile"></ion-nav-view>
   </ion-tab>
 </ion-tabs>

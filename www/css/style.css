@@ -229,3 +229,32 @@ p.satu {
   display: inline; 
   color: red;
 }
+
+.cuba{
+  background-color: rgb(224,245,248);
+  border: solid black;
+}
+
+.right{
+  text-align: right;
+}
+
+.right_p{
+  float: right;
+}
+
+.mar{
+  margin-right: 10px;
+}
+
+.link{
+  cursor: pointer;
+}
+
+.loginInfo{
+  border: solid 1px;
+  width: 50%;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 10px;
+}

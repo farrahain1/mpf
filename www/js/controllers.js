@@ -1,7 +1,7 @@
 angular.module('mpf.controllers', ['firebase', 'ionic-ratings'])
   .controller('SignUpCtrl', [
-    '$scope', '$rootScope', '$firebaseAuth', '$window',
-    function ($scope, $rootScope, $firebaseAuth, $window) {
+    '$scope', '$rootScope', '$firebaseAuth', '$window', 'profile',
+    function ($scope, $rootScope, $firebaseAuth, $window, profile) {
       $scope.user = {
         email: "",
         password: ""
@@ -11,10 +11,11 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings'])
         $scope.createUser = function () {
         var email = this.user.email;
         var password = this.user.password;
+        var username = this.username;
         var obj = {email: email, password: password};
         console.log(obj); // works correctly
 
-        if (!email || !password) {
+        if (!email || !password || !username) {
           $rootScope.notify("Please enter valid credentials");
           return false;
         }
@@ -34,8 +35,13 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings'])
         });
 
       }).then(function(authData) {
+        $scope.prof = profile;
         console.log("Logged in as:", authData.uid);
         $window.location.href = ('#/menu/browse');
+        $scope.prof.$add({
+          name : username,
+          userId :  authData.uid
+        });
         //tambah if admin kat sini
         /*
           if(authData.email == admin@mpf.com){
@@ -132,7 +138,7 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings'])
 
 
           if(email == "admin@mpf.com"){
-              $window.location.href = ('#/menu/adminDash');
+              $window.location.href = ('#/adminMenu/verify');
               console.log("login as admin");
           }
           else{
@@ -245,9 +251,14 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings'])
     console.log(snapshot.key());
     //$window.location.href=('#/menu/list/{{cat.id}}');
     });*/
-
+    $scope.currState = $ionicHistory.currentStateName();
     $scope.data = function(catId) {
-            $state.go('menu.list', { id: catId });
+            if($scope.currState == "adminMenu.browse"){
+              $state.go('adminMenu.list', { id: catId });
+            }
+            else if($scope.currState == "menu.browse"){
+              $state.go('menu.list', { id: catId });
+            }
              //$state.go('menu.list'); 
         };
 
@@ -287,10 +298,11 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings'])
   };
 })
 
-.controller('placeCtrl', function($rootScope, $scope, $state, $stateParams, $firebaseArray, Place) {
+.controller('placeCtrl', function($rootScope, $scope, $state, $stateParams, $firebaseArray, Place, $ionicHistory) {
   
 
   $scope.places = Place;
+
  
 
 
@@ -305,10 +317,16 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings'])
     $scope.asHeader = snapshot.val(); 
   })
 
-
+ $scope.currState = $ionicHistory.currentStateName();
  $scope.data = function(plcId) {
             console.log(plcId);
-            $state.go('menu.details', { id: plcId });
+            if($scope.currState == "adminMenu.list"){
+              $state.go('adminMenu.details', { id: plcId });  
+            }
+            else if($scope.currState == "menu.list"){
+              $state.go('menu.details', {id: plcId });
+            }
+            
              //$state.go('menu.list'); 
         };
 
@@ -321,10 +339,20 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings'])
    /*var placeRef = new Firebase("https://mpf.firebaseio.com/" + $stateParams.id);
     $scope.placeLink = $firebaseArray(placeRef);*/
     $ionicHistory.clearCache();
-    //$window.location.reload();
+    $scope.currState = $ionicHistory.currentStateName();
 
-    $scope.addPlace = true;  
+    var user = new Firebase("https://mpf.firebaseio.com");
+   $scope.id = user.getAuth().uid;
+   console.log($scope.id);
+   if($scope.currState == "menu.addPlace"){
+    $scope.addPlace = true; 
+    $scope.addBusiness = true; 
+  }
+  else if($scope.currState == "adminMenu.addPlace"){
+    $scope.addPlace = false;  
     $scope.addBusiness = true;
+  }
+    
     $scope.days = true;
     $scope.sTime = true;
   
@@ -384,11 +412,11 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings'])
 
   $scope.validate = function(){
     if(!this.phone){
-      this.phone = false;
+      this.phone = "";
       console.log("takde phone");
     }
     if(!this.website){
-      this.website = false;
+      this.website = "";
       console.log("takde website");
     }
     if(!$scope.formTime.time){
@@ -416,12 +444,14 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings'])
     }
 
   }
+
+
   
 
  
     
   $scope.addP = function(){
-     
+     var nama = this.name;
     $scope.validate();
     console.log($scope.formTime.time);
     if($scope.formTime.time === "specific"){
@@ -438,12 +468,9 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings'])
     console.log($scope.openHr);
     console.log(this.openTime);
     //letak validation kat sini
-    $scope.everyday = false;
-    $scope.notFriday = false;
-    $scope.notSaturday = false;
 
     
-    console.log($scope.formData.open_days);
+   /* console.log($scope.formData.open_days);
     if($scope.formData.open_days === "everyday"){
       $scope.everyday = true;
       console.log("everyday");
@@ -460,8 +487,12 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings'])
       $scope.everyday = false;
       $scope.notFriday = false;
       $scope.notSaturday = false;
-    }
+    }*/
     console.log("add place");
+    var stateNow = $ionicHistory.currentStateName();
+      if(stateNow == 'adminMenu.addPlace'){
+        $scope.pilihan.tempat = "place";
+      }
 
     if($scope.pilihan.tempat === "place"){
     $scope.places.$add({
@@ -479,11 +510,7 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings'])
       /*open_hr: $scope.openHr,
       close_hr: $scope.closeHr,
       opHr: $scope.allTime,*/
-      open_days: {
-        everyday: $scope.everyday,
-        notFriday: $scope.notFriday,
-        notSaturday: $scope.notSaturday,
-        other: {
+      close_days: {
           sunday: $scope.formDatas.hari.sunday,
           monday: $scope.formDatas.hari.monday,
           tuesday:$scope.formDatas.hari.tuesday,
@@ -491,11 +518,30 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings'])
           thursday: $scope.formDatas.hari.thursday,
           friday: $scope.formDatas.hari.friday,
           saturday: $scope.formDatas.hari.saturday
-        }
       },
-      address: this.address
+      address: this.address,
+      userId : $scope.id,
+      created_date : Firebase.ServerValue.TIMESTAMP
       
-    })
+    }).then(function() {
+      $rootScope.notify('Successfully Add!');
+      var stateNow = $ionicHistory.currentStateName();     
+       var ref = new Firebase("https://mpf.firebaseio.com/Place");
+       console.log(nama);
+       ref.orderByChild("name").equalTo(nama).on("child_added", function(snapshot) {
+        console.log(snapshot.key());
+        var placeId = snapshot.key();
+        if(stateNow == 'menu.addPlace'){
+          console.log("menu");
+          $state.go('menu.details', { id: placeId });
+        }
+        else if(stateNow == 'adminMenu.addPlace'){
+          console.log("adminmenu");
+          $state.go('adminMenu.details', {id: placeId});
+        }
+    });
+     
+  });
    
    /* $window.location.reload();
      $rootScope.notify('Successfully Add');
@@ -503,9 +549,7 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings'])
     }
     else if($scope.pilihan.tempat === "buss"){
       console.log("masuk bussiness yeah");
-      if(this.own.owner == "true"){
-        //add data kat owner profile tu
-      }
+     
       $scope.places.$add({
       name : this.name,
       category: this.category,
@@ -521,11 +565,7 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings'])
       /*open_hr: $scope.openHr,
       close_hr: $scope.closeHr,
       opHr: $scope.allTime,*/
-      open_days: {
-        everyday: $scope.everyday,
-        notFriday: $scope.notFriday,
-        notSaturday: $scope.notSaturday,
-        other: {
+      close_days: {
           sunday: $scope.formDatas.hari.sunday,
           monday: $scope.formDatas.hari.monday,
           tuesday:$scope.formDatas.hari.tuesday,
@@ -533,19 +573,32 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings'])
           thursday: $scope.formDatas.hari.thursday,
           friday: $scope.formDatas.hari.friday,
           saturday: $scope.formDatas.hari.saturday
-        }
+        
       },
       owner : this.own.owner,
-      regNo: this.regNo,
-      address: this.address
+      address: this.address,
+      userId : $scope.id,
+      created_date : Firebase.ServerValue.TIMESTAMP
       
-    })
+    }).then(function() {
+      console.log("add business");
+      $rootScope.notify('Successfully Add!');
+       var stateNow = $ionicHistory.currentStateName();      
+       var ref = new Firebase("https://mpf.firebaseio.com/Place");
+       console.log(nama);
+       ref.orderByChild("name").equalTo(nama).on("child_added", function(snapshot) {
+        console.log(snapshot.key());
+        var placeId = snapshot.key();
+        $state.go('menu.details', { id: placeId });
+    });
+     
+  });
       /* $rootScope.notify('Successfully Add');
       window.history.back(); */
     }
     
     $rootScope.notify('Successfully Add');
-    $window.location.reload();
+   /* $window.location.reload();*/
     /*$window.history.back();*/
   }
 
@@ -554,35 +607,28 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings'])
     category: null
    };
 
- 
-
-
-})
-
-
-.controller('editPlaceCtrl', function($rootScope, $scope, $state, $stateParams, $firebaseArray, $firebaseObject, Place) {
-
-  $scope.places = Place;
-
-
-  if ($stateParams.id) {
+   ////////////////////////////////////////////////////
+   ////////////       edit place   ////////////////////
+   ////////////////////////////////////////////////////
+   var stateNow = $ionicHistory.currentStateName();
+   console.log(stateNow);
+   if(stateNow == "menu.editPlace"){
+   if ($stateParams.id) {
             $scope.plcId = $stateParams.id;
             console.log($scope.plcId); 
         }
 
-
- 
-  var ref = new Firebase("https://mpf.firebaseio.com/Place");
+   var editPlace = new Firebase("https://mpf.firebaseio.com/Place");
   
-     ref.orderByKey().equalTo($scope.plcId).on("child_added", function(snapshot) {
+     editPlace.orderByKey().equalTo($scope.plcId).on("child_added", function(snapshot) {
    console.log(snapshot.val());
-   $scope.data = snapshot.val();
+   $scope.editPlc = snapshot.val();
     /*console.log("key : " + snapshot.key());  */
     var cat = new Firebase("https://mpf.firebaseio.com/category");
-     cat.orderByKey().equalTo($scope.data.category).on("child_added", function(snapshot) {
-    $scope.category = snapshot.val();
+     cat.orderByKey().equalTo($scope.editPlc.category).on("child_added", function(snapshot) {
+    $scope.kategori = snapshot.val();
     console.log(snapshot.key());
-    $scope.cate = $scope.category.name; //BeautyCare
+    $scope.cate = $scope.kategori.name; //BeautyCare
     
   })
 
@@ -598,6 +644,135 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings'])
       website: this.data.website
 
     });
+   }
+ }
+   ////////////////////////////////////////////////////////
+   //////////// end edit place ////////////////////////////
+   ////////////////////////////////////////////////////////
+ 
+
+
+})
+
+
+.controller('editPlaceCtrl', function($rootScope, $scope, $state, $stateParams, $firebaseArray, $firebaseObject, Place) {
+
+  $scope.places = Place;
+  $scope.formData = {};
+  $scope.formTime = {};
+  $scope.days = true;
+  $scope.sTime = true;
+
+
+  if ($stateParams.id) {
+            $scope.plcId = $stateParams.id;
+            console.log($scope.plcId); 
+        }
+
+   $scope.day = function(){
+    $scope.days = false;
+  }
+
+  /*  $scope.spTime = function(){
+    $scope.sTime = false;
+  }
+
+  $scope.closeSPTime = function(){
+    $scope.sTime = true;
+  }
+
+  if($scope.timing === "specific"){
+      $scope.openHr = "KLSAL";
+     $scope.closeHr = "DNDSJ";
+     $scope.evTime = false;
+    }
+    else if($scope.timing === "allTime"){
+      $scope.openHr = false;
+      $scope.closeHr = false;
+      $scope.evTime = true;
+    }*/
+
+
+ 
+  var ref = new Firebase("https://mpf.firebaseio.com/Place");
+  
+     ref.orderByKey().equalTo($scope.plcId).on("child_added", function(snapshot) {
+   console.log(snapshot.val());
+   $scope.data = snapshot.val();
+
+    /*console.log("key : " + snapshot.key());  */
+    var cat = new Firebase("https://mpf.firebaseio.com/category");
+     cat.orderByKey().equalTo($scope.data.category).on("child_added", function(snapshot) {
+    $scope.category = snapshot.val();
+    console.log(snapshot.key());
+    $scope.cate = $scope.category.name; //BeautyCare
+    
+  })
+
+  })
+
+     var placeDet = new Firebase("https://mpf.firebaseio.com/Place/" + $scope.plcId);
+     
+     $scope.editP = function(){
+    console.log("edit place");
+
+    /*if(this.data.website){
+      $scope.website = this.data.website;
+      console.log("Ada data");
+    }
+    else{
+      $scope.website = "";
+      console.log("takde data");
+    } */
+    var nama = this.data.name;
+    placeDet.update ({
+      name: this.data.name,
+      phone: this.data.phone,
+      website: this.data.website,
+  
+     /* open_hr : {
+        specific : {
+          open_hr : $scope.openHr,
+          close_hr : $scope.closeHr
+        },
+        allTime : $scope.evTime
+      },*/
+      /*open_hr: $scope.openHr,
+      close_hr: $scope.closeHr,
+      opHr: $scope.allTime,*/
+      close_days: {
+          sunday: $scope.data.close_days.sunday,
+          monday: $scope.data.close_days.monday,
+          tuesday:$scope.data.close_days.tuesday,
+          wednesday: $scope.data.close_days.wednesday,
+          thursday: $scope.data.close_days.thursday,
+          friday: $scope.data.close_days.friday,
+          saturday: $scope.data.close_days.saturday
+      },
+      address: this.data.address
+
+    });
+
+    if(placeDet.update){
+      console.log("success");
+      $rootScope.notify("Successfully update!");
+      var ref = new Firebase("https://mpf.firebaseio.com/Place");
+       console.log(nama);
+       ref.orderByChild("name").equalTo(nama).on("child_added", function(snapshot) {
+        console.log(snapshot.key());
+        var placeId = snapshot.key();
+        $state.go('menu.details', { id: placeId });
+    });
+    }
+    /*.then(function() {
+       var ref = new Firebase("https://mpf.firebaseio.com/Place");
+       console.log(nama);
+       ref.orderByChild("name").equalTo(nama).on("child_added", function(snapshot) {
+        console.log(snapshot.key());
+        var placeId = snapshot.key();
+        $state.go('menu.details', { id: placeId });
+    });
+  });*/
    }
     /*  $scope.placeDet = $firebaseObject(placeDet);
     console.log("https://mpf.firebaseio.com/Place/" + $scope.plcId);
@@ -695,13 +870,9 @@ $scope.editP = function(){
   };
 })
 
-.controller('profileCtrl', function($rootScope, $scope, $window) {
-  $scope.edit = function(){
-    $window.location.href=('#/menu/editPlace');
-  }
-})
 
-.controller('menuCtrl', function($rootScope, $scope, $state, $window, $ionicModal, $timeout, $firebaseArray) {
+
+.controller('menuCtrl', function($rootScope, $scope, $state, $stateParams, $window, $ionicModal, $timeout, $firebaseArray) {
   console.log("inside menuCtrl");
 
   // Create the login modal that we will use later
@@ -711,14 +882,14 @@ $scope.editP = function(){
     $scope.modal = modal;
   });
 
-  /*// Triggered in the login modal to close it
-  $scope.closeLogin = function() {
-    $scope.modal.hide();
-  };*/
-
   // Open the login modal
   $scope.show = function() {
     $scope.modal.show();
+  };
+
+   $scope.closeSearch = function() {
+    console.log("masuk closeSearch");
+    $scope.modal.hide();
   };
 
   $scope.goSearch = function(){
@@ -730,10 +901,7 @@ $scope.editP = function(){
     
   };
 
-   $scope.closeSearch = function() {
-    console.log("masuk closeSearch");
-    $scope.modal.hide();
-  };
+  
 
    $scope.searchData = function(searchID) {
             searchID = searchID.toLowerCase();
@@ -742,6 +910,13 @@ $scope.editP = function(){
              $scope.closeSearch();
         };
 
+  var user = new Firebase("https://mpf.firebaseio.com");
+   $scope.uid = user.getAuth().uid;
+   $scope.uProf = function(userId) {
+            $state.go('menu.profile', { id: userId });
+             //$state.go('menu.list'); 
+        };
+  
   
  /* // Perform the login action when the user submits the login form
   $scope.doLogin = function() {
@@ -774,12 +949,13 @@ $scope.editP = function(){
 
 })
 
-.controller('detailsCtrl', function($rootScope, $scope, $firebaseAuth, $state, $stateParams, $window, $ionicModal, $timeout, $ionicHistory, Place, review) {
+.controller('detailsCtrl', function($rootScope, $scope, $firebaseAuth, $state, $stateParams, $window, $ionicModal, $timeout, $ionicHistory, $ionicPopup, Place, review) {
   console.log("inside detailsCtrl");
          
 
   $ionicHistory.clearCache();
   $ionicHistory.clearHistory();
+  $scope.currState = $ionicHistory.currentStateName();
 
   if ($stateParams.id) {
             $scope.det = $stateParams.id;
@@ -800,11 +976,8 @@ console.log($scope.det);
    $scope.data = snapshot.val();
    var j = 0;
    $scope.everyday = [];
-    if($scope.data.open_days.everyday){
+   /* if($scope.data.open_days.everyday){
         $scope.everyday[j] = "Everyday";
-    }
-    else if($scope.data.open_days.notFriday && $scope.data.open_days.notSaturday){
-      $scope.everyday[j] = "Close on Friday and Saturday";
     }
     else if($scope.data.open_days.notFriday){
       $scope.everyday[j] = "Close on Friday only";
@@ -812,41 +985,101 @@ console.log($scope.det);
     else if($scope.data.open_days.notSaturday){
       $scope.everyday[j] = "Close on Saturday only";
     }    
-    else{
+    else{*/
       
-      
-      if($scope.data.open_days.other.monday){
+      console.log($scope.data.close_days.monday);
+      if($scope.data.close_days.monday){
         $scope.everyday[j] = "Monday";
+        console.log("mon");
         j++;
       }
-      if($scope.data.open_days.other.tuesday){
+      if($scope.data.close_days.tuesday){
         $scope.everyday[j] = "Tuesday";
+        console.log("tues");
         j++;
       }
-      if($scope.data.open_days.other.wednesday){
+      if($scope.data.close_days.wednesday){
         $scope.everyday[j] = "Wednesday";
+        console.log("wed");
         j++;
       }
-      if($scope.data.open_days.other.thursday){
+      if($scope.data.close_days.thursday){
         $scope.everyday[j] = "Thursday";
+        console.log("thurs");
         j++;
       }
-      if($scope.data.open_days.other.friday){
+      if($scope.data.close_days.friday){
         $scope.everyday[j] = "Friday";
+        console.log("fri");
         j++;
       }
-      if($scope.data.open_days.other.saturday){
+      if($scope.data.close_days.saturday){
         $scope.everyday[j] = "Saturday";
+        console.log("sat");
         j++;
       }
-      if($scope.data.open_days.other.sunday){
+      if($scope.data.close_days.sunday){
         $scope.everyday[j] = "Sunday";
+        console.log("mon");
         j++;
       }
-    }
+
+      //not day
+      var i = 0;
+      $scope.open = {};
+      if(!$scope.data.close_days.monday){
+        $scope.open[i] = "Monday";
+        console.log("mon");
+        i++;
+      }
+      if(!$scope.data.close_days.tuesday){
+        $scope.open[i] = "Tuesday";
+        console.log("tues");
+        i++;
+      }
+      if(!$scope.data.close_days.wednesday){
+        $scope.open[i] = "Wednesday";
+        console.log("wed");
+        i++;
+      }
+      if(!$scope.data.close_days.thursday){
+        $scope.open[i] = "Thursday";
+        console.log("thurs");
+        i++;
+      }
+      if(!$scope.data.close_days.friday){
+        $scope.open[i] = "Friday";
+        console.log("fri");
+        i++;
+      }
+      if(!$scope.data.close_days.saturday){
+        $scope.open[i] = "Saturday";
+        console.log("sat");
+        i++;
+      }
+      if(!$scope.data.close_days.sunday){
+        $scope.open[i] = "Sunday";
+        console.log("mon");
+        i++;
+      }
+    //}
+    $scope.totalDay = j;
+    console.log($scope.totalDay);
+    
+    console.log($scope.data.open_hr.specific.open_hr);
+    var masa = parseFloat($scope.data.open_hr.specific.open_hr);
+    console.log(masa);
+
+
     /*console.log("key : " + snapshot.key());  */
   })
+
      
+     
+  $scope.coba = function(){
+    $rootScope.show("pppsh");
+  }
+
 
   //nav modal
   $ionicModal.fromTemplateUrl('templates/navigate.html', {
@@ -882,6 +1115,11 @@ console.log($scope.det);
       $scope.modalRev.show();
     /*$scope.listRev();*/
   };
+
+  $scope.showFadd = function(){
+    $scope.closeSearch(3);
+    $scope.show(2);
+  }
 
  /* $scope.rating = function(rat) { 
     if(rat)
@@ -968,14 +1206,16 @@ console.log($scope.det);
         placeId: $scope.det,
         message : this.message,
         user : $scope.email,
-        rating: $scope.rate
+        rating: $scope.rate,
+        creation_date: Firebase.ServerValue.TIMESTAMP
       });
       }
       else {
          $scope.reviews.$add({
         placeId: $scope.det,
         user : $scope.email,
-        rating: $scope.rate
+        rating: $scope.rate,
+        creation_date : Firebase.ServerValue.TIMESTAMP
       });
      
       }      
@@ -1039,6 +1279,42 @@ console.log($scope.det);
         console.log('Selected rating is : ', rating);
       };
 
+
+     //utk admin menu
+      $scope.editPlc = function(){
+    console.log($scope.det);
+    $state.go('adminMenu.editPlace', { id: $scope.det}); 
+   }
+
+   $scope.delPlc = function(plcName){
+    console.log($scope.det);
+    $rootScope.showConfirm(plcName,$scope.det);
+   }
+
+   $rootScope.showConfirm = function(plcName,plcId) {
+            $ionicPopup.confirm({
+              title: 'Delete ' + plcName,
+              template: 'Are you sure to delete ' + plcName + ' ?'
+            })
+            .then(function(res) {
+              if(res) {
+                 console.log('You are sure');
+                 $scope.del(plcId);
+
+                 
+               } else {
+                 console.log('You are not sure');
+               }
+                    });
+          };
+
+    $scope.del = function(id){
+      console.log("let's delete " + id);
+       var plcR = new Firebase("https://mpf.firebaseio.com/Place/"+id);
+      plcR.remove();
+      $rootScope.notify('Successfully Delete');
+      $window.history.back();
+    }
   
 
 
@@ -1053,7 +1329,231 @@ console.log($scope.det);
 
 })
 
+.controller('profileCtrl', function($rootScope, $scope, $state, $stateParams, $firebaseArray, Place, $ionicPopup, $ionicModal, $window) {
+   console.log("masuk profilectrl");
+   if ($stateParams.id) {
+            $scope.profId = $stateParams.id;
+            console.log($scope.profId); //search string
+        }
 
+   
+
+   $scope.pl = Place;
+   console.log($scope.pl);
+
+   //list of added places
+   var plc = new Firebase("https://mpf.firebaseio.com/Place");
+   plc.orderByChild("userId").equalTo($scope.profId).on("value", function(snapshot) {
+   console.log(snapshot.val());
+   $scope.plcList = snapshot.val();
+
+    })
+
+   $scope.editPlc = function(plcId){
+    console.log(plcId);
+    $state.go('menu.editPlace', { id: plcId}); 
+   }
+
+   $scope.delPlc = function(plcId, plcName){
+    console.log(plcId);
+    $rootScope.showConfirm(plcName,plcId);
+   }
+
+   $rootScope.showConfirm = function(plcName,plcId) {
+            $ionicPopup.confirm({
+              title: 'Delete ' + plcName,
+              template: 'Are you sure to delete ' + plcName + ' ?'
+            })
+            .then(function(res) {
+              if(res) {
+                 console.log('You are sure');
+                 $scope.del(plcId);
+                 
+               } else {
+                 console.log('You are not sure');
+               }
+                    });
+          };
+
+    $scope.del = function(id){
+      console.log("let's delete " + id);
+       var plcR = new Firebase("https://mpf.firebaseio.com/Place/"+id);
+      plcR.remove();
+      $rootScope.notify('Successfully Delete');
+
+    }
+
+    $scope.plcDetails = function(plcId){
+      $state.go('menu.details', {id: plcId});
+      
+    }
+
+   var user = new Firebase("https://mpf.firebaseio.com");
+   $scope.id = user.getAuth().uid;
+   $scope.email = user.getAuth().password.email;
+   $scope.password = user.getAuth().password;
+   console.log($scope.password);
+
+   //name of user
+   var prof = new Firebase("https://mpf.firebaseio.com/profile");
+   prof.orderByChild("userId").equalTo($scope.profId).on("child_added", function(snapshot) {
+   console.log(snapshot.val());
+   $scope.data = snapshot.val();
+
+    })
+
+   $scope.editInfo = function(){
+      var ref = new Firebase("https://mpf.firebaseio.com");
+      ref.changePassword({
+        email       : $scope.email,
+        oldPassword : this.password1,
+        newPassword : this.password2
+      }, function(error) {
+        if (error === null) {
+          console.log("Password changed successfully");
+          $rootScope.notify('Password changed successfully');
+          $scope.close();
+        } else {
+          console.log("Error changing password:", error);
+          $rootScope.notify('Error changing password');
+        }
+      });
+       /* if(this.email){
+            var ref = new Firebase("https://mpf.firebaseio.com");
+            ref.changeEmail({
+              oldEmail : $scope.email,
+              newEmail : this.email,
+              password : this.user.password1
+            }, function(error) {
+              if (error === null) {
+                console.log("Email changed successfully");
+                $scope.close();
+                $window.location.reload();
+              } else {
+                console.log("Error changing email:", error);
+              }
+        });
+      }*/
+   
+
+      /*prof.update ({
+        name: 
+      })*/
+   }
+
+   $scope.editEmail = function(){
+
+   }
+
+   $scope.editPassword = function(){
+
+   }
+
+    $ionicModal.fromTemplateUrl('templates/editLoginInfo.html', {
+        scope: $scope
+      }).then(function(modal) {
+        $scope.modal = modal;
+      });
+
+      // Open the login modal
+      $scope.show = function() {
+        $scope.modal.show();
+      };
+
+       $scope.close = function() {
+        console.log("masuk closeloginInfo");
+        $scope.modal.hide();
+      };
+ /* $scope.plc = Place;
+
+  $scope.placeData = function(placeId) {
+            $state.go('menu.details', { id: placeId });
+             //$state.go('menu.list'); 
+        };*/
+
+
+
+
+})
+
+.controller('adminPlcListCtrl', function($rootScope, $scope, $state, $stateParams, $firebaseArray, Place, $ionicPopup, $ionicModal, $ionicHistory, $window) {
+   console.log("masuk profilectrl");
+   
+    if ($stateParams.id) {
+            $scope.cat = $stateParams.id;
+            console.log($scope.cat); //FD
+    }
+
+    //list of place
+  var ref = new Firebase("https://mpf.firebaseio.com/category");
+     ref.orderByKey().equalTo($scope.cat).on("child_added", function(snapshot) {
+    console.log(snapshot.val());
+    $scope.asHeader = snapshot.val(); 
+  })
+
+     //redirect to place details
+ $scope.currState = $ionicHistory.currentStateName();
+ $scope.data = function(plcId) {
+            console.log(plcId);
+            if($scope.currState == "adminMenu.list"){
+              $state.go('adminMenu.details', { id: plcId });  
+            }
+            else if($scope.currState == "menu.list"){
+              $state.go('menu.details', {id: plcId });
+            }
+            
+             //$state.go('menu.list'); 
+        };
+   
+
+   $scope.places = Place;
+   console.log($scope.pl);
+   
+
+   $scope.editPlc = function(plcId){
+    console.log(plcId);
+    $state.go('adminMenu.editPlace', { id: plcId}); 
+   }
+
+   $scope.delPlc = function(plcId, plcName){
+    console.log(plcId);
+    $rootScope.showConfirm(plcName,plcId);
+   }
+
+   $rootScope.showConfirm = function(plcName,plcId) {
+            $ionicPopup.confirm({
+              title: 'Delete ' + plcName,
+              template: 'Are you sure to delete ' + plcName + ' ?'
+            })
+            .then(function(res) {
+              if(res) {
+                 console.log('You are sure');
+                 $scope.del(plcId);
+                 
+               } else {
+                 console.log('You are not sure');
+               }
+                    });
+          };
+
+    $scope.del = function(id){
+      console.log("let's delete " + id);
+       var plcR = new Firebase("https://mpf.firebaseio.com/Place/"+id);
+      plcR.remove();
+      $rootScope.notify('Successfully Delete');
+    }
+
+    $scope.plcDetails = function(plcId){
+      $state.go('menu.details', {id: plcId});
+      
+    }
+
+
+
+
+
+
+})
 
 
 
@@ -1066,3 +1566,5 @@ function escapeEmailAddress(email) {
   return email.trim();
 }
 /*CRUD*/
+
+

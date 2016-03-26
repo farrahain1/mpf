@@ -174,7 +174,7 @@ angular.module('mpf', ['ionic', 'firebase', 'mpf.controllers'])
     .state('menu.browse', {
       url: '/browse',
       views: {
-        'menu-browse': {
+        'menuContent': {
           templateUrl: 'templates/browse.html',
           controller: 'BrowseCtrl'
         }
@@ -184,7 +184,7 @@ angular.module('mpf', ['ionic', 'firebase', 'mpf.controllers'])
     .state('menu.list', {
       url: '/list/:id',
       views: {
-        'menu-browse': {
+        'menuContent': {
           templateUrl: 'templates/placeList.html',
           controller: 'placeCtrl'
         }
@@ -194,7 +194,7 @@ angular.module('mpf', ['ionic', 'firebase', 'mpf.controllers'])
     .state('menu.details', {
       url: '/details/:id',
       views: {
-        'menu-browse': {
+        'menuContent': {
           templateUrl: 'templates/placeDetails.html',
           controller: 'detailsCtrl'
         }
@@ -290,7 +290,7 @@ angular.module('mpf', ['ionic', 'firebase', 'mpf.controllers'])
      .state('adminMenu.verify', {
       url: '/verify',
       views: {
-        'adminMenu-verify': {
+        'adminMenuVerify': {
           templateUrl: 'templates/verify.html'
         }
       }
@@ -299,19 +299,9 @@ angular.module('mpf', ['ionic', 'firebase', 'mpf.controllers'])
      .state('adminMenu.addPlace', {
       url: '/addPlace',
       views: {
-        'adminMenu-addPlace': {
+        'adminMenuAddPlace': {
           templateUrl: 'templates/addPlace.html',
           controller: 'addPlaceCtrl'
-        }
-      }
-    })
-
-         .state('adminMenu.browse', {
-      url: '/browse',
-      views: {
-        'adminMenu-mngPlc': {
-          templateUrl: 'templates/browse.html',
-          controller: 'BrowseCtrl'
         }
       }
     })
@@ -319,34 +309,13 @@ angular.module('mpf', ['ionic', 'firebase', 'mpf.controllers'])
       .state('adminMenu.details', {
       url: '/details/:id',
       views: {
-        'adminMenu-mngPlc': {
+        'adminMenuDetails': {
           templateUrl: 'templates/placeDetails.html',
           controller: 'detailsCtrl'
         }
       }
     })
 
-        .state('adminMenu.list', {
-      url: '/list/:id',
-      views: {
-        'adminMenu-mngPlc': {
-          templateUrl: 'templates/placeList.html',
-          controller: 'adminPlcListCtrl'
-        }
-      }
-    })
-
-         .state('adminMenu.editPlace', {
-      url: '/editPlace/:id',
-      views: {
-        'adminMenu-mngPlc': {
-          templateUrl: 'templates/editPlace.html',
-          controller: 'editPlaceCtrl'
-        }
-      }
-    })
-
-    
 
     /*.state('menu.placeList', {
       url: '/placeList',

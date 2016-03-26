@@ -7,24 +7,52 @@
 	<ion-content>
 		<div class="list">
 		  <label class="item item-input item-stacked-label">
-		    <span class="input-label">Business Name</span>
+		    <span class="input-label">Place/Business Name</span>
 		    <input type="text" ng-model="data.name">
 		  </label>
 		   <label class="item item-input item-stacked-label">
 		    <span class="input-label">Category</span>
 		        <select disabled="">
 			      <option selected>{{cate}}</option>
-			      <option>HealthCare</option>
-			      <option>Boutique</option>
-			      <option>Food and Drink</option>
 			    </select>
 		  </label>
+
 		  <label class="item item-input item-stacked-label">
-		    <span class="input-label">Place helpline  No. </span>
-		    <input type="text" ng-model="data.phone"></textarea>
+		    <span class="input-label">Address </span>
+		    <input class="col col-50 inline" ng-model="data.address" value="data.address">
+		  </label>
+
+		  <label class="item item-input item-stacked-label">
+		   
+		    <!-- <span ng-if="data.phone"> -->
+		    	 <span class="input-label">Place helpline  No. </span>
+		    	<input type="text" ng-model="data.phone" placeholder="Add phone no.">
+		    	</textarea>
+		    <!-- </span> -->
 		  </label>
 		  
 		  <label class="item item-input item-stacked-label">
+		    <span class="input-label col col-15 inline">Close Days</span>
+		   
+		     <ion-list>
+				  
+				  <ion-checkbox name="hari" ng-model="data.close_days.sunday" ng-checked="data.close_days.sunday">Sunday</ion-checkbox>
+				 
+				 <ion-checkbox name="hari" ng-model="data.close_days.monday" ng-checked="data.close_days.monday">Monday</ion-checkbox>
+				 
+				  <ion-checkbox name="hari" ng-model="data.close_days.tuesday" ng-checked="data.close_days.tuesday">Tuesday</ion-checkbox>
+				 
+				  <ion-checkbox name="hari" ng-model="data.close_days.wednesday" ng-checked="data.close_days.wednesday">Wednesday</ion-checkbox>
+				 
+				  <ion-checkbox name="hari" ng-model="data.close_days.thursday" ng-checked="data.close_days.thursday">Thursday</ion-checkbox>
+				 
+				  <ion-checkbox name="hari" ng-model="data.close_days.friday" ng-checked="data.close_days.friday">Friday</ion-checkbox>
+				 
+				  <ion-checkbox name="hari" ng-model="data.close_days.saturday" ng-checked="data.close_days.saturday">Saturday</ion-checkbox>
+				 
+			</ion-list>
+		  </label>
+		  <!-- <label class="item item-input item-stacked-label">
 		    <span class="input-label">Operation Days</span>
 		     <ion-list>
 				  <ion-checkbox ng-checked="data.open_days.monday == true">Isnin</ion-checkbox>
@@ -35,25 +63,33 @@
 				  <ion-checkbox ng-checked="data.open_days.saturday == true">Sabtu</ion-checkbox>
 				  <ion-checkbox ng-checked="data.open_days.sunday == true">Ahad</ion-checkbox>
 				</ion-list>
-		  </label>
+		  </label> -->
 
-		  <label class="item item-input item-stacked-label">
+		<!--   <label class="item item-input item-stacked-label">
 		    <span class="input-label">Operation Time</span>
 		     <ion-list>
-			        <label class="item item-input">
+		     	 <ion-radio name="time" ng-model="timing" ng-checked="!data.open_hr.allTime" ng-click="spTime()" ng-value="specific">Specific Time</ion-radio>
+			        <label class="item item-input item-stacked-label" ng-hide="sTime" >
+			          
 			          <span class="input-label">Opening Time</span>
-			          <input type="time" ng-model="model.time" formatted-time>
-			        </label>
-			         <label class="item item-input">
+			          <input  ng-model="data.open_hr.specific.open_hr">
+			          </label>
+			      <label class="item item-input item-stacked-label" ng-hide="sTime">
 			          <span class="input-label">Closing Time</span>
-			          <input type="time" ng-model="model.time" formatted-time>
+			          <input ng-model="data.open_hr.specific.close_hr">
 			        </label>
+			     <ion-radio name="time" ng-model="timing" ng-checked="data.open_hr.allTime" ng-click="closeSPTime()" ng-value="allTime">24 hours</ion-radio>
 			</ion-list>
-		  </label>
+		  </label> -->
 
 		  <label class="item item-input item-stacked-label">
 		    <span class="input-label">Website</span>
-		    <input type="text" ng-model="data.website">
+		   <!-- <span ng-if="data.website != false"> -->
+		   		<input type="text" ng-model="data.website" placeholder="Add Website">
+		   <!-- </span> -->
+		   <!-- <span ng-if="data.website == false"> -->
+		    <!-- <input type="text" placeholder="Add website"> -->
+		    <!-- </span> -->
 		  </label>
 		   <div>
 			   <a class="button icon-left ion-navigate button-positive" style="margin-left: 150px" ng-click="editP()">Edit</a><br>

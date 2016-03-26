@@ -9,87 +9,34 @@
 
 <ion-view>
 
-<ion-content class="has-header padding">
-<!-- nama category yg dipilih/key word yg dicari -->
+<ion-content class="has-header padding">  
+  <ion-list> 
+   
+    
+        <div ng-repeat="(id,plc) in places | filter: {category:cat} | orderObjectBy: 'rankVal' : true " class="row responsive-sm"> 
+           <ion-item class="col-50 col-offset-25" >
+              <div class="item item-thumbnail-left">
+                <img ng-src="img/ionic.png">
+                <h2 ng-click = "data(plc.$id)"><b> {{plc.name}} </b></h2>
+                <span ng-if="currState == 'menu.list'">
+                  <p> letak rating sini </p>
+                  <p> Rank : {{id + 1}}</p>
+                  <p class="subdued right">Distance : 7km </p> 
+                </span>
+                <span ng-if="currState == 'adminMenu.list'">
+                  <button class="button button-positive subdued right_p" ng-click="delPlc(plc.$id,plc.name)">
+                     <i class="icon ion-trash-a"></i>
+                  </button> 
 
-  
-  <ion-list>
-    <div class="row responsive-sm">
-    <div class="col col-90"> 
-        <ion-item ng-repeat="(id,plc) in places | filter: cat | orderObjectBy: 'rankVal' : true " ng-click = "data(plc.$id)"> <!-- ng-href="#/menu/list/{{cat.$id}}"> -->
-          <div class="item-thumbnail-left">
-
-         <!--  <center> -->
-            <img ng-src="img/ionic.png">
-            <h2> {{plc.name}} </h2>
-           <!--  <h2> {{plc.rankVal}} </h2> -->
-            <h2> Rank : {{id + 1}}
-            <!-- <h2> {{::category[i].name}}</h2> -->
-          <!-- </center> -->
-          </div>
-        </ion-item>
-        </div>
-        </div>
-    <!-- <div class="row responsive-sm">
-        <ion-item class="col-50">
-          <div class="item-thumbnail-left">
-            <img ng-src="img/ionic.png">
-            <h2> Kedai 1 </h2>
-            <h4> Rating : 3 star</h4>
-            <h4> Ranking : 1 </h4>
-            <h4 align="right">7km</h4>
-          </div>
-        </ion-item>
-        <ion-item class="col-50">
-          <div class="item-thumbnail-left">
-            <img ng-src="img/ionic.png">
-            <h2> Kedai 2 </h2>
-            <h4> Rating : 3 star</h4>
-            <h4> Ranking : 1 </h4>
-            <h4 align="right">7km</h4>
-          </div>
-        </ion-item>
-      </div>
-      <div class="row responsive-sm">
-        <ion-item class="col-50">
-          <div class="item-thumbnail-left">
-            <img ng-src="img/ionic.png">
-            <h2> Kedai 3 </h2>
-            <h4> Rating : 3 star</h4>
-            <h4> Ranking : 1 </h4>
-            <h4 align="right">7km</h4>
-          </div>
-        </ion-item>
-        <ion-item class="col-50">
-          <div class="item-thumbnail-left">
-            <img ng-src="img/ionic.png">
-            <h2> Kedai 4 </h2>
-            <h4> Rating : 3 star</h4>
-            <h4> Ranking : 1 </h4>
-            <h4 align="right">7km</h4>
-          </div>
-        </ion-item>
-      </div>
-      <div class="row responsive-sm">
-        <ion-item class="col-50">
-          <div class="item-thumbnail-left">
-            <img ng-src="img/ionic.png">
-            <h2> Kedai 5 </h2>
-            <h4> Rating : 3 star</h4>
-            <h4> Ranking : 1 </h4>
-            <h4 align="right">7km</h4>
-          </div>
-        </ion-item>
-        <ion-item class="col-50">
-          <div class="item-thumbnail-left">
-            <img ng-src="img/ionic.png">
-            <h2> Kedai 6 </h2>
-            <h4> Rating : 3 star</h4>
-            <h4> Ranking : 1 </h4>
-            <h4 align="right">7km</h4>
-          </div>
-        </ion-item>
-      </div> -->
+                  <button class="button button-positive subdued right_p mar" ng-click="editPlc(plc.$id)">
+                     <i class="icon ion-edit"></i>
+                  </button>
+                </span>
+              </div>
+           </ion-item>
+           </div>
+       
+    
   </ion-list>
   
 </ion-content>

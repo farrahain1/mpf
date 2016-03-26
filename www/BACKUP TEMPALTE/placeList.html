@@ -1,0 +1,38 @@
+<ion-nav-view> -->
+<ion-header-bar class="bar-positive">
+   <button class="button button-clear" ng-click="back()">Back</button>
+  <h1 class="title">{{asHeader.name}}</h1>
+  <button class="button button-clear" ng-click="logout()">Logout</button>
+</ion-header-bar>
+
+
+
+<ion-view>
+
+<ion-content class="has-header padding">  
+  <ion-list>
+  
+    <div class="row responsive-sm">
+    <div class="col col-90"> 
+    
+        <ion-item ng-repeat="(id,plc) in places | filter: {category:cat} | orderObjectBy: 'rankVal' : true " ng-click = "data(plc.$id)"> <!-- ng-href="#/menu/list/{{cat.$id}}"> -->
+          
+          <div class="item-thumbnail-left">
+
+         
+            <img ng-src="img/ionic.png">
+            <h2> {{plc.name}} </h2>
+           <!--  <h2> {{plc.rankVal}} </h2> -->
+            <h2> Rank : {{id + 1}}
+            <!-- <h2> {{::category[i].name}}</h2> -->
+          <!-- </center> -->
+          </div>
+        </ion-item>
+        </div>
+        </div>
+    
+  </ion-list>
+  
+</ion-content>
+</ion-view>
+<!-- <ion-nav-view>

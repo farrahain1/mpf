@@ -5,27 +5,39 @@
      	<i class="icon ion-ios-close close-modal"   ng-click="closeSearch(3)"></i>
      	<!-- <div class="card" > -->
      	<!-- <ion-content> -->
-     		
-     		 <div class="item item-divider" ng-repeat="datas in revData">
-			  <!-- <h3>Anynomous:</h3>
-			  <h4>Good!</h4> -->
-			  <h3>{{datas.user}} : </h3>
-			  <h4>{{datas.message}}</h4>
-			  <h4>{{datas.rating}}</h4>
- 				
-			  <span ng-repeat= "str in star(datas.rating) track by $index">
-			  	<i class="icon ion-android-star"></i>
-			  </span>
-			  <span ng-repeat= "str in star(5 - datas.rating) track by $index">
-			  	<i class="icon ion-android-star-outline"></i>
-			  </span>
-			  
-		   <!-- <ionic-ratings ratingsobj='ratingsDisplay'></ionic-ratings>  -->
-			 	
+     	<div class="item item-divider">
+	     	<span ng-if="!revData">
+	     	Be the first one to review this place <a ng-click="showFadd()">here!</a>
 
-			  </span>
+	     	</span>
+
+	     	<span ng-repeat="datas in revData">
+				  <!-- <h3>Anynomous:</h3>
+				  <h4>Good!</h4> -->
+			<div class="item item-divider">
+				  <h3>{{datas.user}} : </h3>
+				  <h4>{{datas.message}}</h4>
+
+				  <!-- 
+				  <h4
+				  <h4>{{datas.rating}}</h4> -->
+	 				
+				  <span ng-repeat= "str in star(datas.rating) track by $index">
+				  	<i class="icon ion-android-star"></i>
+				  </span>
+				  <span ng-repeat= "str in star(5 - datas.rating) track by $index">
+				  	<i class="icon ion-android-star-outline"></i>
+				  </span>
+				  <h4 class="subdued right">{{datas.creation_date | date:'dd/MM/yyyy hh:mm:ss '}}</h4>
+				  
+			   <!-- <ionic-ratings ratingsobj='ratingsDisplay'></ionic-ratings>  -->
+			</div> 	
+				</span>
+			</div>
+			  
 				
-			 </div>
+			 
+			
 			
 			<!--  <div class="item item-divider">
 			   <h3>Ain:</h3>

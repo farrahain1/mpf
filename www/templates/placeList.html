@@ -13,14 +13,34 @@
   <ion-list> 
    
     
-        <div ng-repeat="(id,plc) in places | filter: {category:cat} | orderObjectBy: 'rankVal' : true " class="row responsive-sm"> 
+        <!-- <div ng-repeat="(id,plc) in places | filter: {category:cat, status:'approved'} | orderObjectBy: 'rankVal' : true " class="row responsive-sm">  -->
+         <div ng-repeat="(id,plc) in places | filter: {category:cat} | orderObjectBy: 'rankVal' : true " class="row responsive-sm"> 
            <ion-item class="col-50 col-offset-25" >
               <div class="item item-thumbnail-left">
                 <img ng-src="img/ionic.png">
                 <h2 ng-click = "data(plc.$id)"><b> {{plc.name}} </b></h2>
                 <span ng-if="currState == 'menu.list'">
-                  <p> letak rating sini </p>
-                  <p> Rank : {{id + 1}}</p>
+                  
+                  <span ng-if="!plc.rankVal">
+                     <p>This place not being rate yet </p>
+                  </span>
+                  <span ng-if="plc.rankVal"> 
+                    Rank : {{id + 1}}
+                    <p> Rank value : {{plc.rankVal}}</p>
+                    <p> {{plc.overallStar}} </p>
+
+                    <!-- <span ng-if="plc.overallStar"> -->
+                     <span ng-repeat= "str in star(plc.overallStar) track by $index">
+                        <i class="icon ion-android-star"></i>
+                    </span>
+                    <span ng-repeat= "str in star(5 - plc.overallStar) track by $index">
+                  <i class="icon ion-android-star-outline"></i>
+                </span>
+                <!-- </span> -->
+
+                    <p> based on how many rate : {{plc.ratePerson}}  </p>
+                  </span>
+                  
                   <p class="subdued right">Distance : 7km </p> 
                 </span>
                 <span ng-if="currState == 'adminMenu.list'">
@@ -34,6 +54,7 @@
                 </span>
               </div>
            </ion-item>
+
            </div>
        
     

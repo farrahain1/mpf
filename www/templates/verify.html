@@ -1,1 +1,45 @@
-<h1>hai</h1>
+<ion-nav-view> -->
+<ion-header-bar class="bar-positive">
+   <button class="button button-clear" ng-click="back()">Back</button>
+  <h1 class="title">{{asHeader.name}}</h1>
+  <button class="button button-clear" ng-click="logout()">Logout</button>
+</ion-header-bar>
+
+
+
+<ion-view>
+
+<ion-content class="has-header padding">  
+  <ion-list> 
+   
+    
+      <!--   <div ng-repeat="(id,plc) in places | orderObjectBy: 'created_date' : true " class="row responsive-sm">  -->
+      <h4 ng-if="(places| filter: {status:'pending'} ).length == 0">No pending places</h4>
+        <div ng-repeat="(id,plc) in places | filter: {status:'pending'} |orderObjectBy: 'created_date' : true " class="row responsive-sm"> 
+           <ion-item class="col-50 col-offset-25" >
+              <div class="item item-thumbnail-left">
+                <img ng-src="img/ionic.png">
+                <h2><b> {{plc.name}} </b></h2>
+                
+                  <p> created date : {{plc.created_date | date:'dd MMM yyyy'}}  </p>
+                  <span ng-repeat="prof in profile">
+                  <p ng-if="prof.userId == plc.userId"> created by : {{prof.email }}</p>
+                  </span>
+                  
+                
+                	
+                  <a ng-click="data(plc.$id)" class="subdued right_p">                                       
+                     Details
+                     </a>
+                  
+                
+              </div>
+           </ion-item>
+           </div>
+       
+    
+  </ion-list>
+  
+</ion-content>
+</ion-view>
+<!-- <ion-nav-view>

@@ -40,7 +40,8 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings'])
         $window.location.href = ('#/menu/browse');
         $scope.prof.$add({
           name : username,
-          userId :  authData.uid
+          userId :  authData.uid,
+          email: email
         });
         //tambah if admin kat sini
         /*
@@ -302,6 +303,11 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings'])
   
 
   $scope.places = Place;
+
+   $scope.star=function(n){
+    if(n)
+     return new Array(n);
+};
 
  
 
@@ -965,8 +971,10 @@ $scope.editP = function(){
 
   var ref = new Firebase("https://mpf.firebaseio.com/Place");
   var rev = new Firebase("https://mpf.firebaseio.com/review");
+  var prof = new Firebase("https://mpf.firebaseio.com/profile");
   var user = new Firebase("https://mpf.firebaseio.com");
    $scope.email = user.getAuth().password.email;
+
   console.log($scope.email);  
   
 console.log($scope.det);
@@ -974,6 +982,11 @@ console.log($scope.det);
      ref.orderByKey().equalTo($scope.det).on("child_added", function(snapshot) {
    console.log(snapshot.val());
    $scope.data = snapshot.val();
+   console.log($scope.data.userId);
+      prof.orderByChild("userId").equalTo($scope.data.userId).on("child_added", function(snapshot) {
+        $scope.userEmail = snapshot.val();  
+        console.log(snapshot.val());
+      })
    var j = 0;
    $scope.everyday = [];
    /* if($scope.data.open_days.everyday){
@@ -1171,7 +1184,8 @@ console.log($scope.det);
          
           console.log("masuk");
           placeStar.update ({
-            overallStar : $scope.ave
+            overallStar : $scope.ave,
+            ratePerson: i
           });
         }
      
@@ -1182,7 +1196,8 @@ console.log($scope.det);
       if($scope.rankV){
         console.log("masuk sini");
        placeStar.update ({
-            rankVal: $scope.rankV
+            rankVal: $scope.rankV,
+            ratePerson: i
           });
       }
 
@@ -1195,7 +1210,7 @@ console.log($scope.det);
  // }
 
   
-      
+        
 
   $scope.addRate = function(index, rating){
     if($scope.rate != null){
@@ -1288,18 +1303,28 @@ console.log($scope.det);
 
    $scope.delPlc = function(plcName){
     console.log($scope.det);
-    $rootScope.showConfirm(plcName,$scope.det);
+    var sentence = "Delete";
+    $rootScope.showConfirm(plcName,$scope.det, sentence);
    }
 
-   $rootScope.showConfirm = function(plcName,plcId) {
+   $rootScope.showConfirm = function(plcName,plcId, sentence) {
             $ionicPopup.confirm({
-              title: 'Delete ' + plcName,
-              template: 'Are you sure to delete ' + plcName + ' ?'
+              title: sentence + ' ' + plcName,
+              template: 'Are you sure to ' + sentence + ' ' + plcName + ' ?'
             })
             .then(function(res) {
               if(res) {
                  console.log('You are sure');
-                 $scope.del(plcId);
+                 if(sentence == 'Delete'){
+                  $scope.del(plcId); 
+                 }
+                 else if(sentence == 'Reject'){
+                  $scope.rej(plcId);
+                 }
+                 else if(sentence == 'Approve'){
+                  $scope.app(plcId);
+                 }
+                 
 
                  
                } else {
@@ -1315,6 +1340,66 @@ console.log($scope.det);
       $rootScope.notify('Successfully Delete');
       $window.history.back();
     }
+
+     $scope.rejPlc = function(plcName){
+    console.log($scope.det);
+    var sentence = "Reject";
+    $rootScope.showConfirm(plcName,$scope.det, sentence);
+   }
+
+    $scope.appPlc = function(plcName){
+    console.log($scope.det);
+    var sentence = "Approve";
+    $rootScope.showConfirm(plcName,$scope.det, sentence);
+   }
+
+   $scope.rej = function(id){
+    console.log("reject");
+    $scope.rejId = id;
+     var plcR = new Firebase("https://mpf.firebaseio.com/Place/"+id);
+     plcR.update ({
+      status: 'reject'
+     })
+     $scope.messageBox();
+     /*$rootScope.notify("The place rejected");*/
+    /* $state.go('adminMenu.verify'); */
+   }
+
+   $scope.addRejMsg = function(id){
+      var plcR = new Firebase("https://mpf.firebaseio.com/Place/"+id);
+      console.log("https://mpf.firebaseio.com/Place/" + id);
+       plcR.update ({
+      rejectMsg: this.msg
+     })
+       $scope.closeBox();
+       $window.history.back(); 
+   }
+
+   $scope.app = function(id){
+    console.log("Approve");
+     var plcR = new Firebase("https://mpf.firebaseio.com/Place/"+id);
+     plcR.update ({
+      status: 'approve'
+     })
+     $rootScope.notify("The place approved");
+     $state.go('adminMenu.verify');
+   }
+
+    $ionicModal.fromTemplateUrl('templates/rejectMessage.html', {
+        scope: $scope
+      }).then(function(modal) {
+        $scope.modal = modal;
+      });
+
+      // Open the login modal
+      $scope.messageBox = function() {
+        $scope.modal.show();
+      };
+
+       $scope.closeBox = function() {
+        console.log("masuk closeloginInfo");
+        $scope.modal.hide();
+      };
   
 
 
@@ -1554,6 +1639,61 @@ console.log($scope.det);
 
 
 })
+
+.controller('verifyCtrl', function($rootScope, $scope, $state, $stateParams, $firebaseArray, Place, $ionicHistory) {
+  
+   $rootScope.$on('$stateChangeSuccess', function(ev, to, toParams, from, fromParams) {
+    $rootScope.previousState = from.name;
+    $rootScope.currentState = to.name;
+    console.log('Previous state:'+$rootScope.previousState)
+    console.log('Current state:'+$rootScope.currentState)
+    });
+
+  /*$scope.places = Place;*/
+  var user = new Firebase("https://mpf.firebaseio.com");
+  $scope.id = user.getAuth().uid;
+
+  $scope.places = Place;
+
+  var ref = new Firebase("https://mpf.firebaseio.com/Place");
+ /* ref.on("value", function(snapshot){
+    $scope.places = snapshot.val();
+  })*/
+
+ /* ref.orderByChild("status").equalTo("pending").on("value", function(snapshot) {
+    console.log(snapshot.val());
+    $scope.places = snapshot.val(); 
+    
+    //console.log($scope.places.userId);
+
+    
+    
+    $scope.id = user.getAuth().uid;
+  })*/
+
+
+
+  var prof = new Firebase("https://mpf.firebaseio.com/profile");
+  prof.on("value", function(snapshot){
+    $scope.profile = snapshot.val();
+
+  })
+ /* prof.orderByChild("userId").equalTo($scope.data.userId).on("child_added", function(snapshot) {
+        $scope.userEmail = snapshot.val();  
+        console.log(snapshot.val());
+      })*/
+
+ $scope.currState = $ionicHistory.currentStateName();
+
+
+ $scope.data = function(plcId) {  
+              $state.go('adminMenu.details', { id: plcId});            
+        };
+ 
+
+
+})
+
 
 
 

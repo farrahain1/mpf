@@ -91,7 +91,8 @@
         </span>
         </span>
         {{data.created_date | date:'dd MMM yyyy hh:mm:ss '}} 
-      
+        <br>
+        {{userEmail.email}}
             </h4>
             <!-- <h4 align="center">
             <br>Rating : 3 star
@@ -102,6 +103,7 @@
           </div>
           <div>
            <span ng-if="currState == 'adminMenu.details'">
+              <span ng-if="data.status != 'pending'">
                   <button class="button button-positive subdued right_p" ng-click="delPlc(data.name)">
                      <i class="icon ion-trash-a"></i>
                   </button> 
@@ -109,6 +111,17 @@
                   <button class="button button-positive subdued right_p mar" ng-click="editPlc()">
                      <i class="icon ion-edit"></i>
                   </button>
+              </span>
+              <span ng-if="data.status == 'pending'">
+                  <button class="button button-positive subdued right_p" ng-click="appPlc(data.name)">
+                     Approve
+                  </button> 
+
+                  <button class="button button-positive subdued right_p mar" ng-click="rejPlc(data.name)">
+                     Reject
+                  </button>
+              </span>
+
             </span>
 
              <span ng-if="currState == 'menu.details'">

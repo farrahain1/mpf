@@ -32,6 +32,8 @@
 				<div class="item">
 					<span class="link" ng-click="plcDetails(plc.$id)">{{plc.name}}</span>
 					<h3>{{plc.created_date | date:'dd MMM yyyy hh:mm:ss '}} </h3>
+					<h3>{{plc.status}}</h3>
+					<h3>{{plc.rejectMsg}}</h3>
 					<button class="button button-positive subdued right_p" ng-click="delPlc(plc.$id,plc.name)">
       					<i class="icon ion-trash-a"></i>
     				</button>	

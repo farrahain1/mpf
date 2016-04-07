@@ -291,7 +291,8 @@ angular.module('mpf', ['ionic', 'firebase', 'mpf.controllers'])
       url: '/verify',
       views: {
         'adminMenu-verify': {
-          templateUrl: 'templates/verify.html'
+          templateUrl: 'templates/verify.html',
+          controller: 'verifyCtrl'
         }
       }
     })

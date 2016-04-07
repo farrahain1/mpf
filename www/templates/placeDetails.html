@@ -93,6 +93,8 @@
         {{data.created_date | date:'dd MMM yyyy hh:mm:ss '}} 
         <br>
         {{userEmail.email}}
+        <br>
+        {{data.latitude}}
             </h4>
             <!-- <h4 align="center">
             <br>Rating : 3 star
@@ -125,7 +127,14 @@
             </span>
 
              <span ng-if="currState == 'menu.details'">
-                <a class="button icon-left ion-navigate button-positive" style="width: 200px; height: 20px; margin-top: 5px;" ng-click="show(1)">Navigate<ion-nav-view name="menu-navigate"></ion-nav-view></a><br>
+              <!--   <a class="button icon-left ion-navigate button-positive" style="width: 200px; height: 20px; margin-top: 5px;" ng-click="show(1)">Navigate<ion-nav-view name="menu-navigate"></ion-nav-view></a> -->
+              <a class="button icon-left ion-navigate button-positive"
+        ng-href="geo:0,0?q=({{data.address}})"
+        ng-click="$event.stopPropagation()"
+        target="_blank">
+          Zombie
+        </a>
+              <br>
                  
                 <button class="button icon-left ion-star button-positive" style="width: 200px; height: 20px; margin-top: 5px;" ng-click="show(2)">Rate</button><br>
                 <button class="button icon-left ion-clipboard button-positive" style="width: 200px; height: 20px; margin-top: 5px;" ng-click="show(3)">View Review</button>

@@ -955,7 +955,7 @@ $scope.editP = function(){
 
 })
 
-.controller('detailsCtrl', function($rootScope, $scope, $firebaseAuth, $state, $stateParams, $window, $ionicModal, $timeout, $ionicHistory, $ionicPopup, Place, review) {
+.controller('detailsCtrl', function($rootScope, $scope, $firebaseAuth, $state, $stateParams, $window, $ionicModal, $timeout, $ionicHistory, $ionicPopup,  Place, review) {
   console.log("inside detailsCtrl");
          
 
@@ -1560,6 +1560,8 @@ console.log($scope.det);
 
 
 })
+
+
 
 .controller('adminPlcListCtrl', function($rootScope, $scope, $state, $stateParams, $firebaseArray, Place, $ionicPopup, $ionicModal, $ionicHistory, $window) {
    console.log("masuk profilectrl");

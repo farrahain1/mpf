@@ -3,7 +3,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('mpf', ['ionic', 'firebase', 'mpf.controllers'])
+angular.module('mpf', ['ionic', 'firebase', 'mpf.controllers', 'ngCordova'])
 /*.value('fbURL', 'https://mpf.firebaseio.com/')
 .factory('Place', function (fbURL, $firebaseArray) {
     return $firebaseArray(new Firebase(fbURL));
@@ -41,12 +41,12 @@ angular.module('mpf', ['ionic', 'firebase', 'mpf.controllers'])
     if(window.cordova && window.cordova.plugins.Keyboard) {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
       // for form inputs)
-      //cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
 
       // Don't remove this line unless you know what you are doing. It stops the viewport
       // from snapping when text inputs are focused. Ionic handles this internally for
       // a much nicer keyboard experience.
-      //cordova.plugins.Keyboard.disableScroll(false);
+      cordova.plugins.Keyboard.disableScroll(false);
     }
     if(window.StatusBar) {
       StatusBar.styleDefault();
@@ -137,7 +137,8 @@ angular.module('mpf', ['ionic', 'firebase', 'mpf.controllers'])
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, $compileProvider) {
+  $compileProvider.aHrefSanitizationWhitelist(/^\s*(geo):/);
   $stateProvider
      // Routes will be here
       // Set defualt view of our app to home
@@ -346,6 +347,12 @@ angular.module('mpf', ['ionic', 'firebase', 'mpf.controllers'])
         }
       }
     })
+
+      /*   .state('map', {
+    url: '/map',
+    templateUrl: 'templates/map.html',
+    controller: 'MapCtrl'
+  });*/
 
     
 

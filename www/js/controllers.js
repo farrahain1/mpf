@@ -498,6 +498,10 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings'])
     var stateNow = $ionicHistory.currentStateName();
       if(stateNow == 'adminMenu.addPlace'){
         $scope.pilihan.tempat = "place";
+        var status = "approved";
+      }
+      else{
+        var status = "pending";
       }
 
     if($scope.pilihan.tempat === "place"){
@@ -527,6 +531,7 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings'])
       },
       address: this.address,
       userId : $scope.id,
+      status: status,
       created_date : Firebase.ServerValue.TIMESTAMP
       
     }).then(function() {
@@ -584,6 +589,7 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings'])
       owner : this.own.owner,
       address: this.address,
       userId : $scope.id,
+      status: status,
       created_date : Firebase.ServerValue.TIMESTAMP
       
     }).then(function() {
@@ -1379,7 +1385,7 @@ console.log($scope.det);
     console.log("Approve");
      var plcR = new Firebase("https://mpf.firebaseio.com/Place/"+id);
      plcR.update ({
-      status: 'approve'
+      status: 'approved'
      })
      $rootScope.notify("The place approved");
      $state.go('adminMenu.verify');

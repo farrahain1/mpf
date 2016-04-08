@@ -265,7 +265,7 @@ angular.module('mpf', ['ionic', 'firebase', 'mpf.controllers', 'ngCordova'])
      .state('menu.editPlace', {
       url: '/editPlace/:id',
       views: {
-        'menuContent': {
+        'menuProfile': {
           templateUrl: 'templates/editPlace.html',
           controller: 'editPlaceCtrl'
         }

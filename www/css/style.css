@@ -267,3 +267,31 @@ p.satu {
     width: 100%;
     height: 100%;
 }
+
+.plcList{
+  color: grey;
+}
+
+.detailLink{
+  font-size: 13px;
+}
+
+.listBox{
+  background-color: rgb(242,242,242);
+  border: outset rgb(230,230,230);
+}
+
+.pending{
+  font-family: Centaur;
+  font-size: 30px;
+  text-align: center;
+}
+
+.title{
+  font-family: Calibri;
+}
+
+.listFont{
+   font-family: Calibri;
+   font-size: 10px;
+}

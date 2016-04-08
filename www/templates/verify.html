@@ -1,7 +1,7 @@
 <ion-nav-view> -->
 <ion-header-bar class="bar-positive">
    <button class="button button-clear" ng-click="back()">Back</button>
-  <h1 class="title">{{asHeader.name}}</h1>
+  <h1 class="title">VERIFY</h1>
   <button class="button button-clear" ng-click="logout()">Logout</button>
 </ion-header-bar>
 
@@ -10,34 +10,39 @@
 <ion-view>
 
 <ion-content class="has-header padding">  
+  
   <ion-list> 
+    <div class="row responsive-sm">
+    <div class="col"> 
    
     
       <!--   <div ng-repeat="(id,plc) in places | orderObjectBy: 'created_date' : true " class="row responsive-sm">  -->
-      <h4 ng-if="(places| filter: {status:'pending'} ).length == 0">No pending places</h4>
-        <div ng-repeat="(id,plc) in places | filter: {status:'pending'} |orderObjectBy: 'created_date' : true " class="row responsive-sm"> 
-           <ion-item class="col-50 col-offset-25" >
-              <div class="item item-thumbnail-left">
+      <h4 class="pending" ng-if="(places| filter: {status:'pending'} ).length == 0">.No Pending Place.</h4>
+        <ion-item ng-repeat="(id,plc) in places | filter: {status:'pending'} |orderObjectBy: 'created_date' : true " class="item-thumbnail-left listBox"> 
+           
+          <!--  <ion-item class="col listBoxBorder "> -->
+              <!-- <div class="item-thumbnail-left listBox"> -->
                 <img ng-src="img/ionic.png">
-                <h2><b> {{plc.name}} </b></h2>
+                <h2 class="listFont"><b> {{plc.name}} </b></h2>
                 
-                  <p> created date : {{plc.created_date | date:'dd MMM yyyy'}}  </p>
+                  <h4 class="plcList"> Created Date : {{plc.created_date | date:'dd MMM yyyy'}}  </h4>
                   <span ng-repeat="prof in profile">
-                  <p ng-if="prof.userId == plc.userId"> created by : {{prof.email }}</p>
+                  <h4 class="plcList" ng-if="prof.userId == plc.userId"> Created By : {{prof.email }}</h4>
                   </span>
                   
                 
                 	
-                  <a ng-click="data(plc.$id)" class="subdued right_p">                                       
-                     Details
+                  <a ng-click="data(plc.$id)" class="subdued right_p link detailLink">           
+                    See More
                      </a>
                   
                 
-              </div>
+              <!-- </div> -->
+         <!--   </ion-item> -->
            </ion-item>
-           </div>
        
-    
+    </div>
+    </div>
   </ion-list>
   
 </ion-content>

@@ -1,149 +1,120 @@
 <ion-nav-view>
-<ion-header-bar class="bar-positive">
-   <button class="button button-clear" ng-click="back()">Back</button>
-  <h1 class="title">{{data.name}}</h1>
-  <button class="button button-clear" ng-click="logout()">Logout</button>
-</ion-header-bar>
-
-
-
-
-<ion-content class="has-header padding">
-<!-- nama category yg dipilih/key word yg dicari -->
-
-  
-  <ion-list>
-  <div class="row responsive-sm">
-    <center><img ng-src="img/ionic.png"></center>
-  </div>
-    <div class="row responsive-sm">
-        <ion-item class="row">
-          <div class="col" >
-            <h2 align="center">
-            <b>{{data.name}}</b>
-            </h2>
-            <br>
-            <h4 align="center">
-            <u>ADDRESS</u>
-            <br>
-            {{data.address}}
-            <br>
-            <br> 
-           <!--  <span ng-if="data.category != 'Mosque'">
-              <span ng-if="data.open_hr.allTime">
-              <u>OPERATION HOURS</u>
-              <br>24 hours
-              <br><br>
-              </span>
-
-            
-            <span ng-if="!data.open_hr.allTime">            
-              <span ng-if="data.open_hr.specific.open_hr != false">
-              <u>CLOSE HOURS</u>
-              <br>
-             {{data.open_hr.specific.open_hr}} - {{data.open_hr.specific.close_hr}}
-             <br>
-            <br>
-              </span>
-            </span> -->
-           <!--  OPERATION HOURS : {{data.open_hr}} - {{data.close_hr}} -->
-           
-         <span ng-if="totalDay != 0">
-            <span ng-if="totalDay>3">
-              <u>OPEN DAY(S)</u>
-              <br>
-               <span ng-repeat="day in open track by $index ">              
-              {{day}}<br>
+    <ion-header-bar class="bar-positive">
+     <button class="button button-clear" ng-click="back()">Back</button>
+        <h1 class="title">{{data.name}}</h1>
+     <button class="button button-clear" ng-click="logout()">Logout</button>
+  </ion-header-bar>
+  <ion-content class="has-header padding">    
+    <ion-list>
+      <div class="imgCenter">
+        <img ng-src="img/ionic.png">
+      </div>
+      <div class="titleCenter">
+        <b>{{data.name}}</b>
+      </div>
+      <ion-item class="row detailBox">
+        <div class="col" >     
+          <br>
+          <span class="ion-location">
+            <span class="det">
+              {{data.address}}
+            </span>
+          </span>
+          <br> 
+          <span class="icon ion-iphone">
+            <span ng-if="data.phone" class="det">
+              {{data.phone}}  
+            </span>
+          </span>
+          <br>
+          <span class="icon ion-android-calendar iconSize">
+            <span ng-if="totalDay != 0" class="det">
+              <span ng-repeat="day in open track by $index ">              
+                {{day}} 
               </span>
             </span>
+          </span>
+          <br>
+          <!--  <span ng-if="totalDay != 0">
+              <span ng-if="totalDay>3">
+                <u>OPEN DAY(S)</u>
+                <br>
+                 <span ng-repeat="day in open track by $index ">              
+                {{day}}<br>
+                </span>
+              </span>
+                
+
+               <span ng-if="totalDay<3">
+                <u>CLOSE DAY(S)</u>              
+    <span class="icon ion-ios-world iconSize">            <br>
+                <span ng-repeat="day in everyday track by $index">              
+                {{day}}<br>
+                </span>
+            </span>   -->
               
-
-             <span ng-if="totalDay<3">
-              <u>CLOSE DAY(S)</u>              
-              <br>
-              <span ng-repeat="day in everyday track by $index">              
-              {{day}}<br>
+          
+          <span ng-if="data.website">
+              <span class="icon ion-ios-world iconSize">
+                <span class="det">
+                  {{data.website}}
+                </span>
               </span>
-          </span>  
-           
-            </span> 
-            <br>
-            <span ng-if="data.phone">
-            <u>CONTACT NO.</u>
-            <br>  
-            {{data.phone}}            
-            <br><br>
-            </span>
-            <span ng-if="data.website">
-            <u>WEBSITE</u>
-            <br>
-            {{data.website}}
-            <br>
-            <br>
-
-            </span>
-            <span ng-if="ave">
-             <span ng-repeat= "str in star(ave) track by $index">
-                <i class="icon ion-android-star"></i>
+          </span>
+          <br>
+          <span ng-if="ave">
+            <span ng-repeat=  "str in star(ave) track by $index">
+              <i class="icon ion-android-star"></i>
             </span>
             <span ng-repeat= "str in star(5 - ave) track by $index">
-          <i class="icon ion-android-star-outline"></i>
-        </span>
-        </span>
-        {{data.created_date | date:'dd MMM yyyy hh:mm:ss '}} 
-        <br>
-        {{userEmail.email}}
-        <br>
-        {{data.latitude}}
-            </h4>
-            <!-- <h4 align="center">
-            <br>Rating : 3 star
-            <br> Ranking : 1
-            <br>Alamat : blok 37, jalan 27, Selangor
-            <br>7 km
-            </h4> -->
-          </div>
-          <div>
-           <span ng-if="currState == 'adminMenu.details'">
-              <span ng-if="data.status != 'pending'">
-                  <button class="button button-positive subdued right_p" ng-click="delPlc(data.name)">
-                     <i class="icon ion-trash-a"></i>
-                  </button> 
-
-                  <button class="button button-positive subdued right_p mar" ng-click="editPlc()">
-                     <i class="icon ion-edit"></i>
-                  </button>
-              </span>
-              <span ng-if="data.status == 'pending'">
-                  <button class="button button-positive subdued right_p" ng-click="appPlc(data.name)">
-                     Approve
-                  </button> 
-
-                  <button class="button button-positive subdued right_p mar" ng-click="rejPlc(data.name)">
-                     Reject
-                  </button>
-              </span>
-
+              <i class="icon ion-android-star-outline"></i>
             </span>
+          </span>
+          <!-- {{data.created_date | date:'dd MMM yyyy hh:mm:ss '}}  -->
+          <br>          
+        </div>
+      </ion-item>
 
-             <span ng-if="currState == 'menu.details'">
-              <!--   <a class="button icon-left ion-navigate button-positive" style="width: 200px; height: 20px; margin-top: 5px;" ng-click="show(1)">Navigate<ion-nav-view name="menu-navigate"></ion-nav-view></a> -->
-              <a class="button icon-left ion-navigate button-positive"
-        ng-href="geo:0,0?q=({{data.address}})"
-        ng-click="$event.stopPropagation()"
-        target="_blank">
-          Zombie
-        </a>
-              <br>
-                 
-                <button class="button icon-left ion-star button-positive" style="width: 200px; height: 20px; margin-top: 5px;" ng-click="show(2)">Rate</button><br>
-                <button class="button icon-left ion-clipboard button-positive" style="width: 200px; height: 20px; margin-top: 5px;" ng-click="show(3)">View Review</button>
-            </span>
+      <div class="row responsive-sm">
+        <span ng-if="currState == 'adminMenu.details'" class="centerB">
+          <span ng-if="data.status != 'pending'">
+            <button class="button button-positive subdued right_p" ng-click="delPlc(data.name)">
+              <i class="icon ion-trash-a"></i>
+            </button> 
 
-          <!-- </div> -->
-        </ion-item>
+            <button class="button button-positive subdued right_p mar" ng-click="editPlc()">
+              <i class="icon ion-edit"></i>
+            </button>
+          </span>
+          <span ng-if="data.status == 'pending'">
+            <button class="button icon-left ion-checkmark-round" ng-click="appPlc(data.name)">
+              Approve
+            </button> 
+
+            <button class="button icon-left ion-close-round" ng-click="rejPlc(data.name)">
+              Reject
+            </button>
+          </span>
+        </span>
       </div>
-  </ion-list>
-  
-</ion-content>
+      <div>
+        <span ng-if="currState == 'menu.details'">
+                  <!--   <a class="button icon-left ion-navigate button-positive" style="width: 200px; height: 20px; margin-top: 5px;" ng-click="show(1)">Navigate<ion-nav-view name="menu-navigate"></ion-nav-view></a> -->
+          <a class="button icon-left ion-navigate button-positive"
+            ng-href="geo:0,0?q=({{data.address}})"
+            ng-click="$event.stopPropagation()"
+            target="_blank">
+              Zombie
+          </a>
+          <br>
+          <button class="button icon-left ion-star button-positive" style="width: 200px; height: 20px; margin-top: 5px;" ng-click="show(2)">
+            Rate
+          </button>
+          <br>
+          <button class="button icon-left ion-clipboard button-positive" style="width: 200px; height: 20px; margin-top: 5px;" ng-click="show(3)">
+            View Review
+          </button>
+        </span>
+    </ion-list> 
+  </ion-content>
 <ion-nav-view>

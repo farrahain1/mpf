@@ -1362,11 +1362,12 @@ console.log($scope.det);
    $scope.rej = function(id){
     console.log("reject");
     $scope.rejId = id;
+    $scope.messageBox();
      var plcR = new Firebase("https://mpf.firebaseio.com/Place/"+id);
      plcR.update ({
       status: 'reject'
      })
-     $scope.messageBox();
+     
      /*$rootScope.notify("The place rejected");*/
     /* $state.go('adminMenu.verify'); */
    }

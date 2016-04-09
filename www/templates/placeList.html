@@ -35,12 +35,12 @@
                   <p class="subdued right">Distance : 7km </p> 
               </span>
               <span ng-if="currState == 'adminMenu.list'">
-                <button class="button button-positive subdued right_p" ng-click="delPlc(plc.$id,plc.name)">
-                  <i class="icon ion-trash-a"></i>
+                <button class="button icon-left ion-trash-a subdued right_p" ng-click="delPlc(plc.$id,plc.name)">
+                  Delete
                 </button> 
 
-                <button class="button button-positive subdued right_p mar" ng-click="editPlc(plc.$id)">
-                  <i class="icon ion-edit"></i>
+                <button class="button icon-left ion-android-create subdued right_p mar" ng-click="editPlc(plc.$id)">
+                  Edit
                 </button>
               </span>
           </ion-item>

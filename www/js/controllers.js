@@ -773,7 +773,7 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings'])
        ref.orderByChild("name").equalTo(nama).on("child_added", function(snapshot) {
         console.log(snapshot.key());
         var placeId = snapshot.key();
-        $state.go('menu.details', { id: placeId });
+        $state.go('adminMenu.details', { id: placeId });
     });
     }
     /*.then(function() {

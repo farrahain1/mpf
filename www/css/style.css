@@ -243,6 +243,10 @@ p.satu {
   float: right;
 }
 
+.left_p{
+  float: left;
+}
+
 .centerB{
   margin-left: auto;
   margin-right: auto;
@@ -310,7 +314,7 @@ p.satu {
 
 .titleCenter{
   width: 100%;
-  height: 30px;
+  height: auto;
    text-align: center;
    margin-bottom: 10px;
    font-family: Calibri;

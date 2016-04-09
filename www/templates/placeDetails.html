@@ -11,6 +11,15 @@
       </div>
       <div class="titleCenter">
         <b>{{data.name}}</b>
+        <br>
+        <span ng-if="ave">
+            <span ng-repeat=  "str in star(ave) track by $index">
+              <i class="icon ion-android-star"></i>
+            </span>
+            <span ng-repeat= "str in star(5 - ave) track by $index">
+              <i class="icon ion-android-star-outline"></i>
+            </span>
+          </span>
       </div>
       <ion-item class="row detailBox">
         <div class="col" >     
@@ -21,16 +30,21 @@
             </span>
           </span>
           <br> 
-          <span class="icon ion-iphone">
-            <span ng-if="data.phone" class="det">
-              {{data.phone}}  
+          <span ng-if="data.phone"> 
+            <span class="icon ion-iphone">
+              <span class="det">
+                {{data.phone}}  
+              </span>
             </span>
+            <br>
           </span>
-          <br>
-          <span class="icon ion-android-calendar iconSize">
-            <span ng-if="totalDay != 0" class="det">
-              <span ng-repeat="day in open track by $index ">              
-                {{day}} 
+          
+          <span ng-if="totalDay != 0">
+            <span class="icon ion-android-calendar iconSize">
+              <span class="det">
+                <span ng-repeat="day in open track by $index ">              
+                  {{day}} 
+                </span>
               </span>
             </span>
           </span>
@@ -62,28 +76,21 @@
               </span>
           </span>
           <br>
-          <span ng-if="ave">
-            <span ng-repeat=  "str in star(ave) track by $index">
-              <i class="icon ion-android-star"></i>
-            </span>
-            <span ng-repeat= "str in star(5 - ave) track by $index">
-              <i class="icon ion-android-star-outline"></i>
-            </span>
-          </span>
+          
           <!-- {{data.created_date | date:'dd MMM yyyy hh:mm:ss '}}  -->
-          <br>          
+         <!--  <br>  -->         
         </div>
       </ion-item>
 
       <div class="row responsive-sm">
         <span ng-if="currState == 'adminMenu.details'" class="centerB">
           <span ng-if="data.status != 'pending'">
-            <button class="button button-positive subdued right_p" ng-click="delPlc(data.name)">
-              <i class="icon ion-trash-a"></i>
+            <button class="button icon-left ion-trash-a right_p" ng-click="delPlc(data.name)">
+              Delete
             </button> 
 
-            <button class="button button-positive subdued right_p mar" ng-click="editPlc()">
-              <i class="icon ion-edit"></i>
+            <button class="button icon-left ion-android-create right_p" ng-click="editPlc()">
+              Edit
             </button>
           </span>
           <span ng-if="data.status == 'pending'">

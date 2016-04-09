@@ -5,61 +5,47 @@
   <button class="button button-clear" ng-click="logout()">Logout</button>
 </ion-header-bar>
 
-
-
 <ion-view>
 
-<ion-content class="has-header padding">  
-  <ion-list> 
-   
-    
-        <!-- <div ng-repeat="(id,plc) in places | filter: {category:cat, status:'approved'} | orderObjectBy: 'rankVal' : true " class="row responsive-sm">  -->
-         <div ng-repeat="(id,plc) in places | filter: {category:cat} | orderObjectBy: 'rankVal' : true " class="row responsive-sm"> 
-           <ion-item class="col-50 col-offset-25" >
-              <div class="item item-thumbnail-left">
-                <img ng-src="img/ionic.png">
-                <h2 ng-click = "data(plc.$id)"><b> {{plc.name}} </b></h2>
-                <span ng-if="currState == 'menu.list'">
-                  
-                  <span ng-if="!plc.rankVal">
-                     <p>This place not being rate yet </p>
-                  </span>
-                  <span ng-if="plc.rankVal"> 
-                    Rank : {{id + 1}}
-                    <p> Rank value : {{plc.rankVal}}</p>
-                    <p> {{plc.overallStar}} </p>
-
-                    <!-- <span ng-if="plc.overallStar"> -->
-                     <span ng-repeat= "str in star(plc.overallStar) track by $index">
-                        <i class="icon ion-android-star"></i>
-                    </span>
-                    <span ng-repeat= "str in star(5 - plc.overallStar) track by $index">
-                  <i class="icon ion-android-star-outline"></i>
+  <ion-content class="has-header padding">  
+    <ion-list> 
+      <div class="row responsive-sm">
+        <div class="col"> 
+      
+          <!-- <div ng-repeat="(id,plc) in places | filter: {category:cat, status:'approved'} | orderObjectBy: 'rankVal' : true " class="row responsive-sm">  -->
+          <ion-item ng-repeat="(id,plc) in places | filter: {category:cat} | orderObjectBy: 'rankVal' : true " class="item-thumbnail-left listBox">            
+            <img ng-src="img/ionic.png">
+              <h2  ng-click = "data(plc.$id)" class="link"><b> {{plc.name}} </b></h2>
+              <span ng-if="currState == 'menu.list'">
+                <span ng-if="!plc.rankVal">
+                  <p>This place not being rate yet </p>
                 </span>
-                <!-- </span> -->
-
-                    <p> based on how many rate : {{plc.ratePerson}}  </p>
+                <span ng-if="plc.rankVal"> 
+                  Rank : {{id + 1}}
+                  <p> Rank value : {{plc.rankVal}}</p>
+                  <p> {{plc.overallStar}} </p>
+                  <span ng-repeat= "str in star(plc.overallStar) track by $index">
+                    <i class="icon ion-android-star"></i>
                   </span>
-                  
+                  <span ng-repeat= "str in star(5 - plc.overallStar) track by $index">
+                    <i class="icon ion-android-star-outline"></i>
+                  </span>
+                  <p> based on how many rate : {{plc.ratePerson}}  </p>
+                </span>
                   <p class="subdued right">Distance : 7km </p> 
-                </span>
-                <span ng-if="currState == 'adminMenu.list'">
-                  <button class="button button-positive subdued right_p" ng-click="delPlc(plc.$id,plc.name)">
-                     <i class="icon ion-trash-a"></i>
-                  </button> 
+              </span>
+              <span ng-if="currState == 'adminMenu.list'">
+                <button class="button button-positive subdued right_p" ng-click="delPlc(plc.$id,plc.name)">
+                  <i class="icon ion-trash-a"></i>
+                </button> 
 
-                  <button class="button button-positive subdued right_p mar" ng-click="editPlc(plc.$id)">
-                     <i class="icon ion-edit"></i>
-                  </button>
-                </span>
-              </div>
-           </ion-item>
-
-           </div>
-       
-    
-  </ion-list>
-  
-</ion-content>
+                <button class="button button-positive subdued right_p mar" ng-click="editPlc(plc.$id)">
+                  <i class="icon ion-edit"></i>
+                </button>
+              </span>
+          </ion-item>
+      </div>   
+    </ion-list>  
+  </ion-content>
 </ion-view>
 <!-- <ion-nav-view>

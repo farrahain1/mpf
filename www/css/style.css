@@ -357,7 +357,7 @@ p.satu {
   font-size: 14px;
   color: #7f8c8d;
   text-align: left;
-  border: inset;
+  border: inset !important;
 }
 
 .addPL{

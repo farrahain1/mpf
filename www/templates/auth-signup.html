@@ -2,17 +2,37 @@
   <h1 class="title">Sign Up</h1>
 </ion-header-bar> -->
 <ion-content class="has-header padding">
-
+<!-- 
 <section class="sectionSignIn">
-<span class="spanSignIn"></span>
-<h1 class="h1SignIn">Sign Up</h1>
+<span class="spanSignIn"></span> -->
+<div class="titleCenter">Sign Up</div>
 
-<input class="textbox1" type="text" ng-model="user.email" placeholder="Email">
+<div class="addPForm">
+  <div class="row responsive-sm">
+    <div class="col"> 
+      <span class="input-label addPL">Email</span>
+        <input class="addPT" ng-model="user.email" autofocus="true" autosave="true">
+
+      <span class="input-label addPL">Username</span>
+        <input class="addPT" ng-model="username">
+
+      <span class="input-label addPL">Password</span>
+        <input  class="addPT"  ng-model="user.password" type="password">
+    </div>
+  </div>
+</div>
+<div class="right_p">
+  <button class="button icon-left ion-person-add" ng-click="createUser()">
+    Sign Up
+  </button> 
+</div>
+
+<!-- <input class="textbox1" type="text" ng-model="user.email" placeholder="Email">
 <input class="textbox1" type="text" ng-model="username" placeholder="Username">
- <input class="textbox1" type="password" ng-model="user.password" placeholder="Password">
+ <input class="textbox1" type="password" ng-model="user.password" placeholder="Password"> -->
 
-  <button class="buttonSignIn" ng-click="createUser()">Sign Up</button> 
-  </section>
+<!--   <button class="buttonSignIn" ng-click="createUser()">Sign Up</button> 
+  </section> -->
   <!-- <div class="list">
     <label class="item item-input">
       <span class="input-label">Email</span>

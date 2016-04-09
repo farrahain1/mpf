@@ -342,3 +342,34 @@ p.satu {
 .center{
   text-align: center;
   }
+
+.addPT{
+ width: 70%;
+  height: 30px;
+  margin-bottom: 15px;
+  margin-left: 10px;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 14px;
+  color: #7f8c8d;
+  text-align: left;
+  border: inset;
+}
+
+.addPL{
+  margin-bottom: 5px;
+  margin-left: 10px;
+}
+
+.boxWidth{
+  width: 70%;
+  margin-left: 10px;
+  border: inset;
+  border-radius: 5px;
+}
+
+.addPForm{
+  background-color: rgb(242,242,242);
+  border: outset rgb(230,230,230);
+  font-family: Calibri;
+}

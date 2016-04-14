@@ -219,7 +219,20 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings'])
     
   });
 
-   
+ /* navigator.geolocation.getCurrentPosition(function(position) {
+          
+
+         
+            $scope.ori = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+          },function error(msg){
+          alert('Please enable your GPS setting browse');  
+        
+        
+  }, {maximumAge:600000, timeout:5000, enableHighAccuracy: true});
+   */
 
    /*$scope.back = function(){
     console.log("masuk back");    
@@ -301,7 +314,7 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings'])
 
 .controller('placeCtrl', function($rootScope, $scope, $state, $stateParams, $firebaseArray, Place, $ionicHistory) {
   
-
+  /*$window.location.reload();*/
   $scope.places = Place;
 
    $scope.star=function(n){
@@ -309,7 +322,12 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings'])
      return new Array(n);
 };
 
- 
+
+
+ /* $scope.doRefresh = function() {
+    console.log("refresh");
+    window.location.reload();
+  };*/
 
 
   if ($stateParams.id) {
@@ -321,6 +339,7 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings'])
      ref.orderByKey().equalTo($scope.cat).on("child_added", function(snapshot) {
     console.log(snapshot.val());
     $scope.asHeader = snapshot.val(); 
+
   })
 
  $scope.currState = $ionicHistory.currentStateName();
@@ -335,8 +354,214 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings'])
             
              //$state.go('menu.list'); 
         };
+/******************************************************************/
+//      $scope.loc =  function(address){
 
+
+//       var hoi;
+
+//       navigator.geolocation.getCurrentPosition(function(position) {
+//           $scope.ori = {
+//             lat: position.coords.latitude,
+//             lng: position.coords.longitude
+//           };
+
+
+          
+//           var geocoder = new google.maps.Geocoder();
+//         geocoder.geocode({'address': address}, function(results, status) {
+//        /* if (status === google.maps.GeocoderStatus.OK) {*/
+//           /*resultsMap.setCenter(results[0].geometry.location);*/
+//           var destLoc = results[0].geometry.location;
+//           console.log(results[0].geometry.location);
+//           console.log("Dest lat : " + destLoc.lat());
+//           console.log("Dest lng : " + destLoc.lng());
+//           console.log("Ori lat : " + $scope.ori.lat);
+//           console.log("Ori lng : " + $scope.ori.lng);
+//           hoi = $scope.distance($scope.ori,destLoc);
+//           console.log(hoi);
+//           // return jarak;
+//       /*var marker = new google.maps.Marker({
+//         map: resultsMap,
+//         position: results[0].geometry.location
+//       });*/
+//     /*} else {
+//       alert('Geocode was not successful for the following reason: ' + status);
+     
+//     }*/
+
+//       })
+//         console.log(hoi);
+//        })
+//       console.log(hoi);
+//       return "hoi";
+// }
+/*var timer = function() {
+  window.location.reload(true);
+};
+var timeout = setTimeout(timer, 5000);*/
+   $scope.$on('$ionicView.beforeEnter', function(){
+  /*alert("refresh");*/
+});
+
+/*$scope.refresh = function() {
+
+  setTimeout("location.reload(true);", 5000);
+
+}*/
+/*setTimeout(timer, 5000);
+ clearTimeout(timeout);*/
  
+          
+$scope.loc = function(address,index) {   
+         
+      /* if(index===1){
+         
+            console.log("masuk sini lah ya");
+          }*/
+       $scope.jarak = [];
+        navigator.geolocation.getCurrentPosition(function(position) {
+          
+
+          console.log("INdex : " + index);
+            $scope.ori = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+          
+
+          
+          
+          console.log("ORI " + $scope.ori.lat);
+          console.log("ORI " + $scope.ori.lng);
+          var geocoder = new google.maps.Geocoder();
+        geocoder.geocode({'address': address}, function(results, status) {
+        if (status === google.maps.GeocoderStatus.OK) {
+          $scope.destLoc = results[0].geometry.location;
+        } else {
+          alert('Geocode was not successful for the following reason: ' + status);
+         }
+          console.log($scope.destLoc);
+          console.log(address);
+          console.log("Dest " + $scope.destLoc.lat());
+          console.log("Dest " + $scope.destLoc.lng());
+
+          var p1 = new google.maps.LatLng($scope.ori.lat, $scope.ori.lng);
+          var p2 = new google.maps.LatLng($scope.destLoc.lat(), $scope.destLoc.lng());
+
+          var d = calcDistance(p1, p2);
+          $scope.jarak[index] =  d;
+     
+          console.log($scope.jarak);
+         
+        })
+
+      },function error(msg){
+        if(index == 1){
+          alert('Please enable your GPS setting place list');  
+        }
+        
+  }, {maximumAge:600000, timeout:5000, enableHighAccuracy: false});
+     
+
+}
+
+ function calcDistance(p1, p2) {
+            console.log("calculates");
+            return (google.maps.geometry.spherical.computeDistanceBetween(p1, p2) / 1000).toFixed(2);
+          }
+
+ $scope.toRad = function(x){
+      return x * Math.PI / 180;
+  }
+
+
+/*****************************************************************/
+
+   //     $scope.loc = function(address) {
+         
+   //      var balance;
+   //      navigator.geolocation.getCurrentPosition(function(position) {
+   //        $scope.ori = {
+   //          lat: position.coords.latitude,
+   //          lng: position.coords.longitude
+   //        };
+
+   //        console.log($scope.ori);   
+   //      balance = $scope.dest($scope.ori,address);
+   //      console.log(balance);
+   //      return balance;
+   //     })
+   //       console.log("ada tak");
+   //        /*console.log(desti);
+   //        return desti;*/
+   //    }
+
+   //    $scope.dest = function(ori,address){
+   //      console.log(ori);
+        
+   //      var geocoder = new google.maps.Geocoder();
+   //      geocoder.geocode({'address': address}, function(results, status) {
+   //      if (status === google.maps.GeocoderStatus.OK) {
+   //        // resultsMap.setCenter(results[0].geometry.location);
+   //        var destLoc = results[0].geometry.location;
+   //        console.log(results[0].geometry.location);
+   //        console.log("Dest lat : " + destLoc.lat());
+   //        console.log("Dest lng : " + destLoc.lng());
+   //        console.log("Ori lat : " + ori.lat);
+   //        console.log("Ori lng : " + ori.lng);
+   //        var distanceAll = $scope.distance(ori,destLoc);
+   //        console.log(distanceAll);
+   //        $scope.jarak =  distanceAll;
+   //        console.log($scope.jarak);
+   //        // return jarak;
+   //    /*var marker = new google.maps.Marker({
+   //      map: resultsMap,
+   //      position: results[0].geometry.location
+   //    });*/
+   //  } else {
+   //    alert('Geocode was not successful for the following reason: ' + status);
+   //   $scope.jarak = 0;
+   //   /*return jarak;*/
+   //  }
+   //  console.log($scope.jarak);
+   // /* return $scope.jarak;*/
+   //    })
+   //      /*console.log($scope.jarak);
+   //      return jarak;*/
+   //    }
+        
+ 
+
+//  $scope.distance = function(ori,dest){
+// console.log(ori.lat);
+//   var R = 6371;
+//   console.log(dest.lat());
+// var dLat = toRad(dest.lat()-ori.lat);
+// var dLon = toRad(dest.lng()-ori.lng);
+// var dLat1 = toRad(ori.lat);
+// var dLat2 = toRad(dest.lat());
+// var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+//         Math.cos(dLat1) * Math.cos(dLat1) *
+//         Math.sin(dLon/2) * Math.sin(dLon/2);
+// var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+// var d = R * c;
+
+// console.log(d);
+
+// var R = 6371; // Radius of the earth in km
+//   var dLat = (dest.lat() - ori.lat) * Math.PI / 180;  // deg2rad below
+//   var dLon = (dest.lng() - ori.lng) * Math.PI / 180;
+//   var a = 
+//      0.5 - Math.cos(dLat)/2 + 
+//      Math.cos(ori.lat * Math.PI / 180) * Math.cos(dest.lat() * Math.PI / 180) * 
+//      (1 - Math.cos(dLon))/2;
+
+//      $scope.jarak =  R * 2 * Math.asin(Math.sqrt(a));
+//      return $scope.jarak;
+//   console.log($scope.jarak);
+  
+//  }
 
 
 })
@@ -425,12 +650,12 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings'])
       this.website = "";
       console.log("takde website");
     }
-    if(!$scope.formTime.time){
+    /*if(!$scope.formTime.time){
       $scope.openHr = false;
       $scope.closeHr = false;
       $scope.evTime = false;
       console.log("takde time");
-    }
+    }*/
    /* if(!$scope.formData.open_days){
       console.log("Takde hari");
       $scope.formData.open_days = false;
@@ -459,7 +684,7 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings'])
   $scope.addP = function(){
      var nama = this.name;
     $scope.validate();
-    console.log($scope.formTime.time);
+    /*console.log($scope.formTime.time);
     if($scope.formTime.time === "specific"){
       $scope.openHr = this.openTime.getHours() + ":" + ((this.openTime.getMinutes()<10?'0':'') + this.openTime.getMinutes());
      $scope.closeHr = this.closeTime.getHours() + ":" + ((this.closeTime.getMinutes()<10?'0':'') + this.closeTime.getMinutes());
@@ -469,10 +694,10 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings'])
       $scope.openHr = false;
       $scope.closeHr = false;
       $scope.evTime = true;
-    }
+    }*/
     
-    console.log($scope.openHr);
-    console.log(this.openTime);
+    /*console.log($scope.openHr);
+    console.log(this.openTime);*/
     //letak validation kat sini
 
     
@@ -510,13 +735,13 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings'])
       category: this.category,
       phone :  this.phone, 
       website : this.website,
-      open_hr : {
+      /*open_hr : {
         specific : {
           open_hr : $scope.openHr,
           close_hr : $scope.closeHr
         },
         allTime : $scope.evTime
-      },
+      },*/
       /*open_hr: $scope.openHr,
       close_hr: $scope.closeHr,
       opHr: $scope.allTime,*/
@@ -566,13 +791,13 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings'])
       category: this.category,
       phone :  this.phone, 
       website : this.website,
-      open_hr : {
+      /*open_hr : {
         specific : {
           open_hr : $scope.openHr,
           close_hr : $scope.closeHr
         },
         allTime : $scope.evTime
-      },
+      },*/
       /*open_hr: $scope.openHr,
       close_hr: $scope.closeHr,
       opHr: $scope.allTime,*/
@@ -969,6 +1194,19 @@ $scope.editP = function(){
   $ionicHistory.clearHistory();
   $scope.currState = $ionicHistory.currentStateName();
 
+  $rootScope.$on('$stateChangeSuccess', function(ev, to, toParams, from, fromParams) {
+    $rootScope.previousState = from.name;
+    $rootScope.currentState = to.name;
+    console.log('Previous state:'+$rootScope.previousState)
+    console.log('Current state:'+$rootScope.currentState)
+      if($rootScope.previousState === "adminMenu.editPlace"){
+        console.log("hoiyeahhh");
+        $window.location.reload(true);
+      }
+    });
+
+  
+
   if ($stateParams.id) {
             $scope.det = $stateParams.id;
             console.log($scope.det); 
@@ -1085,9 +1323,9 @@ console.log($scope.det);
     $scope.totalDay = j;
     console.log($scope.totalDay);
     
-    console.log($scope.data.open_hr.specific.open_hr);
+   /* console.log($scope.data.open_hr.specific.open_hr);
     var masa = parseFloat($scope.data.open_hr.specific.open_hr);
-    console.log(masa);
+    console.log(masa);*/
 
 
     /*console.log("key : " + snapshot.key());  */
@@ -1159,6 +1397,13 @@ console.log($scope.det);
       $scope.revData = snapshot.val();
 
 
+      console.log($scope.revData.user);
+     /* var ref = new Firebase("https://mpf.firebaseio.com/profile");
+     ref.orderByChild("email").equalTo($scope.revData.user).on("child_added", function(snapshot) {
+    console.log(snapshot.val());
+    $scope.asHeader = snapshot.val();
+
+})*/
       
 
       /////////////////////////////
@@ -1219,6 +1464,14 @@ console.log($scope.det);
         
 
   $scope.addRate = function(index, rating){
+    console.log($scope.email);
+    /*var ref = new Firebase("https://mpf.firebaseio.com/profile");
+     ref.orderByChild("email").equalTo($scope.email).on("child_added", function(snapshot) {
+    console.log(snapshot.val());
+    $scope.asHeader = snapshot.val(); 
+  })*/
+
+
     if($scope.rate != null){
       //$rootScope.checkUser();
       /*console.log("add review : " + email);*/
@@ -1285,7 +1538,7 @@ console.log($scope.det);
         iconOff : 'ion-ios-star-outline',
         iconOnColor: 'rgb(255, 255, 0)',
         iconOffColor:  'rgb(0, 0, 0)',
-        rating:  2,
+        rating:  0,
         minRating:1,
         max:5,
         callback: function(rating) {
@@ -1715,5 +1968,14 @@ function escapeEmailAddress(email) {
   return email.trim();
 }
 /*CRUD*/
+
+function toRad(){
+  /** Converts numeric degrees to radians */
+if (typeof(Number.prototype.toRad) === "undefined") {
+  Number.prototype.toRad = function() {
+    return this * Math.PI / 180;
+  }
+}
+}
 
 

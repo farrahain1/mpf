@@ -42,12 +42,37 @@
           <span ng-if="totalDay != 0">
             <span class="icon ion-android-calendar iconSize">
               <span class="det">
-                <span ng-repeat="day in open track by $index ">              
-                  {{day}} 
+                <span ng-if="totalDay == 1">
+                  <span ng-repeat="day in everyday track by $index ">              
+                    Everyday except {{day}} 
+                  </span>
+                </span>
+                <span ng-if="totalDay != 1">
+                  <span ng-repeat="day in open track by $index ">              
+                    {{day}} 
+                  </span>
                 </span>
               </span>
             </span>
           </span>
+          <span ng-if="totalDay == 0">
+            <span class="icon ion-android-calendar iconSize">
+              <span class="det">
+                Everyday
+              </span>
+            </span>
+          </span>
+          <!-- <span ng-if="totalDay == 1">
+            <span class="icon ion-android-calendar iconSize">
+              <span class="det">
+                Everyday except
+                 <span ng-repeat="day in open track by $index ">              
+                  {{day}} 
+                </span>
+              </span>
+            </span>
+          </span> -->
+
           <br>
           <!--  <span ng-if="totalDay != 0">
               <span ng-if="totalDay>3">
@@ -94,7 +119,7 @@
             </button>
           </span>
           <span ng-if="data.status == 'pending'">
-            <button class="button icon-left ion-checkmark-round" ng-click="appPlc(data.name)">
+            <button class="button icon-left ion-plus-round" ng-click="appPlc(data.name)">
               Approve
             </button> 
 
@@ -107,18 +132,17 @@
       <div>
         <span ng-if="currState == 'menu.details'">
                   <!--   <a class="button icon-left ion-navigate button-positive" style="width: 200px; height: 20px; margin-top: 5px;" ng-click="show(1)">Navigate<ion-nav-view name="menu-navigate"></ion-nav-view></a> -->
-          <a class="button icon-left ion-navigate button-positive"
+         
+          <a class="button icon-left ion-navigate"
             ng-href="geo:0,0?q=({{data.address}})"
             ng-click="$event.stopPropagation()"
             target="_blank">
-              Zombie
+              Go
           </a>
-          <br>
-          <button class="button icon-left ion-star button-positive" style="width: 200px; height: 20px; margin-top: 5px;" ng-click="show(2)">
+          <button class="button icon-left ion-star" ng-click="show(2)">
             Rate
           </button>
-          <br>
-          <button class="button icon-left ion-clipboard button-positive" style="width: 200px; height: 20px; margin-top: 5px;" ng-click="show(3)">
+          <button class="button icon-left ion-clipboard" ng-click="show(3)">
             View Review
           </button>
         </span>

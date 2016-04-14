@@ -1,4 +1,4 @@
-<ion-nav-view> -->
+<ion-nav-view>
 <ion-header-bar class="bar-positive">
    <button class="button button-clear" ng-click="back()">Back</button>
   <h1 class="title">{{asHeader.name}}</h1>
@@ -8,12 +8,15 @@
 <ion-view>
 
   <ion-content class="has-header padding">  
+
     <ion-list> 
       <div class="row responsive-sm">
         <div class="col"> 
-      
+         <!--  <button class="button icon-left ion-android-create subdued right_p mar" ng-click="loc('Bukit Katil, Melaka')">
+                  Edit
+                </button> -->
           <!-- <div ng-repeat="(id,plc) in places | filter: {category:cat, status:'approved'} | orderObjectBy: 'rankVal' : true " class="row responsive-sm">  -->
-          <ion-item ng-repeat="(id,plc) in places | filter: {category:cat} | orderObjectBy: 'rankVal' : true " class="item-thumbnail-left listBox">            
+          <ion-item ng-repeat="(id,plc) in places | filter: {category:cat} | orderObjectBy: 'rankVal' : true" class="item-thumbnail-left listBox">            
             <img ng-src="img/ionic.png">
               <h2  ng-click = "data(plc.$id)" class="link"><b> {{plc.name}} </b></h2>
               <span ng-if="currState == 'menu.list'">
@@ -21,18 +24,22 @@
                   <p>This place not being rate yet </p>
                 </span>
                 <span ng-if="plc.rankVal"> 
-                  Rank : {{id + 1}}
-                  <p> Rank value : {{plc.rankVal}}</p>
-                  <p> {{plc.overallStar}} </p>
+                  <p>Rank : {{id + 1}}</p>
+                  <!-- <p> Rank value : {{plc.rankVal}}</p> -->
+                  <!-- <p> {{plc.overallStar}} </p> -->
                   <span ng-repeat= "str in star(plc.overallStar) track by $index">
                     <i class="icon ion-android-star"></i>
                   </span>
                   <span ng-repeat= "str in star(5 - plc.overallStar) track by $index">
                     <i class="icon ion-android-star-outline"></i>
                   </span>
-                  <p> based on how many rate : {{plc.ratePerson}}  </p>
+                    ({{plc.ratePerson}})
                 </span>
-                  <p class="subdued right">Distance : 7km </p> 
+                <!-- <div ng-init="loc(plc.address,id+1)"> -->
+                  <p class="subdued right" ng-init="loc(plc.address,id+1)">Distance : {{jarak[id+1]}} km </p> 
+                  
+                <!-- </div> -->
+               
               </span>
               <span ng-if="currState == 'adminMenu.list'">
                 <button class="button icon-left ion-trash-a subdued right_p" ng-click="delPlc(plc.$id,plc.name)">
@@ -43,6 +50,13 @@
                   Edit
                 </button>
               </span>
+              <!-- {{plc.address}}
+              <p>
+              1. 7.9km
+              2. 13km
+              3.  14km
+              4. 4.8km
+              </p> -->
           </ion-item>
       </div>   
     </ion-list>  

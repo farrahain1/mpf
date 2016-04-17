@@ -11,14 +11,18 @@
 
 	     	</span>
 
-	     	<span ng-repeat="datas in revData">
+	     	<span ng-repeat="(name,datas) in revData">
 				  <!-- <h3>Anynomous:</h3>
 				  <h4>Good!</h4> -->
 			<div class="item item-divider listBox">
-				  <h3>{{datas.user}} </h3>
-				  <h3>{{username}} </h3>
+				  <span ng-repeat="prof in profile | filter: {email: datas.user}">
+				  	<h3>{{prof.name}}</h3>
+				  </span>
 				  <h4>{{datas.message}}</h4>
+				  
 
+				  <!-- <span ng-init="userN(name)">
+				  </span> -->
 				  <!-- 
 				  <h4
 				  <h4>{{datas.rating}}</h4> -->

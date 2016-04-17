@@ -16,7 +16,7 @@
                   Edit
                 </button> -->
           <!-- <div ng-repeat="(id,plc) in places | filter: {category:cat, status:'approved'} | orderObjectBy: 'rankVal' : true " class="row responsive-sm">  -->
-          <ion-item ng-repeat="(id,plc) in places | filter: {category:cat} | orderObjectBy: 'rankVal' : true" class="item-thumbnail-left listBox">            
+          <ion-item ng-repeat="(id,plc) in places | filter: {category:cat, status:'approved'} | orderObjectBy: 'rankVal' : true" class="item-thumbnail-left listBox">            
             <img ng-src="img/ionic.png">
               <h2  ng-click = "data(plc.$id)" class="link"><b> {{plc.name}} </b></h2>
               <span ng-if="currState == 'menu.list'">
@@ -36,19 +36,25 @@
                     ({{plc.ratePerson}})
                 </span>
                 <!-- <div ng-init="loc(plc.address,id+1)"> -->
-                  <p class="subdued right" ng-init="loc(plc.address,id+1)">Distance : {{jarak[id+1]}} km </p> 
+                  <p class="subdued right" ng-init="loc(plc.address,id+1)">
+                    <span ng-if="displayDist">
+                      Distance : {{jarak[id+1]}} km 
+                    </span>
+                  </p> 
                   
                 <!-- </div> -->
                
               </span>
-              <span ng-if="currState == 'adminMenu.list'">
+              <span ng-if="currState == 'adminMenu.list' || plc.status == 'pending'">
                 <button class="button icon-left ion-trash-a subdued right_p" ng-click="delPlc(plc.$id,plc.name)">
                   Delete
                 </button> 
 
-                <button class="button icon-left ion-android-create subdued right_p mar" ng-click="editPlc(plc.$id)">
-                  Edit
-                </button>
+                <span ng-if="plc.status != 'pending'">
+                  <button class="button icon-left ion-android-create subdued right_p mar" ng-click="editPlc(plc.$id)">
+                    Edit
+                  </button>
+                </span>
               </span>
               <!-- {{plc.address}}
               <p>

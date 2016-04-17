@@ -112,6 +112,8 @@ angular.module('mpf', ['ionic', 'firebase', 'mpf.controllers', 'ngCordova'])
       }
     };
 
+    
+
     /*$rootScope.checkSession = function() {
       console.log("checkSession");
       

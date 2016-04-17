@@ -128,23 +128,36 @@
             </button>
           </span>
         </span>
+
       </div>
       <div>
         <span ng-if="currState == 'menu.details'">
+          <span ng-if="data.status == 'approved'">
                   <!--   <a class="button icon-left ion-navigate button-positive" style="width: 200px; height: 20px; margin-top: 5px;" ng-click="show(1)">Navigate<ion-nav-view name="menu-navigate"></ion-nav-view></a> -->
          
-          <a class="button icon-left ion-navigate"
-            ng-href="geo:0,0?q=({{data.address}})"
-            ng-click="$event.stopPropagation()"
-            target="_blank">
-              Go
-          </a>
-          <button class="button icon-left ion-star" ng-click="show(2)">
-            Rate
-          </button>
-          <button class="button icon-left ion-clipboard" ng-click="show(3)">
-            View Review
-          </button>
+            <a class="button icon-left ion-navigate"
+              ng-href="geo:0,0?q=({{data.address}})"
+              ng-click="$event.stopPropagation()"
+              target="_blank">
+                Go
+            </a>
+            <button class="button icon-left ion-star" ng-click="show(2)">
+              Rate
+            </button>
+            <button class="button icon-left ion-clipboard" ng-click="show(3)">
+              View Review
+            </button>
+          </span>
+          <span ng-if="data.status == 'reject' || data.status == 'pending'">
+            <button class="button icon-left ion-trash-a right_p" ng-click="delPlc(data.name)">
+              Delete
+            </button> 
+          </span>
+          <span ng-if="data.status == 'pending' ">
+            <button class="button icon-left ion-android-create right_p" ng-click="editPlc()">
+              Edit
+            </button>
+          </span>
         </span>
     </ion-list> 
   </ion-content>

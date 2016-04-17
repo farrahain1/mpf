@@ -278,7 +278,6 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings'])
 
   /*};*/
 
-
 })
 
 .controller('newCtrl', function($rootScope, $scope, $window, $firebase) {
@@ -312,7 +311,7 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings'])
   };
 })
 
-.controller('placeCtrl', function($rootScope, $scope, $state, $stateParams, $firebaseArray, Place, $ionicHistory) {
+.controller('placeCtrl', function($rootScope, $scope, $state, $stateParams, $firebaseArray, Place, $ionicHistory, $ionicPlatform, $ionicLoading, $cordovaGeolocation, $window) {
   
   /*$window.location.reload();*/
   $scope.places = Place;
@@ -400,9 +399,9 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings'])
   window.location.reload(true);
 };
 var timeout = setTimeout(timer, 5000);*/
-   $scope.$on('$ionicView.beforeEnter', function(){
-  /*alert("refresh");*/
-});
+//    $scope.$on('$ionicView.beforeEnter', function(){
+//   /*alert("refresh");*/
+// });
 
 /*$scope.refresh = function() {
 
@@ -419,7 +418,88 @@ $scope.loc = function(address,index) {
          
             console.log("masuk sini lah ya");
           }*/
-       $scope.jarak = [];
+          if(index == 1){
+        cordova.plugins.locationAccuracy.request(onRequestSuccess, onRequestFailure, cordova.plugins.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY);
+        }
+    $ionicPlatform.ready(function() {
+      $scope.displayDist = false;
+       $ionicLoading.show({
+            template: '<ion-spinner icon="bubbles"></ion-spinner><br/>Calculating Distances..'
+        });
+
+       
+
+        var posOptions = {
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 0
+        };
+
+          $scope.jarak = [];
+          $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
+            console.log("masuk cordova geolocation");
+            var lat  = position.coords.latitude;
+            var lng = position.coords.longitude;
+            console.log(lat);
+            console.log(lng);
+             
+            var geocoder = new google.maps.Geocoder();
+            geocoder.geocode({'address': address}, function(results, status) {
+                if (status === google.maps.GeocoderStatus.OK) {
+                  $scope.destLoc = results[0].geometry.location;
+                } else {
+                  alert('Geocode was not successful for the following reason: ' + status);
+                }
+                console.log($scope.destLoc);
+                console.log(address);
+                console.log("Dest " + $scope.destLoc.lat());
+                console.log("Dest " + $scope.destLoc.lng());
+
+                var p1 = new google.maps.LatLng(lat, lng);
+                var p2 = new google.maps.LatLng($scope.destLoc.lat(), $scope.destLoc.lng());
+
+                var d = calcDistance(p1, p2);
+                $scope.jarak[index] =  d;
+           
+                console.log($scope.jarak);
+         
+            }) 
+
+            $scope.displayDist = true;
+            /*setTimeout("location.reload(true);", 5000);*/
+            $ionicLoading.hide();  
+            $state.go($state.current, {}, {reload: true});    
+
+             
+          }, function(err) {
+
+              $ionicLoading.hide();
+              
+              if(index == 1){
+                $rootScope.notify('Failed to calculate distance');
+                /*alert(err.message);*/
+                  /*cordova.plugins.locationAccuracy.request(onRequestSuccess, onRequestFailure, cordova.plugins.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY);*/
+                  /*$scope.loc(address,index);*/
+                }
+                
+                /*var i=0;
+                if(onRequestSuccess){
+                  if(i != 2){
+                    $scope.loc(address,index);
+                    i++;
+                  }
+                }*/
+                
+               
+                
+              
+              console.log(err.message);
+          });
+
+          
+
+         /********************************/
+      /* $scope.jarak = [];
         navigator.geolocation.getCurrentPosition(function(position) {
           
 
@@ -459,12 +539,39 @@ $scope.loc = function(address,index) {
       },function error(msg){
         if(index == 1){
           alert('Please enable your GPS setting place list');  
-        }
+
+                 }
         
-  }, {maximumAge:600000, timeout:5000, enableHighAccuracy: false});
+  }, {maximumAge:600000, timeout:5000, enableHighAccuracy: false});*/
      
 
+  })
 }
+
+function onRequestSuccess(success){
+          console.log("Successfully requested accuracy: "+success.message);
+         /*console.log(address);*/
+         /*$scope.loc(address,index);*/
+          /*window.location.reload();*/
+       /*   $scope.displayDist = true;*/
+        /*$state.go('menu.browse', {}, {reload: true});*/
+         /*$state.go($state.current, {}, {reload: true});*/
+       // $state.go($state.current, {}, {reload: true});
+         
+          }
+
+          function onRequestFailure(error){
+
+          console.error("Accuracy request failed: error code="+error.code+"; error message="+error.message);
+          if(error.code !== cordova.plugins.locationAccuracy.ERROR_USER_DISAGREED){
+              if(window.confirm("Failed to automatically set Location Mode to 'High Accuracy'. Would you like to switch to the Location Settings page and do this manually?")){
+                  cordova.plugins.diagnostic.switchToLocationSettings();
+              }
+           }
+           
+          }
+
+
 
  function calcDistance(p1, p2) {
             console.log("calculates");
@@ -892,7 +999,7 @@ $scope.loc = function(address,index) {
 })
 
 
-.controller('editPlaceCtrl', function($rootScope, $scope, $state, $stateParams, $firebaseArray, $firebaseObject, Place) {
+.controller('editPlaceCtrl', function($rootScope, $scope, $state, $stateParams, $firebaseArray, $firebaseObject, $ionicHistory, Place) {
 
   $scope.places = Place;
   $scope.formData = {};
@@ -949,10 +1056,11 @@ $scope.loc = function(address,index) {
   })
 
      var placeDet = new Firebase("https://mpf.firebaseio.com/Place/" + $scope.plcId);
+    $scope.currState = $ionicHistory.currentStateName();
      
+
      $scope.editP = function(){
     console.log("edit place");
-
     /*if(this.data.website){
       $scope.website = this.data.website;
       console.log("Ada data");
@@ -992,13 +1100,19 @@ $scope.loc = function(address,index) {
 
     if(placeDet.update){
       console.log("success");
-      $rootScope.notify("Successfully update!");
+      $rootScope.notify("Sending for Verification");
       var ref = new Firebase("https://mpf.firebaseio.com/Place");
        console.log(nama);
        ref.orderByChild("name").equalTo(nama).on("child_added", function(snapshot) {
         console.log(snapshot.key());
         var placeId = snapshot.key();
-        $state.go('adminMenu.details', { id: placeId });
+        if($scope.currState === 'menu.editPlace'){
+          $state.go('menu.details', { id: placeId });
+        }
+        else if($scope.currState === 'adminMenu.editPlace'){
+          $state.go('adminMenu.details', { id: placeId });
+        }
+        
     });
     }
     /*.then(function() {
@@ -1186,7 +1300,7 @@ $scope.editP = function(){
 
 })
 
-.controller('detailsCtrl', function($rootScope, $scope, $firebaseAuth, $state, $stateParams, $window, $ionicModal, $timeout, $ionicHistory, $ionicPopup,  Place, review) {
+.controller('detailsCtrl', function($rootScope, $scope, $firebaseAuth, $state, $stateParams, $window, $ionicModal, $timeout, $ionicHistory, $ionicPopup, $cordovaGeolocation,  Place, review, profile) {
   console.log("inside detailsCtrl");
          
 
@@ -1387,17 +1501,19 @@ console.log($scope.det);
     if(n)
      return new Array(n);
 };
+  
 
+  
  // $scope.listRev = function(){
      rev.orderByChild("placeId").equalTo($scope.det).on("value", function(snapshot) {
        //update overallStar & rankVal in firebase
-          var placeStar = new Firebase("https://mpf.firebaseio.com/Place/" + $scope.det);
+    var placeStar = new Firebase("https://mpf.firebaseio.com/Place/" + $scope.det);
     console.log(snapshot.val());
     console.log("okay");
       $scope.revData = snapshot.val();
+    $scope.profile = profile;
 
-
-      console.log($scope.revData.user);
+      /*console.log($scope.revData.user);*/
      /* var ref = new Firebase("https://mpf.firebaseio.com/profile");
      ref.orderByChild("email").equalTo($scope.revData.user).on("child_added", function(snapshot) {
     console.log(snapshot.val());
@@ -1724,6 +1840,15 @@ console.log($scope.det);
       console.log("let's delete " + id);
        var plcR = new Firebase("https://mpf.firebaseio.com/Place/"+id);
       plcR.remove();
+
+      var ref = new Firebase("https://mpf.firebaseio.com/review");
+      ref.orderByChild("placeId").equalTo(id).on("child_added", function(snapshot) {
+        console.log(snapshot.key());
+        var revKey = snapshot.key();
+        var revD =  new Firebase("https://mpf.firebaseio.com/review/"+revKey);
+        revD.remove();
+      })
+
       $rootScope.notify('Successfully Delete');
 
     }
@@ -1918,6 +2043,8 @@ console.log($scope.det);
   $scope.places = Place;
 
   var ref = new Firebase("https://mpf.firebaseio.com/Place");
+  $scope.statuse = {wildcard:false, value: /^pending.*$/};
+  console.log($scope.statuse);
  /* ref.on("value", function(snapshot){
     $scope.places = snapshot.val();
   })*/

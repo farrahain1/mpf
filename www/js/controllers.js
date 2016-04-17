@@ -174,6 +174,7 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings'])
 
 
 .controller('BrowseCtrl', function($rootScope, $scope, $state, $window, $ionicModal, $firebase,$ionicHistory, category) {
+  
   $scope.category = category;
   console.log("masuk next");
   $rootScope.show("Please wait... Processing");
@@ -1591,6 +1592,7 @@ console.log($scope.det);
     if($scope.rate != null){
       //$rootScope.checkUser();
       /*console.log("add review : " + email);*/
+
       if(this.message!=null){
          $scope.reviews.$add({
         placeId: $scope.det,

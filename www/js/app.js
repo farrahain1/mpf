@@ -33,10 +33,14 @@ angular.module('mpf', ['ionic', 'firebase', 'mpf.controllers', 'ngCordova'])
   return $firebaseArray(prof);
 })
 
+.factory("auth", function($firebaseAuth) {
+  var auth = new Firebase("https://mpf.firebaseio.com/");
+  return $firebaseAuth(auth);
+})
 
 
 
-.run(function($ionicPlatform, $rootScope, $firebaseAuth, $firebase, $window, $ionicLoading, $ionicPopup) {
+.run(function($ionicPlatform, $rootScope, $firebaseAuth, $firebase, $window, $ionicLoading, $ionicPopup, $state) {
   $ionicPlatform.ready(function() {
     if(window.cordova && window.cordova.plugins.Keyboard) {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -112,6 +116,16 @@ angular.module('mpf', ['ionic', 'firebase', 'mpf.controllers', 'ngCordova'])
       }
     };
 
+     $rootScope.$on("$stateChangeError", function(event, toState, toParams, fromState, fromParams, error) {
+     // We can catch the error thrown when the $requireAuth promise is rejected
+     // and redirect the user back to the login page
+     console.log(error);
+     if(error === "AUTH_REQUIRED") {
+        $rootScope.notify('You need to login first');
+         $state.go("auth.signin");
+     }
+  });
+
     
 
     /*$rootScope.checkSession = function() {
@@ -181,7 +195,15 @@ angular.module('mpf', ['ionic', 'firebase', 'mpf.controllers', 'ngCordova'])
           templateUrl: 'templates/browse.html',
           controller: 'BrowseCtrl'
         }
-      }
+      },
+      resolve : {
+         // controller will not be loaded until $waitForAuth resolves
+         // Auth refers to our $firebaseAuth wrapper in the example above
+         currentAuth: ["auth", function(Auth) {
+           // $waitForAuth returns a promise so the resolve waits for it to complete
+           return Auth.$requireAuth();
+         }]
+       }
     })
 
     .state('menu.list', {
@@ -191,7 +213,15 @@ angular.module('mpf', ['ionic', 'firebase', 'mpf.controllers', 'ngCordova'])
           templateUrl: 'templates/placeList.html',
           controller: 'placeCtrl'
         }
-      }
+      },
+      resolve : {
+         // controller will not be loaded until $waitForAuth resolves
+         // Auth refers to our $firebaseAuth wrapper in the example above
+         currentAuth: ["auth", function(Auth) {
+           // $waitForAuth returns a promise so the resolve waits for it to complete
+           return Auth.$requireAuth();
+         }]
+       }
     })
 
     .state('menu.details', {
@@ -201,7 +231,15 @@ angular.module('mpf', ['ionic', 'firebase', 'mpf.controllers', 'ngCordova'])
           templateUrl: 'templates/placeDetails.html',
           controller: 'detailsCtrl'
         }
-      }
+      },
+      resolve : {
+         // controller will not be loaded until $waitForAuth resolves
+         // Auth refers to our $firebaseAuth wrapper in the example above
+         currentAuth: ["auth", function(Auth) {
+           // $waitForAuth returns a promise so the resolve waits for it to complete
+           return Auth.$requireAuth();
+         }]
+       }
     })
 
     
@@ -223,7 +261,15 @@ angular.module('mpf', ['ionic', 'firebase', 'mpf.controllers', 'ngCordova'])
           templateUrl: 'templates/searchResult.html',
           controller: 'resultCtrl'
         }
-      }
+      },
+      resolve : {
+         // controller will not be loaded until $waitForAuth resolves
+         // Auth refers to our $firebaseAuth wrapper in the example above
+         currentAuth: ["auth", function(Auth) {
+           // $waitForAuth returns a promise so the resolve waits for it to complete
+           return Auth.$requireAuth();
+         }]
+       }
     })
 
     .state('menu.navigate', {
@@ -232,7 +278,15 @@ angular.module('mpf', ['ionic', 'firebase', 'mpf.controllers', 'ngCordova'])
         'menu-navigate': {
           templateUrl: 'templates/navigate.html'
         }
-      }
+      },
+      resolve : {
+         // controller will not be loaded until $waitForAuth resolves
+         // Auth refers to our $firebaseAuth wrapper in the example above
+         currentAuth: ["auth", function(Auth) {
+           // $waitForAuth returns a promise so the resolve waits for it to complete
+           return Auth.$requireAuth();
+         }]
+       }
     })
 
      .state('menu.rate', {
@@ -242,7 +296,15 @@ angular.module('mpf', ['ionic', 'firebase', 'mpf.controllers', 'ngCordova'])
           templateUrl: 'templates/addRate.html',
           controller: 'detailsCtrl'
         }
-      }
+      },
+      resolve : {
+         // controller will not be loaded until $waitForAuth resolves
+         // Auth refers to our $firebaseAuth wrapper in the example above
+         currentAuth: ["auth", function(Auth) {
+           // $waitForAuth returns a promise so the resolve waits for it to complete
+           return Auth.$requireAuth();
+         }]
+       }
     })
 
       .state('menu.listReview', {
@@ -261,7 +323,15 @@ angular.module('mpf', ['ionic', 'firebase', 'mpf.controllers', 'ngCordova'])
           templateUrl: 'templates/addPlace.html',
           controller: 'addPlaceCtrl'
         }
-      }
+      },
+      resolve : {
+         // controller will not be loaded until $waitForAuth resolves
+         // Auth refers to our $firebaseAuth wrapper in the example above
+         currentAuth: ["auth", function(Auth) {
+           // $waitForAuth returns a promise so the resolve waits for it to complete
+           return Auth.$requireAuth();
+         }]
+       }
     })
 
      .state('menu.editPlace', {
@@ -271,7 +341,15 @@ angular.module('mpf', ['ionic', 'firebase', 'mpf.controllers', 'ngCordova'])
           templateUrl: 'templates/editPlace.html',
           controller: 'editPlaceCtrl'
         }
-      }
+      },
+      resolve : {
+         // controller will not be loaded until $waitForAuth resolves
+         // Auth refers to our $firebaseAuth wrapper in the example above
+         currentAuth: ["auth", function(Auth) {
+           // $waitForAuth returns a promise so the resolve waits for it to complete
+           return Auth.$requireAuth();
+         }]
+       }
     })
 
      .state('menu.profile', {
@@ -281,7 +359,15 @@ angular.module('mpf', ['ionic', 'firebase', 'mpf.controllers', 'ngCordova'])
           templateUrl: 'templates/profile.html',
           controller: 'profileCtrl'
         }
-      }
+      },
+      resolve : {
+         // controller will not be loaded until $waitForAuth resolves
+         // Auth refers to our $firebaseAuth wrapper in the example above
+         currentAuth: ["auth", function(Auth) {
+           // $waitForAuth returns a promise so the resolve waits for it to complete
+           return Auth.$requireAuth();
+         }]
+       }
     })
 
      .state('adminMenu', {
@@ -297,7 +383,15 @@ angular.module('mpf', ['ionic', 'firebase', 'mpf.controllers', 'ngCordova'])
           templateUrl: 'templates/verify.html',
           controller: 'verifyCtrl'
         }
-      }
+      },
+      resolve : {
+         // controller will not be loaded until $waitForAuth resolves
+         // Auth refers to our $firebaseAuth wrapper in the example above
+         currentAuth: ["auth", function(Auth) {
+           // $waitForAuth returns a promise so the resolve waits for it to complete
+           return Auth.$requireAuth();
+         }]
+       }
     })
 
      .state('adminMenu.addPlace', {
@@ -307,7 +401,15 @@ angular.module('mpf', ['ionic', 'firebase', 'mpf.controllers', 'ngCordova'])
           templateUrl: 'templates/addPlace.html',
           controller: 'addPlaceCtrl'
         }
-      }
+      },
+      resolve : {
+         // controller will not be loaded until $waitForAuth resolves
+         // Auth refers to our $firebaseAuth wrapper in the example above
+         currentAuth: ["auth", function(Auth) {
+           // $waitForAuth returns a promise so the resolve waits for it to complete
+           return Auth.$requireAuth();
+         }]
+       }
     })
 
          .state('adminMenu.browse', {
@@ -317,7 +419,15 @@ angular.module('mpf', ['ionic', 'firebase', 'mpf.controllers', 'ngCordova'])
           templateUrl: 'templates/browse.html',
           controller: 'BrowseCtrl'
         }
-      }
+      },
+      resolve : {
+         // controller will not be loaded until $waitForAuth resolves
+         // Auth refers to our $firebaseAuth wrapper in the example above
+         currentAuth: ["auth", function(Auth) {
+           // $waitForAuth returns a promise so the resolve waits for it to complete
+           return Auth.$requireAuth();
+         }]
+       }
     })
 
       .state('adminMenu.details', {
@@ -327,7 +437,15 @@ angular.module('mpf', ['ionic', 'firebase', 'mpf.controllers', 'ngCordova'])
           templateUrl: 'templates/placeDetails.html',
           controller: 'detailsCtrl'
         }
-      }
+      },
+      resolve : {
+         // controller will not be loaded until $waitForAuth resolves
+         // Auth refers to our $firebaseAuth wrapper in the example above
+         currentAuth: ["auth", function(Auth) {
+           // $waitForAuth returns a promise so the resolve waits for it to complete
+           return Auth.$requireAuth();
+         }]
+       }
     })
 
         .state('adminMenu.list', {
@@ -337,7 +455,15 @@ angular.module('mpf', ['ionic', 'firebase', 'mpf.controllers', 'ngCordova'])
           templateUrl: 'templates/placeList.html',
           controller: 'adminPlcListCtrl'
         }
-      }
+      },
+      resolve : {
+         // controller will not be loaded until $waitForAuth resolves
+         // Auth refers to our $firebaseAuth wrapper in the example above
+         currentAuth: ["auth", function(Auth) {
+           // $waitForAuth returns a promise so the resolve waits for it to complete
+           return Auth.$requireAuth();
+         }]
+       }
     })
 
          .state('adminMenu.editPlace', {
@@ -347,7 +473,15 @@ angular.module('mpf', ['ionic', 'firebase', 'mpf.controllers', 'ngCordova'])
           templateUrl: 'templates/editPlace.html',
           controller: 'editPlaceCtrl'
         }
-      }
+      },
+      resolve : {
+         // controller will not be loaded until $waitForAuth resolves
+         // Auth refers to our $firebaseAuth wrapper in the example above
+         currentAuth: ["auth", function(Auth) {
+           // $waitForAuth returns a promise so the resolve waits for it to complete
+           return Auth.$requireAuth();
+         }]
+       }
     })
 
       /*   .state('map', {

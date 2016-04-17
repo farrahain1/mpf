@@ -1,4 +1,4 @@
-angular.module('mpf.controllers', ['firebase', 'ionic-ratings'])
+angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.directives.dirPagination'])
   .controller('SignUpCtrl', [
     '$scope', '$rootScope', '$firebaseAuth', '$window', 'profile',
     function ($scope, $rootScope, $firebaseAuth, $window, profile) {
@@ -176,49 +176,51 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings'])
 .controller('BrowseCtrl', function($rootScope, $scope, $state, $window, $ionicModal, $firebase,$ionicHistory, category) {
   
   $scope.category = category;
-  console.log("masuk next");
-  $rootScope.show("Please wait... Processing");
-  $rootScope.checkUser();
-  console.log("masuk next");
-  $scope.list = [];
-  console.log("masuk next");
-  var bucketListRef = new Firebase($rootScope.baseUrl + escapeEmailAddress($rootScope.userEmail));
-  console.log("masuk next");
-  console.log($ionicHistory.currentStateName());
 
-  /*if($ionicHistory.currentHistoryId() === "ion1"){
-    console.log("clear history");
-      $ionicHistory.clearHistory();
-      console.log($ionicHistory.currentHistoryId());
-    }*/
-  bucketListRef.on('value', function(snapshot) {
-    var data = snapshot.val();
-    console.log("masuk next");
-    $scope.list = [];
-    console.log("masuk next");
-    for (var key in data) {
-      if (data.hasOwnProperty(key)) {
-        if (data[key].isCompleted == false) {
-          data[key].key = key;
-          $scope.list.push(data[key]);
-        }
-      }
-    }
+  
+  // console.log("masuk next");
+  // /*$rootScope.show("Please wait... Processing");
+  // $rootScope.checkUser();*/
+  // console.log("masuk next");
+  // $scope.list = [];
+  // console.log("masuk next");
+  // var bucketListRef = new Firebase($rootScope.baseUrl + escapeEmailAddress($rootScope.userEmail));
+  // console.log("masuk next");
+  // console.log($ionicHistory.currentStateName());
 
-    if ($scope.list.length == 0) {
-      $scope.noData = true;
-    } else {
-      $scope.noData = false;
-    }
-    $rootScope.hide();
-  });
-  $rootScope.hide();
+  // if($ionicHistory.currentHistoryId() === "ion1"){
+  //   console.log("clear history");
+  //     $ionicHistory.clearHistory();
+  //     console.log($ionicHistory.currentHistoryId());
+  //   }
+  // bucketListRef.on('value', function(snapshot) {
+  //   var data = snapshot.val();
+  //   console.log("masuk next");
+  //   $scope.list = [];
+  //   console.log("masuk next");
+  //   for (var key in data) {
+  //     if (data.hasOwnProperty(key)) {
+  //       if (data[key].isCompleted == false) {
+  //         data[key].key = key;
+  //         $scope.list.push(data[key]);
+  //       }
+  //     }
+  //   }
 
-  $ionicModal.fromTemplateUrl('templates/newItem.html', function(modal) {
-    $scope.newTemplate = modal;
+  //   if ($scope.list.length == 0) {
+  //     $scope.noData = true;
+  //   } else {
+  //     $scope.noData = false;
+  //   }
+  //   $rootScope.hide();
+  // });
+  // $rootScope.hide();
+
+  // $ionicModal.fromTemplateUrl('templates/newItem.html', function(modal) {
+  //   $scope.newTemplate = modal;
 
     
-  });
+  // });
 
  /* navigator.geolocation.getCurrentPosition(function(position) {
           
@@ -414,7 +416,7 @@ var timeout = setTimeout(timer, 5000);*/
  
           
 $scope.loc = function(address,index) {   
-         
+        $ionicPlatform.ready(function() { 
       /* if(index===1){
          
             console.log("masuk sini lah ya");
@@ -422,7 +424,7 @@ $scope.loc = function(address,index) {
           if(index == 1){
         cordova.plugins.locationAccuracy.request(onRequestSuccess, onRequestFailure, cordova.plugins.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY);
         }
-    $ionicPlatform.ready(function() {
+    
       $scope.displayDist = false;
        $ionicLoading.show({
             template: '<ion-spinner icon="bubbles"></ion-spinner><br/>Calculating Distances..'

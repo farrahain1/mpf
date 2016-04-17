@@ -11,7 +11,7 @@
 
 	     	</span>
 
-	     	<span ng-repeat="(name,datas) in revData">
+	     	<ion-item dir-paginate="(name,datas) in revData | itemsPerPage:5">
 				  <!-- <h3>Anynomous:</h3>
 				  <h4>Good!</h4> -->
 			<div class="item item-divider listBox">
@@ -37,8 +37,9 @@
 				  
 			   <!-- <ionic-ratings ratingsobj='ratingsDisplay'></ionic-ratings>  -->
 			</div> 	
-				</span>
+				</ion-item>
 			</div>
+
 			  
 				
 			 
@@ -49,10 +50,20 @@
 			  <h4>Good!</h4>
 			 </div> -->
 			 <div class="item item-divider">
+			 <dir-pagination-controls
+         max-size="5"
+         direction-links="true"
+         boundary-links="true" 
+         template-url="lib/angularUtils-pagination/dirPagination.tpl.html"
+         >
+      </dir-pagination-controls>
+      </div>
+			 <div class="item item-divider">
 			   <center>
 			   		<a class="button icon-left button-positive" style="margin-top: 10px; margin-bottom: 10px;" ng-click="closeSearch(3)">Close</a>
 			   	</center>
 			 </div>
+
 			<!-- </ion-content>   -->
 		<!-- </div> --> 
 		

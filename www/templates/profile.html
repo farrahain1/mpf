@@ -27,8 +27,14 @@
 			<h4 ng-if="(pl| filter: {userId:profId}).length == 0">You did not added any place</h4>
 			<span ng-if="(pl| filter: {userId:profId}).length > 0">
 			<h4>List of added places</h4>
+			 <div class="search">
+		        <label class="item item-input">
+		             <i class="icon ion-search placeholder-icon"></i>
+		            <input type="text" ng-model="search" placeholder="Search">
+		        </label>
+		    </div>   
 			<div class="list">
-			<div ng-repeat="plc in pl | filter: {userId:profId}">
+			<div dir-paginate="plc in pl | filter: {userId:profId} | filter: search | itemsPerPage:2">
 				<div class="item">
 					<span class="link" ng-click="plcDetails(plc.$id)">{{plc.name}}</span>
 					<h3>{{plc.created_date | date:'dd MMM yyyy hh:mm:ss '}} </h3>
@@ -48,6 +54,13 @@
 
 				</div>
 			</div>
+			<dir-pagination-controls
+         max-size="5"
+         direction-links="true"
+         boundary-links="true" 
+         template-url="lib/angularUtils-pagination/dirPagination.tpl.html"
+         >
+      </dir-pagination-controls>
 		  		<!-- <div class="item">
 		    		Place 1	
 		    		<button class="button button-positive" ng-click="edit()">

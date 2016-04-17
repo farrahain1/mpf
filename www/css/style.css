@@ -48,7 +48,7 @@
   max-height:80%;
   overflow: scroll;
   /*background-color: transparent !important;*/
-  opacity: 0.9;
+  opacity: 1.0;
   top: 50%;
   left: 50%;
   /*transform: translate(-50%, -50%);*/
@@ -376,4 +376,29 @@ p.satu {
   background-color: rgb(242,242,242);
   border: outset rgb(230,230,230);
   font-family: Calibri;
+}
+
+ul.pagination {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+    float: right;
+    background-color: white;  
+}
+
+ul.pagination li {display: inline;}
+
+ul.pagination li a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    border: 2px solid #ddd; /* Gray */
+}
+
+.search{
+  width: 95%;
+  margin-right: auto;
+  margin-left: auto;
+  margin-bottom: 5px;
 }

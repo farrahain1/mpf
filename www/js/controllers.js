@@ -1259,6 +1259,7 @@ $scope.editP = function(){
 
    $scope.searchData = function(searchID) {
             searchID = searchID.toLowerCase();
+            console.log("Search data");            
             $state.go('menu.searchResult', { id: searchID });
             // $state.go('menu.profile'); 
              $scope.closeSearch();

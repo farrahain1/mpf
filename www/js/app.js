@@ -257,7 +257,7 @@ angular.module('mpf', ['ionic', 'firebase', 'mpf.controllers', 'ngCordova'])
     .state('menu.searchResult', {
       url: '/searchResult/:id',
       views: {
-        'menuContent': {
+        'menu-browse': {
           templateUrl: 'templates/searchResult.html',
           controller: 'resultCtrl'
         }

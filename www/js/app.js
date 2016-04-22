@@ -40,7 +40,7 @@ angular.module('mpf', ['ionic', 'firebase', 'mpf.controllers', 'ngCordova'])
 
 
 
-.run(function($ionicPlatform, $rootScope, $firebaseAuth, $firebase, $window, $ionicLoading, $ionicPopup, $state) {
+.run(function($ionicPlatform, $rootScope, $firebaseAuth, $firebase, $window, $ionicLoading, $ionicPopup, $state, $ionicHistory) {
   $ionicPlatform.ready(function() {
     if(window.cordova && window.cordova.plugins.Keyboard) {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -62,17 +62,9 @@ angular.module('mpf', ['ionic', 'firebase', 'mpf.controllers', 'ngCordova'])
     $rootScope.auth = $firebaseAuth(authRef);
 
     $rootScope.show = function(text) {
-      //$ionicLoading.show('fsdkjfjdk');
       $ionicLoading.show({
           template: text
         });
-      /*$rootScope.loading = $ionicLoading.show({
-        content: text ? text : 'Loading..',
-        animation: 'fade-in',
-        showBackdrop: true,
-        maxWidth: 200,
-        showDelay: 0
-      });*/
     };
 
     $rootScope.hide = function() {
@@ -86,70 +78,38 @@ angular.module('mpf', ['ionic', 'firebase', 'mpf.controllers', 'ngCordova'])
       }, 1999);
     };
 
-
-
-          
-         
-
     $rootScope.logout = function() {
-      
+      $ionicHistory.clearHistory();
+      $ionicHistory.clearCache();
        $rootScope.auth.$unauth();
       $rootScope.checkUser();
-     
+      $state.go($state.current, {}, {reload: true});     
     };
 
     $rootScope.back = function(){
-    console.log("masuk back");    
-    window.history.back();      
+      window.history.back();      
    }
 
     $rootScope.checkUser = function(){
-      console.log("check user id");
       var ref = new Firebase("https://mpf.firebaseio.com");
       var authData = ref.getAuth();
       if (authData) {
         console.log("User " + authData.uid + " is logged in with " + authData.provider);
       } else {
-        console.log("User is logged out");
         $rootScope.userEmail = null;
-          $window.location.href = '#/auth/signin';
+        $window.location.href = '#/auth/signin';
       }
     };
 
-     $rootScope.$on("$stateChangeError", function(event, toState, toParams, fromState, fromParams, error) {
+    $rootScope.$on("$stateChangeError", function(event, toState, toParams, fromState, fromParams, error) {
      // We can catch the error thrown when the $requireAuth promise is rejected
      // and redirect the user back to the login page
-     console.log(error);
-     if(error === "AUTH_REQUIRED") {
-        $rootScope.notify('You need to login first');
-         $state.go("auth.signin");
-     }
-  });
-
-    
-
-    /*$rootScope.checkSession = function() {
-      console.log("checkSession");
-      
-      var auth = new FirebaseSimpleLogin(authRef, function(error, user) {
-        if (error) {
-          // no action yet.. redirect to default route
-          $rootScope.userEmail = null;
-          $window.location.href = '#/auth/signin';
-        } else if (user) {
-          // user authenticated with Firebase  
-          console.log(user.email);
-          $rootScope.userEmail = user.email; 
-          console.log("moshi mo");       
-          $window.location.href = ('#/menu/browse');
-        } else {
-          // user is logged out
-          $rootScope.userEmail = null;
-          $window.location.href = '#/auth/signin';
-        }
-      });
-    }*/
-
+       console.log(error);
+       if(error === "AUTH_REQUIRED") {
+          $rootScope.notify('You need to login first');
+           $state.go("auth.signin");
+       }
+    });
   });
 })
 
@@ -190,6 +150,7 @@ angular.module('mpf', ['ionic', 'firebase', 'mpf.controllers', 'ngCordova'])
 
     .state('menu.browse', {
       url: '/browse',
+      cache : false,
       views: {
         'menu-browse': {
           templateUrl: 'templates/browse.html',
@@ -242,18 +203,6 @@ angular.module('mpf', ['ionic', 'firebase', 'mpf.controllers', 'ngCordova'])
        }
     })
 
-    
-
-    /*.state('menu.search', {
-      url: '/search',
-      views: {
-        'menu-search': {
-          templateUrl: 'templates/search.html',
-          controller: 'menuCtrl'
-        }
-      }
-    })*/
-
     .state('menu.searchResult', {
       url: '/searchResult/:id',
       views: {
@@ -291,6 +240,7 @@ angular.module('mpf', ['ionic', 'firebase', 'mpf.controllers', 'ngCordova'])
 
      .state('menu.rate', {
       url: '/rate',
+      cache : false,
       views: {
         'menu-rate': {
           templateUrl: 'templates/addRate.html',
@@ -318,6 +268,7 @@ angular.module('mpf', ['ionic', 'firebase', 'mpf.controllers', 'ngCordova'])
 
      .state('menu.addPlace', {
       url: '/addPlace',
+      cache : false,
       views: {
         'menuPlace': {
           templateUrl: 'templates/addPlace.html',
@@ -336,6 +287,7 @@ angular.module('mpf', ['ionic', 'firebase', 'mpf.controllers', 'ngCordova'])
 
      .state('menu.editPlace', {
       url: '/editPlace/:id',
+      cache : false,
       views: {
         'menuProfile': {
           templateUrl: 'templates/editPlace.html',
@@ -354,6 +306,7 @@ angular.module('mpf', ['ionic', 'firebase', 'mpf.controllers', 'ngCordova'])
 
      .state('menu.profile', {
       url: '/profile/:id',
+      cache: false,
       views: {
         'menuProfile': {
           templateUrl: 'templates/profile.html',
@@ -396,6 +349,7 @@ angular.module('mpf', ['ionic', 'firebase', 'mpf.controllers', 'ngCordova'])
 
      .state('adminMenu.addPlace', {
       url: '/addPlace',
+      cache : false,
       views: {
         'adminMenu-addPlace': {
           templateUrl: 'templates/addPlace.html',
@@ -468,6 +422,7 @@ angular.module('mpf', ['ionic', 'firebase', 'mpf.controllers', 'ngCordova'])
 
          .state('adminMenu.editPlace', {
       url: '/editPlace/:id',
+      cache : false,
       views: {
         'adminMenu-mngPlc': {
           templateUrl: 'templates/editPlace.html',
@@ -483,25 +438,6 @@ angular.module('mpf', ['ionic', 'firebase', 'mpf.controllers', 'ngCordova'])
          }]
        }
     })
-
-      /*   .state('map', {
-    url: '/map',
-    templateUrl: 'templates/map.html',
-    controller: 'MapCtrl'
-  });*/
-
-    
-
-    /*.state('menu.placeList', {
-      url: '/placeList',
-      views: {
-        'placeList':{
-          templateUrl: 'templates/placeList.html'
-        }
-      }
-          
-    })*/
-
    
     $urlRouterProvider.otherwise('/auth/signin');
 });

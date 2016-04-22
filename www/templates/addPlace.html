@@ -19,6 +19,12 @@
 			<div class="col"> 
 				<form name="placeForm" class="addPForm">
 				<div ng-hide="addPlace">
+					
+				 	<img ng-src="{{imgData}}" style="width:30%; height: auto; margin-top: 5px;"/>
+				 	
+				 	<button class="button button-energized" ng-click="getImageSaveContact()">
+	  					Add image
+  					</button>	
 				  	
 					<span ng-if="currState == 'adminMenu.addPlace'">
 					  	<span class="input-label addPL">Place/Business Name :</span>
@@ -122,6 +128,11 @@
 
 	 <form name="businessForm">
 		<div class="list" ng-hide="addBusiness">
+			<img ng-src="{{imgData}}" style="width:30%; height: auto; margin-top: 5px;"/>
+				 	
+			<button class="button button-energized" ng-click="getImageSaveContact()">
+	  			Add image
+  			</button>	
 		  <label class="item item-input item-stacked-label">
 		    <span class="input-label">Business Name </span>
 		    <input class="col col-50 inline" ng-model="name" name="name" placeholder="Business Name" required>

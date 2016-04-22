@@ -7,9 +7,21 @@
 	<ion-content>
 		<div>
 			<center>
-				<img src="img/profile.png" style="width: 150px; margin-top: 5px;">
+				<span ng-if="imgData">
+				 	<img ng-src="{{imgData}}" style="width:30%; height: auto; margin-top: 5px;"/>
+				 </span>
+				 <span ng-if="!imgData">
+				 	<img ng-src="{{data.pic}}" style="width:30%; height: auto; margin-top: 5px;"/>
+				 	<span ng-if="!data.pic">
+				 		No pic
+				 	</span>
+				 </span>
+				<!-- <img src="img/profile.png" style="width: 150px; margin-top: 5px;"> -->
 				<h3>{{data.name}}</h3>
-				<a class="button icon-left ion-navigate button-positive" style="margin-top: 5px;">Change profile pic</a>				
+				<!-- <a class="button icon-left ion-navigate button-positive" style="margin-top: 5px;" ng-click="uploadImage()">Change profile pic</a>		 -->
+				<button class="button button-energized" ng-click="getImageSaveContact()">
+	  				Change image
+  				</button>		
 			</center>
 			<div class="loginInfo">
 				<h3>Login Information</h3>
@@ -34,8 +46,9 @@
 		        </label>
 		    </div>   
 			<div class="list">
-			<div dir-paginate="plc in pl | filter: {userId:profId} | filter: search | itemsPerPage:2">
+			<div dir-paginate="plc in pl | filter: {userId:profId} | filter: search | itemsPerPage:5" >
 				<div class="item">
+					<img ng-src="{{plc.pic}}" style="width:82px; height: auto; margin-top: 5px;"/>
 					<span class="link" ng-click="plcDetails(plc.$id)">{{plc.name}}</span>
 					<h3>{{plc.created_date | date:'dd MMM yyyy hh:mm:ss '}} </h3>
 					<h3>{{plc.status}}</h3>

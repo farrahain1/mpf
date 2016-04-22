@@ -7,7 +7,7 @@
   <ion-content class="has-header padding">    
     <ion-list>
       <div class="imgCenter">
-        <img ng-src="img/ionic.png">
+        <img ng-src="{{data.pic}}" style="width:82px; height: auto; margin-top: 5px;"/>
       </div>
       <div class="titleCenter">
         <b>{{data.name}}</b>
@@ -21,7 +21,7 @@
             </span>
           </span>
       </div>
-      <ion-item class="row detailBox">
+      <ion-item class="row detailBox item-text-wrap">
         <div class="col" >     
           <br>
           <span class="ion-location">

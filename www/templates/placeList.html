@@ -18,12 +18,8 @@
     </div>   
       <div class="row responsive-sm">
         <div class="col"> 
-         <!--  <button class="button icon-left ion-android-create subdued right_p mar" ng-click="loc('Bukit Katil, Melaka')">
-                  Edit
-                </button> -->
-          <!-- <div ng-repeat="(id,plc) in places | filter: {category:cat, status:'approved'} | orderObjectBy: 'rankVal' : true " class="row responsive-sm">  -->
-          <ion-item dir-paginate="(id,plc) in places | filter: {category:cat, status:'approved'} | filter:search | orderObjectBy: 'rankVal' : true | itemsPerPage:5" class="item-thumbnail-left listBox">            
-            <img ng-src="img/ionic.png">
+          <ion-item dir-paginate="(id,plc) in places | filter: {category:cat, status:'approved'} | filter:search | orderObjectBy: 'rankVal' : true | itemsPerPage: pageSize" current-page="currentPage" class="item-thumbnail-left listBox">           
+              <img ng-src="{{plc.pic}}"/>
               <h2  ng-click = "data(plc.$id)" class="link"><b> {{plc.name}} </b></h2>
               <span ng-if="currState == 'menu.list'">
                 <span ng-if="!plc.rankVal">
@@ -70,10 +66,12 @@
               4. 4.8km
               </p> -->
           </ion-item>
+          <span>Page {{currentPage}} from {{totalPage}}</span>
           <dir-pagination-controls
          max-size="5"
          direction-links="true"
          boundary-links="true" 
+         on-page-change="pageChangeHandler(newPageNumber)"
          template-url="lib/angularUtils-pagination/dirPagination.tpl.html"
          >
       </dir-pagination-controls>

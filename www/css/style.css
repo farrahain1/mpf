@@ -258,10 +258,24 @@ p.satu {
     width: 10em;
 }
 
+.cSign{
+  height: 50%;
+  margin: auto;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+}
+
+.titleS{
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: Calibri;
+}
+
 .titleCenter{
   width: 100%;
-  height: auto;
+  height: 5%;
    text-align: center;
+   margin-top: 10px;
    margin-bottom: 10px;
    font-family: Calibri;
    font-size: 20px;
@@ -297,13 +311,25 @@ p.satu {
  width: 70%;
   height: 30px;
   margin-bottom: 15px;
-  margin-left: 10px;
+  margin-left: 15%;
   border-radius: 5px;
   text-align: center;
   font-size: 14px;
   color: #7f8c8d;
   text-align: left;
   border: inset !important;
+}
+
+.signInBut{
+  width: 70%;
+  height: 30px;
+  margin-bottom: 15px;
+  margin-left: 15%;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 14px;
+  color: #7f8c8d;
+  text-align: left;
 }
 
 .addPL{
@@ -318,10 +344,18 @@ p.satu {
   border-radius: 5px;
 }
 
+.signInCont{
+  margin: auto;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+}
+
+
 .addPForm{
   background-color: rgb(242,242,242);
   border: outset rgb(230,230,230);
   font-family: Calibri;
+  height: 100%;
 }
 
 ul.pagination {

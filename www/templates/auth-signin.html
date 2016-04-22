@@ -1,24 +1,29 @@
 <ion-content class="has-header padding">
 <!-- <section class="sectionSignIn">
 <span class="spanSignIn"></span> -->
-<div class="titleCenter">Sign In</div>
+<!-- <div class="titleCenter">Sign In</div> -->
 
 <div class="addPForm">
-  <div class="row responsive-sm">
-    <div class="col"> 
-      <span class="input-label addPL">Email</span>
+  <div class="row responsive-sm signInCont">
+    <div class="cSign"> 
+    <h2 class="titleS">Muslim Places Finder</h2>
+      <!-- <span class="input-label addPL">Email</span> -->
         <input class="addPT" ng-model="user.email" placeholder="Email" autofocus="true" autosave="true">
 
-      <span class="input-label addPL">Password</span>
+      <!-- <span class="input-label addPL">Password</span> -->
         <input  class="addPT"  ng-model="user.password" placeholder="Password" type="password">
+
+        <button class="button icon-left ion-log-in signInBut" ng-click="validateUser()">
+          Sign In
+        </button>
     </div>
   </div>
 </div>
-<div class="right_p">
+<!-- <div class="right_p">
   <button class="button icon-left ion-log-in" ng-click="validateUser()">
     Sign In
   </button> 
-</div>
+</div> -->
 <!-- <div class="signin">
   
   <img ng-src="img/logo.png" class="logo">

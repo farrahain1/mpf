@@ -138,8 +138,10 @@ angular.module('mpf', ['ionic', 'firebase', 'mpf.controllers', 'ngCordova'])
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider, $compileProvider) {
+.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionicConfigProvider) {
   $compileProvider.aHrefSanitizationWhitelist(/^\s*(geo):/);
+  $ionicConfigProvider.tabs.position('bottom');
+
   $stateProvider
      // Routes will be here
       // Set defualt view of our app to home

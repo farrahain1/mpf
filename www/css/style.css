@@ -328,8 +328,8 @@ p.satu {
   border-radius: 5px;
   text-align: center;
   font-size: 14px;
-  color: #7f8c8d;
-  text-align: left;
+  color: #fff;
+  background-color: rgb(18,95,56);
 }
 
 .addPL{
@@ -382,3 +382,7 @@ ul.pagination li a {
   margin-left: auto;
   margin-bottom: 5px;
 }
+
+/*.positive{
+  background-color: rgb(31, 159, 95);
+}*/

@@ -148,14 +148,13 @@
               View Review
             </button>
           </span>
-          <div>
           <span ng-if="data.status == 'reject' || data.status == 'pending'">
-            <button class="button icon-left ion-trash-a right_p" ng-click="delPlc(data.name)">
+            <button class="button icon-left ion-trash-a" ng-click="delPlc(data.name)">
               Delete
             </button> 
           </span>
           <span ng-if="data.status == 'pending' ">
-            <button class="button icon-left ion-android-create right_p" ng-click="editPlc()">
+            <button class="button icon-left ion-android-create" ng-click="editPlc()">
               Edit
             </button>
           </span>

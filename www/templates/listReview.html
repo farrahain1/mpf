@@ -15,7 +15,7 @@
 				  <!-- <h3>Anynomous:</h3>
 				  <h4>Good!</h4> -->
 			<div class="item item-divider listBox">
-				  <span ng-repeat="prof in profile track by $index | filter: {email: datas.user}">
+				  <span ng-repeat="prof in profile | filter: {email: datas.user}">
 				  	<h3>{{prof.name}}</h3>
 				  </span>
 				  <h4>{{datas.message}}</h4>

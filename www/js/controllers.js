@@ -954,6 +954,7 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
     };
 
     $scope.ratingsCallback = function(rating) {
+      
     };
 
 

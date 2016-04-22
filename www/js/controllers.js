@@ -1228,6 +1228,14 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
         $scope.cat = $stateParams.id;
       }
 
+      $scope.currentPage = 1;
+     $scope.pageSize = 2;
+     $scope.totalPage = 1;
+
+    $scope.pageChangeHandler = function(num) {
+      $scope.totalPage = num;
+  };
+
       //list of place
     var ref = new Firebase("https://mpf.firebaseio.com/category");
        ref.orderByKey().equalTo($scope.cat).on("child_added", function(snapshot) {

@@ -17,7 +17,7 @@
     
       <!--   <div ng-repeat="(id,plc) in places | orderObjectBy: 'created_date' : true " class="row responsive-sm">  -->
       <h4 class="pending" ng-if="(places| filter: {status: 'pending'} ).length == 0">.No Pending Place.</h4>
-        <ion-item ng-repeat="(id,plc) in places | filter: {status:'pending'} |orderObjectBy: 'created_date' : true " class="item-thumbnail-left listBox"> 
+        <ion-item ng-repeat="(id,plc) in places track by $index | filter: {status:'pending'} |orderObjectBy: 'created_date' : true " class="item-thumbnail-left listBox"> 
            
           <!--  <ion-item class="col listBoxBorder "> -->
               <!-- <div class="item-thumbnail-left listBox"> -->
@@ -25,7 +25,7 @@
                 <h2 class="listFont"><b> {{plc.name}} </b></h2>
                 
                   <h4 class="plcList"> Created Date : {{plc.created_date | date:'dd MMM yyyy'}}  </h4>
-                  <span ng-repeat="prof in profile">
+                  <span ng-repeat="prof in profile track by $index">
                   <h4 class="plcList" ng-if="prof.userId == plc.userId"> Created By : {{prof.email }}</h4>
                   </span>
                   

@@ -56,6 +56,33 @@ angular.module('mpf', ['ionic', 'firebase', 'mpf.controllers', 'ngCordova'])
       StatusBar.styleDefault();
     }
 
+    document.addEventListener("backbutton", function(e){
+       if($.mobile.activePage.is('#auth-signin')){
+           e.preventDefault();
+           navigator.app.exitApp();
+       }
+       else {
+           navigator.app.backHistory()
+       }
+    }, false);
+
+    $rootScope.checkConnection = function(){
+      var networkState = navigator.connection.type;
+
+      if(networkState == Connection.NONE){
+        alert('This apps need a network connection');
+        navigator.app.exitApp();
+      }
+    }
+
+    document.addEventListener("offline", onOffline, false);
+
+    function onOffline() {
+        $rootScope.$apply(function(){
+             alert('You are offline. Please have a connection to continue using this apps.');
+        });
+    }
+
     $rootScope.userEmail = null;
     $rootScope.baseUrl = 'https://mpf.firebaseio.com/';
     var authRef = new Firebase($rootScope.baseUrl);
@@ -93,9 +120,7 @@ angular.module('mpf', ['ionic', 'firebase', 'mpf.controllers', 'ngCordova'])
     $rootScope.checkUser = function(){
       var ref = new Firebase("https://mpf.firebaseio.com");
       var authData = ref.getAuth();
-      if (authData) {
-        console.log("User " + authData.uid + " is logged in with " + authData.provider);
-      } else {
+      if (!authData) {
         $rootScope.userEmail = null;
         $window.location.href = '#/auth/signin';
       }

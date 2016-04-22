@@ -18,7 +18,7 @@
     </div>   
       <div class="row responsive-sm">
         <div class="col"> 
-          <ion-item dir-paginate="(id,plc) in places | filter: {category:cat, status:'approved'} | filter:search | orderObjectBy: 'rankVal' : true | itemsPerPage: pageSize" current-page="currentPage" class="item-thumbnail-left listBox">           
+          <ion-item dir-paginate="(id,plc) in places | filter: {category:cat, status:'approved'} | filter:search | orderObjectBy: 'rankVal' : true | itemsPerPage: pageSize" class="item-thumbnail-left listBox">           
               <img ng-src="{{plc.pic}}"/>
               <h2  ng-click = "data(plc.$id)" class="link"><b> {{plc.name}} </b></h2>
               <span ng-if="currState == 'menu.list'">
@@ -66,7 +66,6 @@
               4. 4.8km
               </p> -->
           </ion-item>
-          <span>Page {{currentPage}} from {{totalPage}}</span>
           <dir-pagination-controls
          max-size="5"
          direction-links="true"

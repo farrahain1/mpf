@@ -13,7 +13,6 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
           var password = this.user.password;
           var username = this.username;
           var obj = {email: email, password: password};
-          console.log(obj); // works correctly
 
           if (!email || !password || !username) {
             $rootScope.notify("Please enter valid credentials");
@@ -26,7 +25,6 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
           email: email,
           password: password
         }).then(function(userData) {    
-          console.log("User " + userData.uid + " created successfully!"); 
           $rootScope.hide();
 
           return $scope.auth.$authWithPassword({
@@ -36,25 +34,21 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
 
         }).then(function(authData) {
           $scope.prof = profile;
-          console.log("Logged in as:", authData.uid);
           $window.location.href = ('#/menu/browse');
+          window.location.reload();
           $scope.prof.$add({
             name : username,
             userId :  authData.uid,
             email: email
           });
         }).catch(function(error) {
-          //console.error("Error: ", error);
           if (error.code == 'INVALID_EMAIL') {
-                console.log("INVALID_EMAIL");
                 $rootScope.notify('Invalid Email Address');
               }
               else if (error.code == 'EMAIL_TAKEN') {
-                console.log("EMAIL_TAKEN");
                 $rootScope.notify('Email Address already taken');
               }
               else {
-                console.log("OOPS");
                 $rootScope.notify('Oops something went wrong. Please try again later');
               }
         });
@@ -67,6 +61,8 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
   '$state', '$scope', '$rootScope', '$firebaseAuth', '$window', '$ionicHistory', '$ionicPlatform',
   function ($state, $scope, $rootScope, $firebaseAuth, $window, $ionicHistory, $ionicPlatform) {
      $ionicPlatform.ready(function() {
+
+        // $rootScope.checkConnection();
        $scope.user = {
           email: "",
           password: ""
@@ -80,7 +76,6 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
       });
        
       $scope.validateUser = function () {
-        console.log("masuk 2");
           $rootScope.show('Please wait.. Authenticating');
           var email = this.user.email;
           var password = this.user.password;
@@ -107,7 +102,6 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
               $ionicHistory.clearHistory();
                 $window.location.href = ('#/adminMenu/verify');
                  window.location.reload();
-                console.log("login as admin");
             }
             else{
                $ionicHistory.nextViewOptions({
@@ -119,24 +113,19 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
               $ionicHistory.clearHistory();
               $window.location.href = ('#/menu/browse');
               window.location.reload();
-              console.log("login as user");
             }
           }, function (error) {
             $rootScope.hide();
             if (error.code == 'INVALID_EMAIL') {
-              console.log("INVALID_EMAIL");
               $rootScope.notify('Invalid Email Address');
             }
             else if (error.code == 'INVALID_PASSWORD') {
-               console.log("INVALID_PASSWORD");
               $rootScope.notify('Invalid Password');
             }
             else if (error.code == 'INVALID_USER') {
-               console.log("INVALID_USER");
               $rootScope.notify('Invalid User');
             }
             else {
-               console.log("OOPS");
               $rootScope.notify('Oops something went wrong. Please try again later');
             }
           });
@@ -166,14 +155,12 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
 
 .controller('placeCtrl', function($rootScope, $scope, $state, $stateParams, $firebaseArray, Place, $ionicHistory, $ionicPlatform, $ionicLoading, $cordovaGeolocation, $window) {
   $ionicPlatform.ready(function() {
-    $scope.currentPage = 1;
+
      $scope.pageSize = 2;
-     $scope.totalPage = 1;
+     
     $scope.places = Place;
 
-    $scope.pageChangeHandler = function(num) {
-      $scope.totalPage = num;
-  };
+    
 
     $scope.star=function(n){
       if(n)
@@ -331,17 +318,9 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
     $scope.validate = function(){
       if(!this.phone){
         this.phone = "";
-        console.log("takde phone");
       }
       if(!this.website){
         this.website = "";
-        console.log("takde website");
-      }
-      if($scope.pilihan.tempat === "buss"){
-        if(!$scope.regNo){
-          console.log("takde time");
-          $scope.regNo = false;
-        }
       }
     }
 
@@ -515,7 +494,7 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
               });
               // $state.go($state.current, {}, {reload: true});    
           }, function(error) {
-            console.log('Error: ' + JSON.stringify(error));    // In case of error
+            // console.log('Error: ' + JSON.stringify(error));    // In case of error
         });
       };  
     
@@ -617,7 +596,7 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
               });
               // $state.go($state.current, {}, {reload: true});    
           }, function(error) {
-            console.log('Error: ' + JSON.stringify(error));    // In case of error
+            // console.log('Error: ' + JSON.stringify(error));    // In case of error
         });
       };  
   })
@@ -677,7 +656,6 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
 
     $scope.loc = function(address,index) {   
       $ionicPlatform.ready(function() { 
-        console.log(index);
         if(index === 0){
           cordova.plugins.locationAccuracy.request(onRequestSuccess, onRequestFailure, cordova.plugins.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY);
         }
@@ -976,7 +954,6 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
     };
 
     $scope.ratingsCallback = function(rating) {
-          console.log('Selected rating is : ', rating);
     };
 
 
@@ -1007,7 +984,6 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
               $scope.app(plcId);
             } 
           } else {
-            console.log('You are not sure');
           }
         });
       };
@@ -1174,7 +1150,6 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
         };
 
          $scope.close = function() {
-          console.log("masuk closeloginInfo");
           $scope.modal.hide();
         };
 
@@ -1202,7 +1177,7 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
               });
               $state.go($state.current, {}, {reload: true});    
           }, function(error) {
-            console.log('Error: ' + JSON.stringify(error));    // In case of error
+            // console.log('Error: ' + JSON.stringify(error));    // In case of error
         });
       };  
     
@@ -1228,18 +1203,13 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
         $scope.cat = $stateParams.id;
       }
 
-      $scope.currentPage = 1;
+      
      $scope.pageSize = 2;
-     $scope.totalPage = 1;
 
-    $scope.pageChangeHandler = function(num) {
-      $scope.totalPage = num;
-  };
 
       //list of place
     var ref = new Firebase("https://mpf.firebaseio.com/category");
        ref.orderByKey().equalTo($scope.cat).on("child_added", function(snapshot) {
-      console.log(snapshot.val());
       $scope.asHeader = snapshot.val(); 
     })
 
@@ -1304,7 +1274,6 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
 
     var ref = new Firebase("https://mpf.firebaseio.com/Place");
     $scope.statuse = {wildcard:false, value: /^pending.*$/};
-    console.log($scope.statuse);
     var prof = new Firebase("https://mpf.firebaseio.com/profile");
     prof.on("value", function(snapshot){
       $scope.profile = snapshot.val();
@@ -1352,11 +1321,11 @@ function toRad(){
 }
 
  function onRequestSuccess(success){
-      console.log("Successfully requested accuracy: "+success.message);  
+      // console.log("Successfully requested accuracy: "+success.message);  
     }
 
     function onRequestFailure(error){
-      console.error("Accuracy request failed: error code="+error.code+"; error message="+error.message);
+      // console.error("Accuracy request failed: error code="+error.code+"; error message="+error.message);
       if(error.code !== cordova.plugins.locationAccuracy.ERROR_USER_DISAGREED){
         if(window.confirm("Failed to automatically set Location Mode to 'High Accuracy'. Would you like to switch to the Location Settings page and do this manually?")){
           cordova.plugins.diagnostic.switchToLocationSettings();

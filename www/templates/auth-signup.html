@@ -5,26 +5,23 @@
 <!-- 
 <section class="sectionSignIn">
 <span class="spanSignIn"></span> -->
-<div class="titleCenter">Sign Up</div>
+<!-- <div class="titleCenter">Sign Up</div> -->
 
 <div class="addPForm">
-  <div class="row responsive-sm">
-    <div class="col"> 
-      <span class="input-label addPL">Email</span>
-        <input class="addPT" ng-model="user.email" autofocus="true" autosave="true">
+  <div class="row responsive-sm signInCont">
+    <div class="cSign"> 
+      <h2 class="titleS">Muslim Places Finder</h2>
+        <input class="addPT" ng-model="user.email" placeholder="Email" autofocus="true" autosave="true">
 
-      <span class="input-label addPL">Username</span>
-        <input class="addPT" ng-model="username">
+        <input class="addPT" placeholder="Username" ng-model="username">
 
-      <span class="input-label addPL">Password</span>
-        <input  class="addPT"  ng-model="user.password" type="password">
+        <input  class="addPT"  placeholder="Password" ng-model="user.password" type="password">
+
+        <button class="button icon-left ion-person-add signInBut" ng-click="createUser()">
+          Sign Up
+        </button> 
     </div>
   </div>
-</div>
-<div class="right_p">
-  <button class="button icon-left ion-person-add" ng-click="createUser()">
-    Sign Up
-  </button> 
 </div>
 
 <!-- <input class="textbox1" type="text" ng-model="user.email" placeholder="Email">

@@ -159,7 +159,7 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
 .controller('placeCtrl', function($rootScope, $scope, $state, $stateParams, $firebaseArray, Place, $ionicHistory, $ionicPlatform, $ionicLoading, $cordovaGeolocation, $window) {
   $ionicPlatform.ready(function() {
 
-     $scope.pageSize = 2;
+     $scope.pageSize = 7;
      
     $scope.places = Place;
 
@@ -173,6 +173,15 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
     if ($stateParams.id) {
       $scope.cat = $stateParams.id;
     }
+    $scope.i=0;
+    var place = new Firebase("https://mpf.firebaseio.com/Place");
+    place.orderByChild("category").equalTo($scope.cat).on("child_added", function(snapshot) {
+      $scope.filteredPlc = snapshot.val(); 
+       if ($scope.filteredPlc.status == 'approved') {
+          $scope.i++;
+          console.log($scope.i);
+      }
+    })
 
     var ref = new Firebase("https://mpf.firebaseio.com/category");
     ref.orderByKey().equalTo($scope.cat).on("child_added", function(snapshot) {

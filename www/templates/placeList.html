@@ -21,30 +21,37 @@
     </div>   
       <div class="row responsive-sm">
         <div class="col"> 
-          <ion-item dir-paginate="(id,plc) in places | filter: {category:cat, status:'approved'} | filter:search | orderObjectBy: 'rankVal' : true | itemsPerPage: pageSize" class="item-thumbnail-left listBox">           
+          <ion-item dir-paginate="(id,plc) in places | filter: {category:cat, status:'approved'} | filter:search | orderObjectBy: 'rankVal' : true | itemsPerPage: pageSize" class="item-thumbnail-left listBox item-text-wrap">           
               <img ng-src="{{plc.pic}}"/>
 
-              <h2  ng-click = "data(plc.$id)" class="link"><b> {{plc.name}} </b></h2>
+              <h2  ng-click = "data(plc.$id)" class="link">
+                <b> {{plc.name}} </b>
+                <span ng-if="plc.rankVal"> 
+                  <h4 class="right_p">#{{id+1}} of {{i}} {{asHeader.name}}</h4>
+                </span>
+              </h2>
               <span ng-if="currState == 'menu.list'">
                 <span ng-if="!plc.rankVal">
-                  <p>This place not being rate yet </p>
+                  <p>No review</p>
                 </span>
                 <span ng-if="plc.rankVal"> 
-                  <p>Rank : {{id + 1}}</p>
                   <!-- <p> Rank value : {{plc.rankVal}}</p> -->
                   <!-- <p> {{plc.overallStar}} </p> -->
+                  <!-- <h5>{{plc.overallStar.toFixed(1)}}</h5> -->
                   <span ng-repeat= "str in star(plc.overallStar) track by $index">
                     <i class="icon ion-android-star"></i>
                   </span>
                   <span ng-repeat= "str in star(5 - plc.overallStar) track by $index">
                     <i class="icon ion-android-star-outline"></i>
                   </span>
-                    ({{plc.ratePerson}})
+                    
+                    ({{plc.ratePerson}} reviews)
+                    
                 </span>
                 <!-- <div ng-init="loc(plc.address,id+1)"> -->
-                  <p class="subdued right" ng-init="loc(plc.address,id+1)">
+                  <p class="subdued right dist" ng-init="loc(plc.address,id+1)">
                     <span ng-if="displayDist">
-                      Distance : {{jarak[id+1]}} km 
+                      {{jarak[id+1]}} km 
                     </span>
                   </p> 
                   
@@ -70,15 +77,19 @@
               4. 4.8km
               </p> -->
           </ion-item>
-          <dir-pagination-controls
-         max-size="5"
-         direction-links="true"
-         boundary-links="true" 
-         on-page-change="pageChangeHandler(newPageNumber)"
-         template-url="lib/angularUtils-pagination/dirPagination.tpl.html"
-         >
-      </dir-pagination-controls>
+          
       </div>   
+      </div> 
+      <div class="row responsive-sm">
+        <dir-pagination-controls
+           max-size="5"
+           direction-links="true"
+           boundary-links="true" 
+           on-page-change="pageChangeHandler(newPageNumber)"
+           template-url="lib/angularUtils-pagination/dirPagination.tpl.html"
+           >
+        </dir-pagination-controls>
+      </div>
     </ion-list>  
   </ion-content>
 </ion-view>

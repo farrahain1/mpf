@@ -365,18 +365,32 @@ ul.pagination {
     display: inline-block;
     padding: 0;
     margin: 0;
+    background-color: white;
     float: right;
-    background-color: white;  
 }
 
-ul.pagination li {display: inline;}
+ul.pagination li {
+  display: inline;
+}
 
 ul.pagination li a {
     color: black;
     float: left;
     padding: 8px 16px;
     text-decoration: none;
-    border: 2px solid #ddd; /* Gray */
+    border: 1px solid #ddd; /* Gray */
+}
+
+.pagin{
+  float: right;
+  position: relative;
+  left: -50%; /* or right 50% */
+  text-align: left;
+}
+
+.pageNo{
+  font-size: 13px;
+  text-align: center;
 }
 
 .search{
@@ -392,6 +406,13 @@ ul.pagination li a {
   font-size: 17px;
 }
 
+.dist{
+  margin-top: 8px;
+}
+
+/*.rank{
+  position: right;
+}*/
 /*.positive{
   background-color: rgb(31, 159, 95);
 }*/

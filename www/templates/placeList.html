@@ -1,11 +1,14 @@
-<ion-nav-view>
-<ion-header-bar class="bar-positive">
+<!-- <ion-nav-view > -->
+<!-- <ion-header-bar class="bar-positive">
    <button class="button button-clear" ng-click="back()">Back</button>
   <h1 class="title">{{asHeader.name}}</h1>
   <button class="button button-clear" ng-click="logout()">Logout</button>
-</ion-header-bar>
+</ion-header-bar> -->
 
-<ion-view>
+<ion-view title="{{asHeader.name}}">
+  <!-- <ion-nav-title>
+    Test
+    </ion-nav-title> -->
 
   <ion-content class="has-header padding">  
 
@@ -20,6 +23,7 @@
         <div class="col"> 
           <ion-item dir-paginate="(id,plc) in places | filter: {category:cat, status:'approved'} | filter:search | orderObjectBy: 'rankVal' : true | itemsPerPage: pageSize" class="item-thumbnail-left listBox">           
               <img ng-src="{{plc.pic}}"/>
+
               <h2  ng-click = "data(plc.$id)" class="link"><b> {{plc.name}} </b></h2>
               <span ng-if="currState == 'menu.list'">
                 <span ng-if="!plc.rankVal">

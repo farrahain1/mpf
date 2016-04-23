@@ -75,6 +75,10 @@ angular.module('mpf', ['ionic', 'firebase', 'mpf.controllers', 'ngCordova'])
       }
     }
 
+    // $rootScope.setTitle = function(title){
+    //   $rootScope.title = title;
+    // }
+
     document.addEventListener("offline", onOffline, false);
 
     function onOffline() {
@@ -123,6 +127,10 @@ angular.module('mpf', ['ionic', 'firebase', 'mpf.controllers', 'ngCordova'])
       if (!authData) {
         $rootScope.userEmail = null;
         $window.location.href = '#/auth/signin';
+      }
+      else{
+         $window.location.href = '#/menu/browse';
+         /*$window.location.reload();*/
       }
     };
 

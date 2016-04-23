@@ -3,6 +3,7 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
     '$scope', '$rootScope', '$firebaseAuth', '$window', 'profile', '$ionicPlatform',
     function ($scope, $rootScope, $firebaseAuth, $window, profile, $ionicPlatform) {
       $ionicPlatform.ready(function() {
+        $rootScope.checkUser();
         $scope.user = {
           email: "",
           password: ""
@@ -62,6 +63,7 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
   function ($state, $scope, $rootScope, $firebaseAuth, $window, $ionicHistory, $ionicPlatform) {
      $ionicPlatform.ready(function() {
 
+        $rootScope.checkUser();
         // $rootScope.checkConnection();
        $scope.user = {
           email: "",
@@ -137,7 +139,8 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
 
 .controller('BrowseCtrl', function($rootScope, $scope, $state, $window, $ionicModal, $firebase, $ionicHistory, category, $ionicPlatform) {
   $ionicPlatform.ready(function() {
-  
+    // $rootScope.setTitle("Browse");
+
     $scope.category = category;
     
     $scope.currState = $ionicHistory.currentStateName();
@@ -174,6 +177,7 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
     var ref = new Firebase("https://mpf.firebaseio.com/category");
     ref.orderByKey().equalTo($scope.cat).on("child_added", function(snapshot) {
       $scope.asHeader = snapshot.val(); 
+      /*$rootScope.setTitle($scope.asHeader.name);*/
     })
 
    $scope.currState = $ionicHistory.currentStateName();

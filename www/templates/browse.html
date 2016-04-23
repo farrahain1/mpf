@@ -1,16 +1,16 @@
-<ion-header-bar class="bar-positive">
+<!-- ion-header-bar class="bar-positive">
   <button class="button button-clear" ng-click="back()">Back</button>
     <h1 class="title">BROWSE</h1>
   <button class="button button-clear" ng-click="logout()">Logout</button>
-</ion-header-bar> 
-<ion-view>
-<ion-content class="has-header padding">
+</ion-header-bar>  -->
+<ion-view title="Browse">
+<ion-content class="padding">
 	<ion-list>
     <div class="row responsive-sm">
       <div class="col">		
   	    <ion-item ng-repeat="(id,cat) in category track by $index"  class="item-thumbnail-left listBox"  ng-click = "data(cat.$id)">
           <img ng-src="{{cat.pic}}"/>
-  				<h2><b> {{cat.name}} </b></h2>
+  				<span class="browseName"><b> {{cat.name}} </b></span>
   			</ion-item>
       </div>
     </div>

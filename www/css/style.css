@@ -244,7 +244,10 @@ p.satu {
 
 .title{
   font-family: Calibri;
+  text-align: center;
 }
+
+
 
 .listFont{
    font-family: Calibri;
@@ -381,6 +384,12 @@ ul.pagination li a {
   margin-right: auto;
   margin-left: auto;
   margin-bottom: 5px;
+}
+
+.browseName{
+  line-height: 70px;
+  text-align: left;
+  font-size: 17px;
 }
 
 /*.positive{

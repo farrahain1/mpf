@@ -129,8 +129,12 @@ angular.module('mpf', ['ionic', 'firebase', 'mpf.controllers', 'ngCordova'])
         $window.location.href = '#/auth/signin';
       }
       else{
-         $window.location.href = '#/menu/browse';
-         /*$window.location.reload();*/
+          if(authData.uid == '1f198755-1dcf-4ae7-9051-82dd65b4eb3c'){
+            $window.location.href = '#/adminMenu/verify';   
+          }
+          else{
+            $window.location.href = '#/menu/browse';   
+          }
       }
     };
 

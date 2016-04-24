@@ -21,7 +21,7 @@
     </div>   
       <div class="row responsive-sm">
         <div class="col"> 
-          <ion-item dir-paginate="(id,plc) in places | filter: {category:cat, status:'approved'} | filter:search | orderObjectBy: 'rankVal' : true | itemsPerPage: pageSize" class="item-thumbnail-left listBox item-text-wrap">           
+          <ion-item dir-paginate="(id,plc) in places | filter: {category:cat, status:'approved'} | filter:search | orderBy: 'rankVal' : true | itemsPerPage: pageSize" class="item-thumbnail-left listBox item-text-wrap">           
               <img ng-src="{{plc.pic}}"/>
 
               <h2  ng-click = "data(plc.$id)" class="link">
@@ -45,7 +45,7 @@
                     <i class="icon ion-android-star-outline"></i>
                   </span>
                     
-                    ({{plc.ratePerson}} reviews)
+                    <span style="font-size: 13px">({{plc.ratePerson}} reviews)</span>
                     
                 </span>
                 <!-- <div ng-init="loc(plc.address,id+1)"> -->

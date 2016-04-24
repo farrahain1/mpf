@@ -162,7 +162,6 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
      $scope.pageSize = 7;
      
     $scope.places = Place;
-
     
 
     $scope.star=function(n){
@@ -390,6 +389,7 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
             },
             address: this.address,
             userId : $scope.id,
+            rankVal: 0,
             status: status,
             pic: pic,
             created_date : Firebase.ServerValue.TIMESTAMP
@@ -429,6 +429,7 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
           owner : this.own.owner,
           address: this.address,
           userId : $scope.id,
+          rankVal: 0,
           status: status,
           pic: pic,
           created_date : Firebase.ServerValue.TIMESTAMP

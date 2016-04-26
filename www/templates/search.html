@@ -1,12 +1,12 @@
-<ion-modal-view class="searchA">
-<div class="buttons">
-      <button class="button button-clear" ng-click="closeSearch()">Close</button>
+<div class="modal transparent searchA">
+  	<div class="card searchBox">
+   		<i class="icon ion-ios-close close-modal" style="left:0" ng-click="closeSearch()"></i>
+		<div class="item item-input listBox">
+			<input type="text" placeholder="Search" ng-model="searchString" autofocus="true">
+   			<a class="button button-clear" ng-click="searchData(searchString)">
+   				<i class="icon ion-search placeholder-icon"></i>
+   			</a>
+		</div>
+	</div> 
  </div>
-<div class="list list-inset">
-  <div class="item item-input">
-    <i class="icon ion-search placeholder-icon"></i>
-    <input type="text" placeholder="Search" ng-model="searchString">
-   		<a class="button button-clear" ng-click="searchData(searchString)">GO</a>
-  </div>  
-</div>
-</ion-modal-view>
+

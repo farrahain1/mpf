@@ -209,9 +209,9 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
         // }
       
         $scope.displayDist = false;
-        $ionicLoading.show({
-          template: '<ion-spinner icon="bubbles"></ion-spinner><br/>Calculating Distances..'
-        });
+        // $ionicLoading.show({
+        //   template: '<ion-spinner icon="bubbles"></ion-spinner><br/>Calculating Distances..'
+        // });
 
         var posOptions = {
           enableHighAccuracy: true,
@@ -239,7 +239,7 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
           }) 
 
             $scope.displayDist = true;
-            $ionicLoading.hide();  
+            // $ionicLoading.hide();  
             $state.go($state.current, {}, {reload: true});    
 
                
@@ -572,7 +572,7 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
       });
 
       if(placeDet.update){
-        $rootScope.notify("Edited successfully");
+        // $rootScope.notify("Edited successfully");
         var ref = new Firebase("https://mpf.firebaseio.com/Place");
         ref.orderByChild("name").equalTo(nama).on("child_added", function(snapshot) {
           var placeId = snapshot.key();
@@ -583,6 +583,7 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
             $state.go('adminMenu.details', { id: placeId });
           }
         });
+        // $rootScope.hide();
       }
      }
 

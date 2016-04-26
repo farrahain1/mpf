@@ -242,6 +242,16 @@ angular.module('mpf', ['ionic', 'firebase', 'mpf.controllers', 'ngCordova'])
        }
     })
 
+    // .state('menu.search', {
+    //   url: '/search',
+    //   views: {
+    //     'menu-search': {
+    //       templateUrl: 'templates/searchResult.html',
+    //       controller: 'resultCtrl'
+    //     }
+    //   }
+    // })
+
     .state('menu.searchResult', {
       url: '/searchResult/:id',
       views: {

@@ -1,9 +1,4 @@
-<ion-view>
-	<ion-header-bar class="bar-positive">
-		<button class="button button-clear" ng-click="back()">Back</button>
-		<h1 class="title">Profile</h1>
-		<button class="button button-clear" ng-click="logout()">Logout</button>
-	</ion-header-bar>
+<ion-view title="Profile">
 	<ion-content>
 		<div>
 			<center>
@@ -16,29 +11,33 @@
 				 		No pic
 				 	</span>
 				 </span>
-				<!-- <img src="img/profile.png" style="width: 150px; margin-top: 5px;"> -->
+				
+	  				<i class="icon ion-edit" ng-click="getImageSaveContact()"></i>
+  				
 				<h3>{{data.name}}</h3>
-				<!-- <a class="button icon-left ion-navigate button-positive" style="margin-top: 5px;" ng-click="uploadImage()">Change profile pic</a>		 -->
-				<button class="button button-energized" ng-click="getImageSaveContact()">
-	  				Change image
-  				</button>		
+						
 			</center>
-			<div class="loginInfo">
-				<h3>Login Information</h3>
+			 <ion-item class="row detailBox item-text-wrap">
+        <div class="col" >    
+				<h3 class="center">Login Information</h3>
 				
 				<div>
-					<p>Username : {{data.name}} 
-					<p>Email Address : {{email}}
+					<p>Username : {{data.name}}</p> 
+					<p>Email Address : {{email}}</p>
 					<p>Password : ******  <button class="subdued right_p mar" ng-click="show()">
       					Change Password
     				</button></p>
 					
 				</div>
 				</div>
+				</ion-item>
+			</div>
 			
-			<h4 ng-if="(pl| filter: {userId:profId}).length == 0">You did not added any place</h4>
+			<h4 style="margin-left: 15px" ng-if="(pl| filter: {userId:profId}).length == 0">You did not added any place</h4>
 			<span ng-if="(pl| filter: {userId:profId}).length > 0">
-			<h4>List of added places</h4>
+			<h4 style="margin-left: 15px">List of added places</h4>
+			<!-- <ion-item class="row detailBox item-text-wrap">
+        	<div class="col" >  -->
 			 <div class="search">
 		        <label class="item item-input">
 		             <i class="icon ion-search placeholder-icon"></i>
@@ -46,34 +45,21 @@
 		        </label>
 		    </div>   
 			<div class="list">
-			<div dir-paginate="plc in pl | filter: {userId:profId} | filter: search | itemsPerPage:5" >
-				<div class="item">
-					<img ng-src="{{plc.pic}}" style="width:82px; height: auto; margin-top: 5px;"/>
+			<ion-item dir-paginate="plc in pl | filter: {userId:profId} | filter: search | itemsPerPage:5" class="item-thumbnail-left listBox item-text-wrap" >
+					<img ng-src="{{plc.pic}}"/>
 					<span class="link" ng-click="plcDetails(plc.$id)">{{plc.name}}</span>
 					<h3>{{plc.created_date | date:'dd MMM yyyy hh:mm:ss '}} </h3>
 					<h3>{{plc.status}}</h3>
 					<h3>{{plc.rejectMsg}}</h3>
-					<button class="button button-positive subdued right_p" ng-click="delPlc(plc.$id,plc.name)">
-      					<i class="icon ion-trash-a"></i>
-    				</button>	
+      				<i class="icon ion-trash-a profBut" ng-click="delPlc(plc.$id,plc.name)"></i>
 
     				<span ng-if="plc.status != 'reject'">
-					<button class="button button-positive subdued right_p mar" ng-click="editPlc(plc.$id)">
-      					<i class="icon ion-edit"></i>
-    				</button>
+      					<i class="icon ion-edit profBut" ng-click="editPlc(plc.$id)"></i>
     				</span>
-
-    				
-
-				</div>
+    				</ion-item>
+    				<br>
 			</div>
-			<dir-pagination-controls
-         max-size="5"
-         direction-links="true"
-         boundary-links="true" 
-         template-url="lib/angularUtils-pagination/dirPagination.tpl.html"
-         >
-      </dir-pagination-controls>
+			
 		  		<!-- <div class="item">
 		    		Place 1	
 		    		<button class="button button-positive" ng-click="edit()">
@@ -92,8 +78,16 @@
       					<i class="icon ion-trash-a"></i>
     				</button>		    		
 		  		</div> -->
-		  	</div>
+		  	<!-- </div>
+		  	</ion-item> -->
 		  	</span>
+		  	<dir-pagination-controls
+         max-size="5"
+         direction-links="true"
+         boundary-links="true" 
+         template-url="lib/angularUtils-pagination/dirPagination.tpl.html"
+         >
+      </dir-pagination-controls>
 		</div>
 	</ion-content>
 </ion-view>

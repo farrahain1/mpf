@@ -10,7 +10,7 @@
     Test
     </ion-nav-title> -->
 
-  <ion-content class="has-header padding">  
+  <ion-content class="has-header">  
 
     <ion-list> 
     <div class="search">
@@ -26,10 +26,10 @@
 
               <h2  ng-click = "data(plc.$id)" class="link">
                 <b> {{plc.name}} </b>
+              </h2>
                 <span ng-if="plc.rankVal"> 
                   <h4 class="right_p">#{{id+1}} of {{i}} {{asHeader.name}}</h4>
                 </span>
-              </h2>
               <span ng-if="currState == 'menu.list'">
                 <span ng-if="!plc.rankVal">
                   <p>No review</p>

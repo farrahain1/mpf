@@ -1,7 +1,8 @@
-     <div class="modal transparent">
+ <ion-content>
+    <div class="modal-transparent">
      	<div class="card">
      		<i class="icon ion-ios-close close-modal" ng-click="closeSearch(2)"></i>
-     		 <div class="item item-divider listBox">
+     		 <!-- <div class="item item-divider listBox"> -->
 			   <!-- <i class="icon ion-star star-rate"></i>
 			   <i class="icon ion-star star-rate"></i>
 			   <i class="icon ion-star star-rate"></i>
@@ -9,21 +10,23 @@
 			   <i class="icon ion-star star-rate"></i> -->
 			  <!--  <rating ng-model="rating.rate" max="rating.max"></rating> -->
 			  <ionic-ratings ratingsobj='ratingsObject'></ionic-ratings>
+			  
 			  <a class="right_p link" style="margin-right: 10px;" ng-model="collapsed" ng-click="collapsed=!collapsed">Add Review?</a>
-			 </div>
+			 <!-- </div> -->
 			 <!-- <div class="item item-divider">
 			   <button class="button right_p" ng-model="collapsed" ng-click="collapsed=!collapsed">Add Review?</button>
 			 </div> -->
-			 <div class="item item-divider listBox" ng-show="collapsed">
+			 <br>
+			 <div class="listBox" ng-show="collapsed">
 			 <!-- <form > -->
 			 	<label class="item item-input">
 			 		<textarea placeholder="Add Review" ng-model="message"></textarea>
 			 	</label>
 			 <!-- </form> -->
 			 </div>
-			 <div class="item item-divider listBox">
-			   <center><a class="button icon-left ion-checkmark-round"  ng-click="addRate(2)">Submit</a></center>
+			 <div>
+			   <center><a class="button icon-left ion-checkmark-round"   style="margin-top: 10px; margin-bottom: 10px" ng-click="addRate(2)">Submit</a></center>
 			 </div>
 		</div> 
      </div>
-
+</ion-content>

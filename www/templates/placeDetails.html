@@ -1,16 +1,11 @@
-<ion-nav-view>
-    <ion-header-bar class="bar-positive">
-     <button class="button button-clear" ng-click="back()">Back</button>
-        <h1 class="title">{{data.name}}</h1>
-     <button class="button button-clear" ng-click="logout()">Logout</button>
-  </ion-header-bar>
-  <ion-content class="has-header padding">    
+<ion-view title="{{data.name}}">
+  <ion-content>    
     <ion-list>
-      <div class="imgCenter">
-        <img class="imgCenter" ng-src="{{data.pic}}" style="width:82px; height: auto; margin-top: 5px;"/>
+      <div class="center">
+        <img ng-src="{{data.pic}}"/>
       </div>
-      <div class="titleCenter">
-        <b>{{data.name}}</b>
+      <div class="detailBox center ">
+        <b >{{data.name}}</b>
         <br>
         <span ng-if="ave">
             <span ng-repeat=  "str in star(ave) track by $index">
@@ -21,7 +16,7 @@
             </span>
           </span>
       </div>
-      <ion-item class="row detailBox item-text-wrap">
+      <div class="detailBox item-text-wrap">
         <div class="col" >     
           <br>
           <span class="ion-location">
@@ -105,11 +100,11 @@
           <!-- {{data.created_date | date:'dd MMM yyyy hh:mm:ss '}}  -->
          <!--  <br>  -->         
         </div>
-      </ion-item>
+      </div>
 
       <div class="row responsive-sm">
         <span ng-if="currState == 'adminMenu.details'" class="centerB">
-          <span ng-if="data.status != 'pending'">
+          <span ng-if="data.status != 'Pending'">
             <button class="button icon-left ion-trash-a right_p" ng-click="delPlc(data.name)">
               Delete
             </button> 
@@ -118,7 +113,7 @@
               Edit
             </button>
           </span>
-          <span ng-if="data.status == 'pending'">
+          <span ng-if="data.status == 'Pending'">
             <button class="button icon-left ion-plus-round" ng-click="appPlc(data.name)">
               Approve
             </button> 
@@ -130,9 +125,9 @@
         </span>
 
       </div>
-      <div>
+      <div class="center">
         <span ng-if="currState == 'menu.details'">
-          <span ng-if="data.status == 'approved'">
+          <span ng-if="data.status == 'Approved'">
                   <!--   <a class="button icon-left ion-navigate button-positive" style="width: 200px; height: 20px; margin-top: 5px;" ng-click="show(1)">Navigate<ion-nav-view name="menu-navigate"></ion-nav-view></a> -->
          
             <a class="button icon-left ion-navigate"
@@ -145,15 +140,15 @@
               Rate
             </button>
             <button class="button icon-left ion-clipboard" ng-click="show(3)">
-              View Review
+              Reviews
             </button>
           </span>
-          <span ng-if="data.status == 'reject' || data.status == 'pending'">
+          <span ng-if="data.status == 'Rejected' || data.status == 'Pending'">
             <button class="button icon-left ion-trash-a" ng-click="delPlc(data.name)">
               Delete
             </button> 
           </span>
-          <span ng-if="data.status == 'pending' ">
+          <span ng-if="data.status == 'Pending' ">
             <button class="button icon-left ion-android-create" ng-click="editPlc()">
               Edit
             </button>
@@ -161,4 +156,4 @@
         </span>
     </ion-list> 
   </ion-content>
-<ion-nav-view>
+</ion-view>

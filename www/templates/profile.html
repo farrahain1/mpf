@@ -17,14 +17,15 @@
 				<h3>{{data.name}}</h3>
 						
 			</center>
-			 <ion-item class="row detailBox item-text-wrap">
+			 <ion-item class="detailBox item-text-wrap">
         <div class="col" >    
 				<h3 class="center">Login Information</h3>
 				
 				<div>
 					<p>Username : {{data.name}}</p> 
 					<p>Email Address : {{email}}</p>
-					<p>Password : ******  <button class="subdued right_p mar" ng-click="show()">
+					<p>Password : ******  
+					<button class="subdued right_p pass" ng-click="show()">
       					Change Password
     				</button></p>
 					
@@ -45,15 +46,17 @@
 		        </label>
 		    </div>   
 			<div class="list">
-			<ion-item dir-paginate="plc in pl | filter: {userId:profId} | filter: search | itemsPerPage:5" class="item-thumbnail-left listBox item-text-wrap" >
+			<ion-item dir-paginate="plc in pl | filter: {userId:profId} | filter: search | itemsPerPage:5" class="item-thumbnail-left detailBox item-text-wrap" >
 					<img ng-src="{{plc.pic}}"/>
-					<span class="link" ng-click="plcDetails(plc.$id)">{{plc.name}}</span>
-					<h3>{{plc.created_date | date:'dd MMM yyyy hh:mm:ss '}} </h3>
-					<h3>{{plc.status}}</h3>
-					<h3>{{plc.rejectMsg}}</h3>
+					<h3 class="link" ng-click="plcDetails(plc.$id)"><b>{{plc.name}}</b></h3>
+					<h4>{{plc.created_date | date:'dd MMM yyyy hh:mm:ss '}} </h4>
+					<h4>Status : {{plc.status}}</h4>
+					<span ng-if="plc.status == 'Rejected'">
+						<h4>Message from Admin : {{plc.rejectMsg}}</h4>
+					</span>
       				<i class="icon ion-trash-a profBut" ng-click="delPlc(plc.$id,plc.name)"></i>
 
-    				<span ng-if="plc.status != 'reject'">
+    				<span ng-if="plc.status != 'Rejected'">
       					<i class="icon ion-edit profBut" ng-click="editPlc(plc.$id)"></i>
     				</span>
     				</ion-item>

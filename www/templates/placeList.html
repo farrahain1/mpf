@@ -10,26 +10,27 @@
     Test
     </ion-nav-title> -->
 
-  <ion-content class="has-header">  
+  <ion-content>  
 
     <ion-list> 
     <div class="search">
         <label class="item item-input">
              <i class="icon ion-search placeholder-icon"></i>
-            <input type="text" ng-model="search" placeholder="Search">
+            <input type="text" ng-model="search" placeholder="Search" cache="false">
         </label>
     </div>   
       <div class="row responsive-sm">
         <div class="col"> 
-          <ion-item dir-paginate="(id,plc) in places | filter: {category:cat, status:'approved'} | filter:search | orderBy: 'rankVal' : true | itemsPerPage: pageSize" class="item-thumbnail-left listBox item-text-wrap">           
+          <ion-item dir-paginate="(id,plc) in places | filter: {category:cat, status:'Approved'} | filter:search | orderBy: 'rankVal' : true | itemsPerPage: pageSize" class="item-thumbnail-left listBox item-text-wrap">           
               <img ng-src="{{plc.pic}}"/>
-
-              <h2  ng-click = "data(plc.$id)" class="link">
+              <div class="detailsList" ng-click = "data(plc.$id)">
+              <h2   class="link">
                 <b> {{plc.name}} </b>
-              </h2>
+              
                 <span ng-if="plc.rankVal"> 
                   <h4 class="right_p">#{{id+1}} of {{i}} {{asHeader.name}}</h4>
                 </span>
+                </h2>
               <span ng-if="currState == 'menu.list'">
                 <span ng-if="!plc.rankVal">
                   <p>No review</p>
@@ -58,12 +59,13 @@
                 <!-- </div> -->
                
               </span>
-              <span ng-if="currState == 'adminMenu.list' || plc.status == 'pending'">
+              </div>
+              <span ng-if="currState == 'adminMenu.list' || plc.status == 'Pending'">
                 <button class="button icon-left ion-trash-a subdued right_p" ng-click="delPlc(plc.$id,plc.name)">
                   Delete
                 </button> 
 
-                <span ng-if="plc.status != 'pending'">
+                <span ng-if="plc.status != 'Pending'">
                   <button class="button icon-left ion-android-create subdued right_p mar" ng-click="editPlc(plc.$id)">
                     Edit
                   </button>
@@ -76,6 +78,7 @@
               3.  14km
               4. 4.8km
               </p> -->
+              
           </ion-item>
           
       </div>   

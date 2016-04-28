@@ -1,13 +1,9 @@
 <ion-nav-view>
-<ion-header-bar class="bar-positive">
-   <button class="button button-clear" ng-click="back()">Back</button>
-  <h1 class="title">VERIFICATION</h1>
-  <button class="button button-clear" ng-click="logout()">Logout</button>
-</ion-header-bar>
 
 
 
-<ion-view>
+
+<ion-view title="Verification">
 
 <ion-content class="has-header padding">  
   <ion-list> 
@@ -16,8 +12,8 @@
    
     
       <!--   <div ng-repeat="(id,plc) in places | orderObjectBy: 'created_date' : true " class="row responsive-sm">  -->
-      <h4 class="pending" ng-if="(places| filter: {status: 'pending'} ).length == 0">.No Pending Place.</h4>
-        <ion-item ng-repeat="(id,plc) in places | filter: {status:'pending'} |orderObjectBy: 'created_date' : true " class="item-thumbnail-left listBox"> 
+      <h4 class="Pending" ng-if="(places| filter: {status: 'Pending'} ).length == 0">.No Pending Place.</h4>
+        <ion-item ng-repeat="(id,plc) in places | filter: {status:'Pending'} |orderObjectBy: 'created_date' : true " class="item-thumbnail-left listBox"> 
            
           <!--  <ion-item class="col listBoxBorder "> -->
               <!-- <div class="item-thumbnail-left listBox"> -->

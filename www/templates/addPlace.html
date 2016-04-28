@@ -1,71 +1,60 @@
-<ion-view>
-	<ion-header-bar class="bar-positive">
-		<button class="button button-clear" ng-click="back()">Back</button>
-		<h1 class="title">ADD PLACE</h1>
-		<button class="button button-clear" ng-click="logout()">Logout</button>
-	</ion-header-bar>
+<ion-view title="Add Place">
 	<ion-content>	
-		<span ng-if="currState != 'adminMenu.addPlace'">
-			<div class="list">
-				<h4>Do you wish to add a place or a business?</h4>
-				<label class="item item-input item-stacked-label">
+		<!-- <span ng-if="currState != 'adminMenu.addPlace'">
+				<h5 class="det">Do you wish to add a place or a business?</h5>
+				 <div class="row responsive-sm">
+        		<div class="col"> 
+				<label>
 					<ion-radio name="tempat" ng-model="pilihan.tempat"  ng-click="place(1)" value="place">Place</ion-radio>
 					<ion-radio name="tempat" ng-model="pilihan.tempat"  ng-click="place(2)" value="buss">Business</ion-radio>
 				</label>
-			</div>
-		</span>
+				</div>
+				</div>
+		</span> -->
 
 		<div class="row responsive-sm">
 			<div class="col"> 
+			<div>
 				<form name="placeForm" class="addPForm">
-				<div ng-hide="addPlace">
-					
-				 	<img ng-src="{{imgData}}" style="width:30%; height: auto; margin-top: 5px;"/>
-				 	
-				 	<button class="button button-energized" ng-click="getImageSaveContact()">
+				
+				 	<div class="center">
+				 	<img ng-src="{{imgData}}"/>
+				 	<br>
+				 	<button class="button addImgBut" ng-click="getImageSaveContact()">
 	  					Add image
   					</button>	
-				  	
-					<span ng-if="currState == 'adminMenu.addPlace'">
-					  	<span class="input-label addPL">Place/Business Name :</span>
-					</span>
-					<span ng-if="currState != 'adminMenu.addPlace'">
-					  	<span class="addPL">Place Name :</span>
-					</span>					
-				    <input class="addPT" ng-model="name" name="name"  required>
-				    <p class="ion-information-circled col satu" ng-show="placeForm.name.$error.required">
-				    	This field is required
+  					</div>
+				  	<br>
+				  	<p class="ion-information-circled satu" ng-show="placeForm.name.$error.required">
+				    	This field is required!
 				    </p>
-				  				    
-				    <span class="input-label addPL">
-				    	Address :
-				    </span>				    
-				    <input class="addPT" ng-model="address" name="address" required>
-				    <p class="ion-information-circled col satu" ng-show="placeForm.address.$error.required">
+					
+					  	<input class="addPT" ng-model="name" name="name"  placeholder=" Place Name" required>
+					
+								
+				    
+				  	<p class="ion-information-circled satu" ng-show="placeForm.address.$error.required">
 				    	This field is required
-				    </p>
+				    </p>				    
+				    <input class="addPT" ng-model="address" name="address" placeholder=" Address" required>
+				    
 
 				    <span class="input-label addPL">
 				    	Category :
 				    </span>
+				    <p class="ion-information-circled satu" ng-show="placeForm.category.$error.required">This field is required</p>
 				    <select class="addPT" name="category" ng-model="category" required>
 					    <option value="Mosque">Mosque</option>
 					    <option value="MK">Market</option>			      
-						<option ng-if="currState == 'adminMenu.addPlace'" value="HC">Healthcare</option>
-						<option ng-if="currState == 'adminMenu.addPlace'" value="BC">Beautycare</option>
-						<option ng-if="currState == 'adminMenu.addPlace'" value="BT">Boutique</option>
-						<option ng-if="currState == 'adminMenu.addPlace'" value="FD">Food and Drink</option>					
+						<option value="HC">Healthcare</option>
+						<option value="BC">Beautycare</option>
+						<option value="BT">Boutique</option>
+						<option value="FD">Food and Drink</option>					
 					</select>
-					<p class="ion-information-circled col satu" ng-show="placeForm.category.$error.required">This field is required</p>
-				  
-				    <span class="input-label addPL">
-				    	Place helpline  No. : 
-				    </span>
-				    <input class="addPT" ng-model="phone">
+					
+				    <input class="addPT" placeholder="Phone No." ng-model="phone">
 				  
 				    <span class="input-label addPL">Closed Day(s) : </span>
-				   
-				     
 				    <ion-list>
 				     	<div class="boxWidth">
 						   	<ion-checkbox name="hari" ng-init="formDatas.hari.sunday=false" ng-model="formDatas.hari.sunday" >
@@ -91,200 +80,95 @@
 						  	</ion-checkbox>
 						</div>
 					</ion-list>
-				
-				 
+				   
+				    <input class="addPT" ng-model="website" placeholder="Website"> 	
 
-				 		<!--  <label class="item item-input item-stacked-label">
-				    <span class="input-label">Operation Time</span>
-				     <ion-list>
-				     	 <ion-radio name="time" ng-model="formTime.time" value="specific" ng-click="spTime()">Specific Time</ion-radio>
-					        <label class="item item-input item-stacked-label" ng-hide="sTime">
-					          
-					          <span class="input-label">Opening Time</span>
-					          <input type="time"  ng-model="openTime">
-					          </label>
-					      <label class="item item-input item-stacked-label" ng-hide="sTime">
-					          <span class="input-label">Closing Time</span>
-					          <input type="time" ng-model="closeTime">
-					        </label>
-					     <ion-radio name="time" ng-model="formTime.time" value="allTime" ng-click="closeSPTime()">24 hours</ion-radio>
-					</ion-list>
-				  </label>	 -->													
-				    <span class="input-label addPL">
-				    	Website
-				    </span>
-				    <input class="addPT" ng-model="website"> 			  
-				    
-				</div>
-				
 				</form>
 				<div class="right_p">
-					<button class="button icon-left ion-checkmark-round" ng-click="addP()" ng-disabled="!name || !category || !address">
+					<button class="button icon-left ion-checkmark-round"  style="margin-top: 10px; margin-bottom: 10px" ng-click="addP()" ng-disabled="!name || !category || !address">
 						Submit
 					</button>
 				</div>
-			</div>
-		</div>
+		 	</div>
+	  
+			<!-- <div ng-hide="addBusiness">
+				<form name="businessForm" class="addPForm">
+					<img ng-src="{{imgData}}"/>	 	
+					<div class="center">
+						<button class="button addImgBut" ng-click="getImageSaveContact()">
+			  				Add image
+		  				</button>	
+		  			</div>
+		  			<br>
+					<p class="ion-information-circled satu" ng-show="businessForm.name.$error.required">This field is required
+					</p>
+				    <input class="addPT" ng-model="name" name="name" placeholder="Business Name" required>
+				    
+				    <p class="ion-information-circled satu" ng-show="businessForm.address.$error.required">
+						This field is required
+					</p>				    
+					<input class="addPT" ng-model="address" name="address" placeholder=" Address" required>
 
-	 <form name="businessForm">
-		<div class="list" ng-hide="addBusiness">
-			<img ng-src="{{imgData}}" style="width:30%; height: auto; margin-top: 5px;"/>
-				 	
-			<button class="button button-energized" ng-click="getImageSaveContact()">
-	  			Add image
-  			</button>	
-		  <label class="item item-input item-stacked-label">
-		    <span class="input-label">Business Name </span>
-		    <input class="col col-50 inline" ng-model="name" name="name" placeholder="Business Name" required>
-		    <p class="ion-information-circled col satu" ng-show="businessForm.name.$error.required">This field is required</p>
-		  </label>
-          
-		  <label class="item item-input item-stacked-label">
-		    <span class="input-label">Category</span>
-		        <select class="col col-50 inline" name="category" ng-model="category" required>
-			      <option value="HC">Healthcare</option>
-			      <option value="BC">Beautycare</option>
-			      <option value="BT">Boutique</option>
-			      <option value="FD">Food and Drink</option>
-			     <!-- <option>Taman Rekreasi</option> 
-			     <option>Miscellaneous</option> -->
-			    </select>
-			     <p class="ion-information-circled col satu" ng-show="businessForm.category.$error.required">This field is required</p>
-		  </label>
+					<span class="input-label addPL">
+					   	Category :
+					</span>
+					<p class="ion-information-circled satu" ng-show="businessForm.category.$error.required">This field is required</p>
+				    <select class="addPT" name="category" ng-model="category" required>
+					    <option value="HC">Healthcare</option>
+					    <option value="BC">Beautycare</option>
+					    <option value="BT">Boutique</option>
+					    <option value="FD">Food and Drink</option>
+				    </select>
 
-		  <label class="item item-input item-stacked-label">
-		    <span class="input-label">Address </span>
-		    <input class="col col-50 inline" ng-model="address" name="address" required>
-		    <p class="ion-information-circled col satu" ng-show="businessForm.address.$error.required">This field is required</p>
-		  </label>
-
-		  <label class="item item-input item-stacked-label">
-		    <span class="input-label">Support Helpline  No. </span>
-		    <input placeholder="0761881999" ng-model="phone">
-		  </label>
-		  
-		  <label class="item item-input item-stacked-label">
-		    <span class="input-label col col-15 inline">Closed Days</span>
-		   
-		     <ion-list>			  
+				    <input class="addPT" placeholder="Phone No." ng-model="phone">
 				  
-				  <label class="item item-input item-stacked-label">
-				   <ion-checkbox name="hari" ng-init="formDatas.hari.sunday=false" ng-model="formDatas.hari.sunday" >Sunday</ion-checkbox>
-				 <ion-checkbox name="hari" ng-init="formDatas.hari.monday=false" ng-model="formDatas.hari.monday">Monday</ion-checkbox>
-				  <ion-checkbox name="hari" ng-init="formDatas.hari.tuesday=false" ng-model="formDatas.hari.tuesday">Tuesday</ion-checkbox>
-				  <ion-checkbox name="hari" ng-init="formDatas.hari.wednesday=false" ng-model="formDatas.hari.wednesday">Wednesday</ion-checkbox>
-				  <ion-checkbox name="hari" ng-init="formDatas.hari.thursday=false" ng-model="formDatas.hari.thursday">Thursday</ion-checkbox>
-				  <ion-checkbox name="hari" ng-init="formDatas.hari.friday=false" ng-model="formDatas.hari.friday">Friday</ion-checkbox>
-				  <ion-checkbox name="hari" ng-init="formDatas.hari.saturday=false" ng-model="formDatas.hari.saturday">Saturday</ion-checkbox>
-				  </label>
-			</ion-list>
-		  </label>
+				  
+				  	<span class="input-label addPL">
+				  		Closed Day(s) : 
+				  	</span>
+					<ion-list>
+					  	<div class="boxWidth">
+						   	<ion-checkbox name="hari" ng-init="formDatas.hari.sunday=false" ng-model="formDatas.hari.sunday" >
+						   		Sunday
+						   	</ion-checkbox>
+						 	<ion-checkbox name="hari" ng-init="formDatas.hari.monday=false" ng-model="formDatas.hari.monday">
+						 		Monday
+						 	</ion-checkbox>
+						  	<ion-checkbox name="hari" ng-init="formDatas.hari.tuesday=false" ng-model="formDatas.hari.tuesday">
+						  		Tuesday
+						  	</ion-checkbox>
+						  	<ion-checkbox name="hari" ng-init="formDatas.hari.wednesday=false" ng-model="formDatas.hari.wednesday">		
+						  		Wednesday
+						  	</ion-checkbox>
+						  	<ion-checkbox name="hari" ng-init="formDatas.hari.thursday=false" ng-model="formDatas.hari.thursday">
+						  		Thursday
+						  	</ion-checkbox>
+						  	<ion-checkbox name="hari" ng-init="formDatas.hari.friday=false" ng-model="formDatas.hari.friday">
+						  		Friday
+						  	</ion-checkbox>
+						  	<ion-checkbox name="hari" ng-init="formDatas.hari.saturday=false" ng-model="formDatas.hari.saturday">
+						  		Saturday
+						  	</ion-checkbox>
+						</div>
+					</ion-list>
 
-		 <!--  <label class="item item-input item-stacked-label">
-		    <span class="input-label">Operation Time</span>
-		     <ion-list>
-		     	 <ion-radio name="time" ng-model="formTime.time" value="specific" ng-click="spTime()">Specific Time</ion-radio>
-			        <label class="item item-input item-stacked-label" ng-hide="sTime">
-			          
-			          <span class="input-label">Opening Time</span>
-			          <input type="time"  ng-model="openTime">
-			          </label>
-			      <label class="item item-input item-stacked-label" ng-hide="sTime">
-			          <span class="input-label">Closing Time</span>
-			          <input type="time" ng-model="closeTime">
-			        </label>
-			     <ion-radio name="time" ng-model="formTime.time" value="allTime" ng-click="closeSPTime()">24 hours</ion-radio>
-			</ion-list>
-		  </label> -->
-
-		  <label class="item item-input item-stacked-label">
-		    <span class="input-label">Website</span>
-		    <input type="text" placeholder="John" ng-model="website"> 
-		  </label>
-		  
-		   <label class="item item-input item-stacked-label">		   
-		    <span class="input-label" ng-init="own.owner='yes'">Is this your own business?</span>
-		    <ion-radio name="owner" ng-model="own.owner" value="yes">Yes</ion-radio>
-		    <ion-radio name="owner" ng-model="own.owner" value="no">No</ion-radio>
-		  </label>
-		<!--   <label class="item item-input item-stacked-label">
-		    <span class="input-label">Company Reg. No</span>
-		    <input type="text" ng-model="regNo">
-		  </label> -->
-		    <div>
-			   <button class="button icon-left button-positive" style="margin-left: 150px" ng-click="addP()" ng-disabled="!name || !category || !address">		Submit
-			   </button>
-			   <br>
-		    </div>
-		</div>
-		</form> 
-
-		<!-- <div class="list" ng-hide="addBusiness">
-		  <label class="item item-input item-stacked-label">
-		    <span class="input-label">Business Name</span>
-		    <input type="text" placeholder="John">
-		  </label>
-		   <label class="item item-input item-stacked-label">
-		    <span class="input-label">Category</span>
-		        <select>
-			      <option selected>Healthcare</option>
-			      <option>Beautycare</option>
-			      <option>Boutique</option>
-			      <option>Food and Drink</option>
-			    </select>
-		  </label>
-		  <label class="item item-input item-stacked-label">
-		    <span class="input-label">Place helpline  No. </span>
-		    <textarea placeholder="john@suhr.com"></textarea>
-		  </label>
-		  
-		  <label class="item item-input item-stacked-label">
-		    <span class="input-label">Operation Days</span>
-		     <ion-list>
-				  <ion-checkbox>Isnin</ion-checkbox>
-				  <ion-checkbox>Selasa</ion-checkbox>
-				  <ion-checkbox>Rabu</ion-checkbox>
-				  <ion-checkbox>Khamis</ion-checkbox>
-				  <ion-checkbox>Jumaat</ion-checkbox>
-				  <ion-checkbox>Sabtu</ion-checkbox>
-				  <ion-checkbox>Ahad</ion-checkbox>
-				</ion-list>
-		  </label>
-
-		  <label class="item item-input item-stacked-label">
-		    <span class="input-label">Operation Time</span>
-		     <ion-list>
-			        <label class="item item-input">
-			          <span class="input-label">Opening Time</span>
-			          <input type="time" ng-model="model.time" formatted-time>
-			        </label>
-			         <label class="item item-input">
-			          <span class="input-label">Closing Time</span>
-			          <input type="time" ng-model="model.time" formatted-time>
-			        </label>
-			</ion-list>
-		  </label>
-
-		  <label class="item item-input item-stacked-label">
-		    <span class="input-label">Website</span>
-		    <input type="text" placeholder="John">
-		  </label>
-		  <label class="item item-input item-stacked-label">
-		    <span class="input-label">Is this your own business?</span>
-		    <ion-radio>Yes</ion-radio>
-		    <ion-radio>No</ion-radio>
-		  </label>
-		  <label class="item item-input item-stacked-label">
-		    <span class="input-label">Company Reg. No</span>
-		    <input type="text" placeholder="John">
-		  </label>
-		   <div>
-			   <a class="button icon-left button-positive" style="margin-left: 150px">Submit</a><br>
-			   <input type="submit" value="Save" class="btn btn-primary"> 
-		    </div>
-		</div> -->
-
-		
+					<input class="addPT" ng-model="website" placeholder="Website"> 	
+				  
+					<span class="input-label addPL" ng-init="own.owner='yes'">
+						Is this your own business?
+					</span> 
+					<div class="boxWidth">
+					   	<ion-radio name="owner" ng-model="own.owner" value="yes">Yes</ion-radio>
+					   	<ion-radio name="owner" ng-model="own.owner" value="no">No</ion-radio>
+					</div>
+				</form>  
+				<div class="right_p">
+					<button class="button icon-left ion-checkmark-round"  style="margin-top: 10px; margin-bottom: 10px" ng-click="addP()" ng-disabled="!name || !category || !address">
+						Submit
+					</button>
+				</div>
+				</div> -->
+			</div>
+		</div> 
 		</ion-content>
-	
 </ion-view>

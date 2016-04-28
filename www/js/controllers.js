@@ -266,19 +266,19 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
 
     var user = new Firebase("https://mpf.firebaseio.com");
     $scope.id = user.getAuth().uid;
-    if($scope.currState == "menu.addPlace"){
+    /*if($scope.currState == "menu.addPlace"){
       $scope.addPlace = true; 
       $scope.addBusiness = true; 
     }
     else if($scope.currState == "adminMenu.addPlace"){
       $scope.addPlace = false;  
       $scope.addBusiness = true;
-    }
+    }*/
       
     $scope.days = true;
     $scope.sTime = true;
     
-    $scope.place = function(index){
+   /* $scope.place = function(index){
       if(index == 1){
         $scope.addPlace = false;  
         $scope.addBusiness = true;      
@@ -287,7 +287,7 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
         $scope.addBusiness = false;
         $scope.addPlace = true;
       }
-    }
+    }*/
      
     $scope.day = function(){
       $scope.days = false;
@@ -365,14 +365,14 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
       }
       var stateNow = $ionicHistory.currentStateName();
         if(stateNow == 'adminMenu.addPlace'){
-          $scope.pilihan.tempat = "place";
-          var status = "approved";
+          /*$scope.pilihan.tempat = "place";*/
+          var status = "Approved";
         }
         else{
-          var status = "pending";
+          var status = "Pending";
         }
 
-        if($scope.pilihan.tempat === "place"){
+        // if($scope.pilihan.tempat === "place"){
           $scope.places.$add({
             name : this.name,
             category: this.category,
@@ -395,7 +395,7 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
             created_date : Firebase.ServerValue.TIMESTAMP
         
           }).then(function() {
-              $rootScope.notify('Successfully Add!');
+              $rootScope.notify('Successfully send to Admin for approval');
               var stateNow = $ionicHistory.currentStateName();     
               var ref = new Firebase("https://mpf.firebaseio.com/Place");
               ref.orderByChild("name").equalTo(nama).on("child_added", function(snapshot) {
@@ -408,7 +408,7 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
                 }
               });
            });
-        }
+        /*}
 
         else if($scope.pilihan.tempat === "buss"){
        
@@ -443,20 +443,47 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
               $state.go('menu.details', { id: placeId });
             });
         });
-      }
+      }*/
       
-      $rootScope.notify('Successfully Add');
-    }
+      /*$rootScope.notify('Successfully Add');*/
+    } //penutup addp()
 
 
     $scope.data = {
       category: null
     }
+     $scope.collection = {
+          selectedImage : ''
+        };
+
+       
+          $scope.getImageSaveContact = function() {       
+      
+          // Image picker will load images according to these settings
+            var options = {
+              maximumImagesCount: 1, // Max number of selected images, I'm using only one for this example
+              width: 150,
+              height: 150,
+              quality: 80            // Higher is better
+            };
+   
+          $cordovaImagePicker.getPictures(options).then(function (results) {
+          // Loop through acquired images
+              $scope.imgData = results[0];
+              window.plugins.Base64.encodeFile($scope.imgData, function(base64){  // Encode URI to Base64 needed for contacts plugin
+                $scope.imgData = base64;
+                // $scope.addContact(results[0]);    // Save contact
+              });
+              // $state.go($state.current, {}, {reload: true});    
+          }, function(error) {
+            // console.log('Error: ' + JSON.stringify(error));    // In case of error
+        });
+      };
 
      ////////////////////////////////////////////////////
      ////////////       edit place   ////////////////////
      ////////////////////////////////////////////////////
-    var stateNow = $ionicHistory.currentStateName();
+    /*var stateNow = $ionicHistory.currentStateName();
     if(stateNow == "menu.editPlace"){
       if ($stateParams.id) {
         $scope.plcId = $stateParams.id;
@@ -484,33 +511,7 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
     }
    }
 
-   $scope.collection = {
-          selectedImage : ''
-        };
-
-       
-          $scope.getImageSaveContact = function() {       
-      
-          // Image picker will load images according to these settings
-            var options = {
-              maximumImagesCount: 1, // Max number of selected images, I'm using only one for this example
-              width: 100,
-              height: 100,
-              quality: 80            // Higher is better
-            };
-   
-          $cordovaImagePicker.getPictures(options).then(function (results) {
-          // Loop through acquired images
-              $scope.imgData = results[0];
-              window.plugins.Base64.encodeFile($scope.imgData, function(base64){  // Encode URI to Base64 needed for contacts plugin
-                $scope.imgData = base64;
-                // $scope.addContact(results[0]);    // Save contact
-              });
-              // $state.go($state.current, {}, {reload: true});    
-          }, function(error) {
-            // console.log('Error: ' + JSON.stringify(error));    // In case of error
-        });
-      };  
+    */
     
  
    ////////////////////////////////////////////////////////
@@ -552,7 +553,6 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
       $scope.currState = $ionicHistory.currentStateName();
        
       $scope.editP = function(){
-
       var nama = this.data.name;
       placeDet.update ({
         name: this.data.name,
@@ -567,12 +567,12 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
             friday: $scope.data.close_days.friday,
             saturday: $scope.data.close_days.saturday
         },
-        address: this.data.address,
-        pic: this.imgData
+        address: this.data.address/*,
+        pic: $scope.imgData*/
       });
 
       if(placeDet.update){
-        // $rootScope.notify("Edited successfully");
+        $rootScope.notify("Edited successfully");
         var ref = new Firebase("https://mpf.firebaseio.com/Place");
         ref.orderByChild("name").equalTo(nama).on("child_added", function(snapshot) {
           var placeId = snapshot.key();
@@ -607,13 +607,20 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
               $scope.imgData = results[0];
               window.plugins.Base64.encodeFile($scope.imgData, function(base64){  // Encode URI to Base64 needed for contacts plugin
                 $scope.imgData = base64;
-                // $scope.addContact(results[0]);    // Save contact
+                $scope.addContact(results[0]);    // Save contact
               });
               // $state.go($state.current, {}, {reload: true});    
           }, function(error) {
             // console.log('Error: ' + JSON.stringify(error));    // In case of error
         });
       };  
+
+       $scope.addContact = function(results) {
+          placeDet.update({
+            pic : results
+          });
+      }; 
+
   })
 })
 
@@ -975,7 +982,13 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
 
     //utk admin menu
     $scope.editPlc = function(){
-      $state.go('adminMenu.editPlace', { id: $scope.det}); 
+      if($scope.currState === "adminMenu.details"){
+        $state.go('adminMenu.editPlace', { id: $scope.det});   
+      }
+      else if($scope.currState === "menu.details"){
+        $state.go('menu.editPlace', { id: $scope.det});   
+      }
+      
     }
 
     $scope.delPlc = function(plcName){

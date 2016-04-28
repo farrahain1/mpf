@@ -1,27 +1,25 @@
-<ion-view>
-	<ion-header-bar class="bar-positive">
-		<button class="button button-clear" ng-click="back()">Back</button>
-		<h1 class="title">Edit Place</h1>
-		<button class="button button-clear" ng-click="logout()">Logout</button>
-	</ion-header-bar>
+<ion-view title="Edit {{data.name}}">
 	<ion-content>
 		<div class="list">
 			<div class="row responsive sm">
 				<div class="col">
 					<form name="placeForm" class="addPForm">
 				    	<span ng-if="imgData">
-				 			<img ng-src="{{imgData}}" style="width:30%; height: auto; margin-top: 5px;"/>
+				    		<div class="center">
+				 				<img ng-src="{{imgData}}" style="width:30%; height: auto; margin-top: 5px;"/>
+				 			</div>
 				 		</span>
 				 		<span ng-if="!imgData">
-				 			<img ng-src="{{data.pic}}" style="width:30%; height: auto; margin-top: 5px;"/>
+				 			<div class="center">
+				 				<img ng-src="{{data.pic}}" style="width:30%; height: auto; margin-top: 5px;"/>
+				 			</div>
 				 		</span>
-				    	<button class="button button-energized" ng-click="getImageSaveContact()">
-	  						Add image
-  						</button>
-				    	<span class="input-label addPL">
-				    		Place/Business Name
-				    	</span>
-			    		<input class="addPT" ng-model="data.name">
+				 		<div class="center">
+				    		<button class="button addImgBut" ng-click="getImageSaveContact()">
+	  							Add image
+  							</button>	
+  						</div>
+			    		<input class="addPT" ng-model="data.name" placeholder="Place/Business Name">
 			    		
 			    		<span class="input-label addPL">
 			    			Category

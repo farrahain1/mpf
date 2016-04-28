@@ -9,10 +9,16 @@
 
   
   <ion-list>
+  <div class="search">
+        <label class="item item-input">
+             <i class="icon ion-search placeholder-icon"></i>
+            <input type="text" ng-model="search" placeholder="Search">
+        </label>
+    </div> 
     <div class="row responsive-sm">
       <div class="col">         
         <h4 ng-if="(plc| filter: result).length == 0">No result found</h4>
-          <ion-item dir-paginate="(id,place) in plc | filter: result | orderBy: 'rankVal' : true | itemsPerPage: 5" ng-click="placeData(place.$id)" class="item-thumbnail-left listBox">    
+          <ion-item dir-paginate="(id,place) in plc | filter: result | filter: {status:'Approved'} |orderBy: 'rankVal' : true | filter:search  | itemsPerPage: 5" ng-click="placeData(place.$id)" class="item-thumbnail-left listBox">    
              <img ng-src="{{place.pic}}"/>
               <h2>
               <b> {{place.name}} </b>

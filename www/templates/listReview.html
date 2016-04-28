@@ -1,24 +1,34 @@
 <!-- <ion-modal-view> -->
-
 <ion-content>
      <div class="modal-transparent">
+     <div class="card">
      	<i class="icon ion-ios-close close-modal"   ng-click="closeSearch(3)"></i>
      	<!-- <div class="card" > -->
      	<!-- <ion-content> -->
-     	<div class="item item-divider">
+     	
 	     	<span ng-if="!revData">
-	     	Be the first one to review this place <a ng-click="showFadd()">here!</a>
-
+	     	<br>
+	     	 &nbsp&nbspBe the first one to review this place <a ng-click="showFadd()">here!</a>
+	     	 <br>
+	     	 <br>
 	     	</span>
 
 	     	<ion-item dir-paginate="(name,datas) in revData| itemsPerPage:5">
+	     		<span ng-repeat= "str in star(datas.rating) track by $index">
+				  	<i class="icon ion-android-star"></i>
+				  </span>
+				  <span ng-repeat= "str in star(5 - datas.rating) track by $index">
+				  	<i class="icon ion-android-star-outline"></i>
+				  </span>
+				  <h5 class="right_p">{{datas.creation_date | date:'dd/MM/yyyy'}}</h5>
+				  <h3>{{datas.message}}</h3>
 				  <!-- <h3>Anynomous:</h3>
 				  <h4>Good!</h4> -->
-			<div class="item item-divider listBox">
+			<!-- <div class="item item-divider listBox"> -->
 				  <span ng-repeat="prof in profile | filter: {email: datas.user}">
-				  	<h3>{{prof.name}}</h3>
+				  	<h4>by <i style="color: green;">{{prof.name}}</i> </h4>
 				  </span>
-				  <h4>{{datas.message}}</h4>
+				  
 				  
 
 				  <!-- <span ng-init="userN(name)">
@@ -27,18 +37,13 @@
 				  <h4
 				  <h4>{{datas.rating}}</h4> -->
 	 				
-				  <span ng-repeat= "str in star(datas.rating) track by $index">
-				  	<i class="icon ion-android-star"></i>
-				  </span>
-				  <span ng-repeat= "str in star(5 - datas.rating) track by $index">
-				  	<i class="icon ion-android-star-outline"></i>
-				  </span>
-				  <h4 class="subdued right">{{datas.creation_date | date:'dd/MM/yyyy hh:mm:ss '}}</h4>
+				  
+				 <!--  <h4 class="subdued right">{{datas.creation_date | date:'dd/MM/yyyy hh:mm:ss '}}</h4> -->
 				  
 			   <!-- <ionic-ratings ratingsobj='ratingsDisplay'></ionic-ratings>  -->
-			</div> 	
+			<!-- </div>  -->	
 				</ion-item>
-			</div>
+			
 
 			  
 				
@@ -49,7 +54,7 @@
 			   <h3>Ain:</h3>
 			  <h4>Good!</h4>
 			 </div> -->
-			 <div class="item item-divider">
+			 <div>
 			 <dir-pagination-controls
          max-size="5"
          direction-links="true"
@@ -58,16 +63,16 @@
          >
       </dir-pagination-controls>
       </div>
-			 <div class="item item-divider">
+			 <!-- <div class="item item-divider">
 			   <center>
 			   		<a class="button icon-left button-positive" style="margin-top: 10px; margin-bottom: 10px;" ng-click="closeSearch(3)">Close</a>
 			   	</center>
-			 </div>
+			 </div> -->
 
 			<!-- </ion-content>   -->
 		<!-- </div> --> 
-		
+		</div>
      </div>
-</ion-content>
 <!-- </ion-modal-view> -->
 
+</ion-content>

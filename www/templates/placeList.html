@@ -5,7 +5,7 @@
   <button class="button button-clear" ng-click="logout()">Logout</button>
 </ion-header-bar> -->
 
-<ion-view title="{{asHeader.name}}">
+<ion-view title="{{asHeader.name}}" cache="false">
   <!-- <ion-nav-title>
     Test
     </ion-nav-title> -->
@@ -21,14 +21,27 @@
     </div>   
       <div class="row responsive-sm">
         <div class="col"> 
-          <ion-item dir-paginate="(id,plc) in places | filter: {category:cat, status:'Approved'} | filter:search | orderBy: 'rankVal' : true | itemsPerPage: pageSize" class="item-thumbnail-left listBox item-text-wrap">           
-              <img ng-src="{{plc.pic}}"/>
+          <ion-item dir-paginate="(id,plc) in places | filter: {category:cat, status:'Approved'}| filter:search | orderBy: 'rankVal' : true | itemsPerPage: pageSize" style="border: none;">  
+          <p  ng-init="loc(plc.address,id+1)" >
+                    <!-- <span ng-if="displayDist">
+                      {{jarak[id+1].dist}} km 
+                    </span> -->
+          </p> 
+          <!-- <div  class="item-thumbnail-left listBox item-text-wrap"> -->
+          
+            <span ng-if="jarak[id+1].display">
+            <div  class="item-thumbnail-left listBox item-text-wrap" style="margin-right: 0px; margin-left: 0px">
+            <img ng-src="{{plc.pic}}"/>
+            
+              
               <div class="detailsList" ng-click = "data(plc.$id)">
               <h2   class="link">
                 <b> {{plc.name}} </b>
               
-                <span ng-if="plc.rankVal"> 
-                  <h4 class="right_p">#{{id+1}} of {{i}} {{asHeader.name}}</h4>
+                <span ng-if="currState == 'menu.list'">
+                  <span ng-if="plc.rankVal"> 
+                    <h4 class="right_p" style="margin-right: 10px;"># {{jarak[id+1].pos}} of {{bil-1}} {{asHeader.name}}</h4>
+                  </span>
                 </span>
                 </h2>
               <span ng-if="currState == 'menu.list'">
@@ -49,12 +62,9 @@
                     <span style="font-size: 13px">({{plc.ratePerson}} reviews)</span>
                     
                 </span>
+                <p class="subdued right dist">{{jarak[id+1].dist}} km </p>
                 <!-- <div ng-init="loc(plc.address,id+1)"> -->
-                  <p class="subdued right dist" ng-init="loc(plc.address,id+1)">
-                    <span ng-if="displayDist">
-                      {{jarak[id+1]}} km 
-                    </span>
-                  </p> 
+                  
                   
                 <!-- </div> -->
                
@@ -71,14 +81,63 @@
                   </button>
                 </span>
               </span>
-              <!-- {{plc.address}}
-              <p>
-              1. 7.9km
-              2. 13km
-              3.  14km
-              4. 4.8km
-              </p> -->
+              </div>
+              </span>
+              <span ng-if="displayPlc == 'failed'">
+                <div  class="item-thumbnail-left listBox item-text-wrap" style="margin-right: 0px; margin-left: 0px">
+            <img ng-src="{{plc.pic}}"/>
+            
               
+              <div class="detailsList" ng-click = "data(plc.$id)">
+              <h2   class="link">
+                <b> {{plc.name}} </b>
+              
+                <span ng-if="currState == 'menu.list'">
+                  <span ng-if="plc.rankVal"> 
+                    <h4 class="right_p" style="margin-right: 10px;">#{{id+1}} of {{i}} {{asHeader.name}}</h4>
+                  </span>
+                </span>
+                </h2>
+              <span ng-if="currState == 'menu.list'">
+                <span ng-if="!plc.rankVal">
+                  <p>No review</p>
+                </span>
+                <span ng-if="plc.rankVal"> 
+                  <!-- <p> Rank value : {{plc.rankVal}}</p> -->
+                  <!-- <p> {{plc.overallStar}} </p> -->
+                  <!-- <h5>{{plc.overallStar.toFixed(1)}}</h5> -->
+                  <span ng-repeat= "str in star(plc.overallStar) track by $index">
+                    <i class="icon ion-android-star"></i>
+                  </span>
+                  <span ng-repeat= "str in star(5 - plc.overallStar) track by $index">
+                    <i class="icon ion-android-star-outline"></i>
+                  </span>
+                    
+                    <span style="font-size: 13px">({{plc.ratePerson}} reviews)</span>
+                    
+                </span>
+                
+                <!-- <div ng-init="loc(plc.address,id+1)"> -->
+                  
+                  
+                <!-- </div> -->
+               
+              </span>
+              </div>
+              <span ng-if="currState == 'adminMenu.list' || plc.status == 'Pending'">
+                <button class="button icon-left ion-trash-a subdued right_p" ng-click="delPlc(plc.$id,plc.name)">
+                  Delete
+                </button> 
+
+                <span ng-if="plc.status != 'Pending'">
+                  <button class="button icon-left ion-android-create subdued right_p mar" ng-click="editPlc(plc.$id)">
+                    Edit
+                  </button>
+                </span>
+              </span>
+              </div>
+              </span>
+             <!--  </div> -->
           </ion-item>
           
       </div>   

@@ -4340,9 +4340,9 @@ a.subdued {
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
   border-color: #b2b2b2;
-  background-color: #f8f8f8;
+  background-color: rgb(18,95,56);
   background-image: linear-gradient(0deg, #b2b2b2, #b2b2b2 50%, transparent 50%);
-  color: #444;
+  color: white;
   position: absolute;
   bottom: 0;
   z-index: 5;
@@ -5651,7 +5651,7 @@ ion-tabs.tabs-color-active-dark .tab-item {
   z-index: 2;
   display: block;
   margin: -1px;
-  padding: 16px;
+  /*padding: 16px;*/
   border-width: 1px;
   border-style: solid;
   font-size: 16px; }

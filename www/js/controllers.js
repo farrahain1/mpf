@@ -163,6 +163,9 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
      
     $scope.places = Place;
     
+    // var rank = 1;
+    
+    
 
     $scope.star=function(n){
       if(n)
@@ -176,9 +179,10 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
     var place = new Firebase("https://mpf.firebaseio.com/Place");
     place.orderByChild("category").equalTo($scope.cat).on("child_added", function(snapshot) {
       $scope.filteredPlc = snapshot.val(); 
-       if ($scope.filteredPlc.status == 'approved') {
-          $scope.i++;
-          console.log($scope.i);
+      /*console.log($scope.filteredPlc);*/
+       if ($scope.filteredPlc.status == 'Approved') {
+          $scope.i++;/*
+          console.log($scope.i);*/
       }
     })
 
@@ -201,14 +205,14 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
     $scope.$on('$ionicView.loaded', function(){
       cordova.plugins.locationAccuracy.request(onRequestSuccess, onRequestFailure, cordova.plugins.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY);
     });
-    $scope.loc = function(address,index) {   
+    $scope.loc = function(address,index,plcObj) {   
       $ionicPlatform.ready(function() { 
         
         // if(index == 0){
         //   cordova.plugins.locationAccuracy.request(onRequestSuccess, onRequestFailure, cordova.plugins.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY);
         // }
-      
         $scope.displayDist = false;
+        $scope.displayPlc = true;
         // $ionicLoading.show({
         //   template: '<ion-spinner icon="bubbles"></ion-spinner><br/>Calculating Distances..'
         // });
@@ -230,12 +234,36 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
               $scope.destLoc = results[0].geometry.location;
             } else {
               alert('Geocode was not successful for the following reason: ' + status);
+              $scope.displayPlc = 'failed';
             }
             var p1 = new google.maps.LatLng(lat, lng);
             var p2 = new google.maps.LatLng($scope.destLoc.lat(), $scope.destLoc.lng());
 
             var d = calcDistance(p1, p2);
-            $scope.jarak[index] =  d;         
+            if(d>30){
+              $scope.displayPlc = false;
+              $scope.jarak[index] =  {dist:d,display:false};
+              
+            }
+            else if(d<30){
+              console.log(d);
+              $scope.jarak[index] =  {dist:d,display:true};
+              /*$scope.ind++;*/
+            }
+            var ind = 1;
+            var indexx = 1;
+            angular.forEach($scope.jarak, function(rank) {
+
+              if(rank.display == true){
+                $scope.jarak[indexx] = {dist:rank.dist,display:rank.display,pos:ind};
+                ind++;
+                $scope.bil = ind;
+              }
+              indexx++;
+            });
+            /*console.log($scope.displayPlc);*/
+            
+            console.log($scope.jarak);
           }) 
 
             $scope.displayDist = true;
@@ -248,6 +276,7 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
                 
             if(index == 1){
               $rootScope.notify('Failed to calculate distance');
+              $scope.displayPlc = 'failed';
             }
         });
       })
@@ -1055,9 +1084,9 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
       $scope.app = function(id){
         var plcR = new Firebase("https://mpf.firebaseio.com/Place/"+id);
         plcR.update ({
-          status: 'approved'
+          status: 'Approved'
         })
-        $rootScope.notify("The place approved");
+        $rootScope.notify("The place Approved");
         $state.go('adminMenu.verify');
       }
 
@@ -1233,7 +1262,7 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
       }
 
       
-     $scope.pageSize = 2;
+     $scope.pageSize = 7;
 
 
       //list of place

@@ -4465,7 +4465,7 @@ a.subdued {
     color: #444; }
 
 .tabs-striped .tabs {
-  background-color: white;
+  /*background-color: white;*/
   background-image: none;
   border: none;
   border-bottom: 1px solid #ddd;
@@ -4475,7 +4475,9 @@ a.subdued {
   margin-top: -2px;
   border-style: solid;
   border-width: 2px 0 0 0;
-  border-color: #444; }
+  color: black;
+  border-color: black; }
+  /*border-color: #444; }*/
   .tabs-striped .tab-item.tab-item-active .badge, .tabs-striped .tab-item.active .badge, .tabs-striped .tab-item.activated .badge {
     top: 2px;
     opacity: 1; }
@@ -5068,7 +5070,7 @@ ion-tabs.tabs-color-active-dark .tab-item {
   font-weight: 400;
   font-size: 14px;
   font-family: "-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;
-  opacity: 0.7; }
+  opacity: 1; }
   .tab-item:hover {
     cursor: pointer; }
   .tab-item.tab-hidden {
@@ -5651,7 +5653,7 @@ ion-tabs.tabs-color-active-dark .tab-item {
   z-index: 2;
   display: block;
   margin: -1px;
-  /*padding: 16px;*/
+  padding: 16px;
   border-width: 1px;
   border-style: solid;
   font-size: 16px; }
@@ -6290,7 +6292,7 @@ button.item.item-button-right {
   .item-thumbnail-left .item-content > img:first-child,
   .item-thumbnail-left .item-content .item-image {
     position: absolute;
-    top: 10px;
+    /*top: 10px;*/
     left: 10px;
     max-width: 80px;
     max-height: 80px;

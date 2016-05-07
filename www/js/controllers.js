@@ -137,7 +137,8 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
 ])
 
 
-.controller('BrowseCtrl', function($rootScope, $scope, $state, $window, $ionicModal, $firebase, $ionicHistory, category, $ionicPlatform) {
+.controller('BrowseCtrl', function(
+  $rootScope, $scope, $state, $window, $ionicModal, $firebase, $ionicHistory, category, $ionicPlatform) {
   $ionicPlatform.ready(function() {
     // $rootScope.setTitle("Browse");
 
@@ -189,7 +190,6 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
     var ref = new Firebase("https://mpf.firebaseio.com/category");
     ref.orderByKey().equalTo($scope.cat).on("child_added", function(snapshot) {
       $scope.asHeader = snapshot.val(); 
-      /*$rootScope.setTitle($scope.asHeader.name);*/
     })
 
    $scope.currState = $ionicHistory.currentStateName();
@@ -234,7 +234,7 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
               $scope.destLoc = results[0].geometry.location;
             } else {
               alert('Geocode was not successful for the following reason: ' + status);
-              $scope.displayPlc = 'failed';
+              $scope.displayPlc = false;
             }
             var p1 = new google.maps.LatLng(lat, lng);
             var p2 = new google.maps.LatLng($scope.destLoc.lat(), $scope.destLoc.lng());
@@ -246,7 +246,6 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
               
             }
             else if(d<30){
-              console.log(d);
               $scope.jarak[index] =  {dist:d,display:true};
               /*$scope.ind++;*/
             }
@@ -261,9 +260,6 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
               }
               indexx++;
             });
-            /*console.log($scope.displayPlc);*/
-            
-            console.log($scope.jarak);
           }) 
 
             $scope.displayDist = true;
@@ -276,7 +272,7 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
                 
             if(index == 1){
               $rootScope.notify('Failed to calculate distance');
-              $scope.displayPlc = 'failed';
+              $scope.displayPlc = false;
             }
         });
       })
@@ -1261,6 +1257,7 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
         $scope.cat = $stateParams.id;
       }
 
+      $scope.displayPlc = false;
       
      $scope.pageSize = 7;
 

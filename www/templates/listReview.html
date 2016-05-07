@@ -2,6 +2,7 @@
 <ion-content>
      <div class="modal-transparent">
      <div class="card">
+     <!-- <div class="row"> -->
      	<i class="icon ion-ios-close close-modal"   ng-click="closeSearch(3)"></i>
      	<!-- <div class="card" > -->
      	<!-- <ion-content> -->
@@ -14,7 +15,10 @@
 	     	</span>
 
 	     	<ion-item dir-paginate="(name,datas) in revData| itemsPerPage:5">
+	     		<div class="row">
+	     		<div class="col">
 	     		<span ng-repeat= "str in star(datas.rating) track by $index">
+	     			
 				  	<i class="icon ion-android-star"></i>
 				  </span>
 				  <span ng-repeat= "str in star(5 - datas.rating) track by $index">
@@ -28,8 +32,8 @@
 				  <span ng-repeat="prof in profile | filter: {email: datas.user}">
 				  	<h4>by <i style="color: green;">{{prof.name}}</i> </h4>
 				  </span>
-				  
-				  
+				  </div>
+				  </div>
 
 				  <!-- <span ng-init="userN(name)">
 				  </span> -->
@@ -73,6 +77,7 @@
 		<!-- </div> --> 
 		</div>
      </div>
+
 <!-- </ion-modal-view> -->
 
 </ion-content>

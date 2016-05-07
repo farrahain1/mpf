@@ -110,15 +110,27 @@ angular.module('mpf', ['ionic', 'firebase', 'mpf.controllers', 'ngCordova'])
     };
 
     $rootScope.logout = function() {
-      $ionicHistory.clearHistory();
+     
+        
+        $ionicHistory.clearHistory();
       $ionicHistory.clearCache();
        $rootScope.auth.$unauth();
       $rootScope.checkUser();
-      $state.go($state.current, {}, {reload: true});     
+      $state.go($state.current, {}, {reload: true}); 
+      
+          
     };
 
     $rootScope.back = function(){
-      window.history.back();      
+       if($ionicHistory.currentStateName() == "menu.browse"){
+        $rootScope.notify("Cannot Go Back to Login Page");
+      }
+      else if($ionicHistory.currentStateName() == "adminMenu.verify"){
+        $rootScope.notify("Cannot Go Back to Login Page");
+      }
+      else{
+        window.history.back();   
+        }   
    }
 
     $rootScope.checkUser = function(){

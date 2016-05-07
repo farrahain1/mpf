@@ -246,8 +246,8 @@ p.satu {
 .listBox{
   background-color: rgb(242,242,242);
   border: outset rgb(230,230,230);
-  margin-left: 10px;
-  margin-right: 10px;
+  /*margin-left: 10px;
+  margin-right: 10px;*/
 }
 
 .detailsList{
@@ -446,6 +446,11 @@ ul.pagination li a {
 .pass{
   width: 130px;
   height: 25px;
+}
+
+.review{
+  margin-right: 10px;
+  margin-left: 10px;
 }
 
 /*.rank{

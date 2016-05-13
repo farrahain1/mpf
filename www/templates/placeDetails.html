@@ -1,5 +1,9 @@
 <ion-view title="{{data.name}}">
-  <ion-content>    
+  <ion-content>   
+     <ion-refresher
+          pulling-text="Refreshing..."
+          on-refresh="refresh()">
+      </ion-refresher> 
     <ion-list>
       <div class="center">
         <img ng-src="{{data.pic}}"/>

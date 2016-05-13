@@ -121,6 +121,11 @@ angular.module('mpf', ['ionic', 'firebase', 'mpf.controllers', 'ngCordova'])
           
     };
 
+    $rootScope.refresh = function(){
+      $window.location.reload();
+       $scope.$broadcast('scroll.refreshComplete');
+    }
+
     $rootScope.back = function(){
        if($ionicHistory.currentStateName() == "menu.browse"){
         $rootScope.notify("Cannot Go Back to Login Page");

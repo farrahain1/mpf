@@ -15,11 +15,72 @@
             <input type="text" ng-model="search" placeholder="Search">
         </label>
     </div> 
-    <div class="row responsive-sm">
-      <div class="col">         
+  <!--   <div class="row responsive-sm">
+      <div class="col">   -->       
         <h4 ng-if="(plc| filter: result).length == 0">No result found</h4>
-          <ion-item dir-paginate="(id,place) in plc | filter: result | filter: {status:'Approved'} | orderBy: 'rankVal' : true | filter:search  | itemsPerPage: 5" ng-click="placeData(place.$id)" class="item-thumbnail-left listBox">    
-             <img ng-src="{{place.pic}}"/>
+          <ion-item ng-repeat="(id,place) in plc | filter: result | filter: {status:'Approved'}"   style="border: none; padding: 0px;">    
+
+             <p  ng-init="loc(place.address,id+1,place)">
+             
+                    <!-- <span ng-if="displayDist">
+                      {{jarak[id+1].dist}} km 
+                    </span> -->
+           </p> 
+           </ion-item>
+
+           <div class="row responsive-sm">
+        <div class="col"> 
+          <div class="right_p">
+            <h4>
+            <span>Sort By : </span>
+             <span ng-click="order('pos')">Rank</span>
+             <span class="sortorder" ng-show="predicate === 'pos'"></span>
+             <span ng-click="order('dist')">Distance</span>
+             <span class="sortorder" ng-show="predicate === 'dist'"></span>
+             </h4>
+           </div>
+
+           <ion-item dir-paginate="(id,plc) in jarak | filter: {display:true} | filter: search | orderBy: predicate | itemsPerPage: pageSize" class="item-thumbnail-left listBox item-text-wrap"  >  
+           <img ng-src="{{plc.place.pic}}"/>
+           <div class="detailsList" ng-click = "data(plc.place.$id)">
+              <b>{{plc.place.name}}</b>
+             
+                  <span ng-if="plc.place.rankVal"> 
+                      <h4 class="right_p" style="margin-right: 10px;"># {{plc.pos}} of {{bil-1}} {{result}}</h4>
+                  </span>
+                
+
+                
+                <span ng-if="!plc.place.rankVal">
+                  <p>No review</p>
+                </span>
+                <span ng-if="plc.place.rankVal"> 
+                <br>
+                  <!-- <p> Rank value : {{plc.rankVal}}</p> -->
+                  <!-- <p> {{plc.overallStar}} </p> -->
+                  <!-- <h5>{{plc.overallStar.toFixed(1)}}</h5> -->
+                  <span ng-repeat= "str in star(plc.place.overallStar) track by $index">
+                    <i class="icon ion-android-star"></i>
+                  </span>
+                  <span ng-repeat= "str in star(5 - plc.place.overallStar) track by $index">
+                    <i class="icon ion-android-star-outline"></i>
+                  </span>
+                    
+                    <span style="font-size: 13px">({{plc.place.ratePerson}} reviews)</span>
+                    
+                </span>
+                <span ng-if="plc.display">
+                <p class="subdued right dist">{{plc.dist}} km </p>
+                </span>               
+            
+
+              </div>
+          </ion-item>
+          
+      </div>   
+      </div> 
+
+            <!--  <img ng-src="{{place.pic}}"/>
               <h2>
               <b> {{place.name}} </b>
                <span ng-if="place.rankVal"> 
@@ -31,8 +92,6 @@
                 <p>No review </p>
               </span>
               <span ng-if="place.rankVal"> 
-                  <!-- <p> Rank value : {{plc.rankVal}}</p> -->
-                  <!-- <p> {{plc.overallStar}} </p> -->
                   <span ng-repeat= "str in star(place.overallStar) track by $index">
                     <i class="icon ion-android-star"></i>
                   </span>
@@ -41,7 +100,6 @@
                   </span>
                    <span style="font-size: 13px">({{place.ratePerson}} reviews)</span>
                 </span>
-               <!--  <button ng-click="loc(place.address,id+1)">Click</button> -->
                 <p class="subdued right" ng-init="loc(place.address,id+1)">
                   <span ng-if="displayDist" style="margin-right: 5px;">
                     {{jarak[id+1]}} km 
@@ -49,7 +107,9 @@
                 </p>   
         </ion-item>
         </div>
-        </div>
+        </div> -->
+
+
     <div class="row responsive-sm">
         <dir-pagination-controls
            max-size="5"

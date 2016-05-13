@@ -163,6 +163,8 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
      $scope.pageSize = 7;
      
     $scope.places = Place;
+    $scope.noMoreItemsAvailable = false;
+   
     
     // var rank = 1;
     
@@ -187,6 +189,15 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
       }
     })
 
+    place.orderByChild("category").equalTo($scope.cat).on("child_added", function(snapshot) {
+      $scope.filteredPlc = snapshot.val(); 
+      //console.log($scope.filteredPlc);
+       if ($scope.filteredPlc.status == 'Approved') {
+          $scope.i++;
+          // console.log($scope.i);
+      }
+    })
+
     var ref = new Firebase("https://mpf.firebaseio.com/category");
     ref.orderByKey().equalTo($scope.cat).on("child_added", function(snapshot) {
       $scope.asHeader = snapshot.val(); 
@@ -205,8 +216,29 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
     $scope.$on('$ionicView.loaded', function(){
       cordova.plugins.locationAccuracy.request(onRequestSuccess, onRequestFailure, cordova.plugins.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY);
     });
-    $scope.loc = function(address,index,plcObj) {   
+    /*$scope.distanceFilt = 5;*/
+    /*$scope.setDist = function(dist){
+      console.log("masuk");
+        $scope.distanceFilt = dist;
+      } */
+
+       $scope.predicate = 'pos';
+  /*$scope.reverse = false;*/
+
+      $scope.order = function(predicate) {
+    // $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : true;
+    $scope.predicate = predicate;
+  };
+    var ind = 1;
+    $scope.loc = function(address,index,plcObj) { 
+
+
       $ionicPlatform.ready(function() { 
+        $scope.filtD = 290;
+        $scope.filterDi = function(){
+          console.log("dont let me be gone");
+          $scope.filtD = this.filterD;
+        }
         
         // if(index == 0){
         //   cordova.plugins.locationAccuracy.request(onRequestSuccess, onRequestFailure, cordova.plugins.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY);
@@ -240,29 +272,52 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
             var p2 = new google.maps.LatLng($scope.destLoc.lat(), $scope.destLoc.lng());
 
             var d = calcDistance(p1, p2);
-            if(d>30){
+            if(d>$scope.filtD){
+              //console.log("d>5 : " + plcObj.name);
+              //console.log(plcObj);
               $scope.displayPlc = false;
-              $scope.jarak[index] =  {dist:d,display:false};
+              $scope.jarak[index] =  {place: plcObj, dist:d,display:false};
+             // console.log($scope.jarak[index]);
               
             }
-            else if(d<30){
-              $scope.jarak[index] =  {dist:d,display:true};
-              /*$scope.ind++;*/
-            }
-            var ind = 1;
-            var indexx = 1;
-            angular.forEach($scope.jarak, function(rank) {
-
-              if(rank.display == true){
-                $scope.jarak[indexx] = {dist:rank.dist,display:rank.display,pos:ind};
+            else if(d<$scope.filtD){
+              //console.log(plcObj);
+              //console.log("d<5 : " + plcObj.name);
+              if(plcObj.rankVal == 0){
+                $scope.jarak[index] =  {place: plcObj, dist:d,display:true};
+              }
+              else{
+                $scope.jarak[index] = {place: plcObj, dist:d,display:true,pos:ind};
                 ind++;
                 $scope.bil = ind;
               }
-              indexx++;
-            });
+              
+              //console.log($scope.jarak);
+              /*$scope.ind++;*/
+
+            }
+            //console.log($scope.jarak);
+            // var ind = 1;
+            // var indexx = 1;
+            // angular.forEach($scope.jarak, function(rank) {
+              
+            //   if(rank.display == true){
+            //     if(rank.place.rankVal != 0){
+            //       console.log(index);
+            //       $scope.jarak[indexx] = {place: rank.place, dist:rank.dist,display:rank.display,pos:ind};
+            //       //console.log($scope.jarak[index]);
+            //     ind++;
+            //     $scope.bil = ind;
+            //     }
+                
+            //   }
+            //    // console.log($scope.jarak);
+            //   indexx++;
+            // });
           }) 
 
             $scope.displayDist = true;
+
             // $ionicLoading.hide();  
             $state.go($state.current, {}, {reload: true});    
 
@@ -701,7 +756,16 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
       $state.go('menu.details', { id: placeId });
     };
 
-    $scope.loc = function(address,index) {   
+     $scope.predicate = 'pos';
+  /*$scope.reverse = false;*/
+
+      $scope.order = function(predicate) {
+    // $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : true;
+    $scope.predicate = predicate;
+  };
+    var ind = 1;
+    $scope.pageSize = 5;
+    $scope.loc = function(address,index,plcObj) {   
       $ionicPlatform.ready(function() { 
         if(index === 0){
           cordova.plugins.locationAccuracy.request(onRequestSuccess, onRequestFailure, cordova.plugins.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY);
@@ -734,7 +798,30 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
             var p2 = new google.maps.LatLng($scope.destLoc.lat(), $scope.destLoc.lng());
 
             var d = calcDistance(p1, p2);
-            $scope.jarak[index] =  d;         
+            if(d>290){
+              //console.log("d>5 : " + plcObj.name);
+              //console.log(plcObj);
+              $scope.displayPlc = false;
+              $scope.jarak[index] =  {place: plcObj, dist:d,display:false};
+             // console.log($scope.jarak[index]);
+              
+            }
+            else if(d<290){
+              //console.log(plcObj);
+              //console.log("d<5 : " + plcObj.name);
+              if(plcObj.rankVal == 0){
+                $scope.jarak[index] =  {place: plcObj, dist:d,display:true};
+              }
+              else{
+                $scope.jarak[index] = {place: plcObj, dist:d,display:true,pos:ind};
+                ind++;
+                $scope.bil = ind;
+              }
+              
+              console.log($scope.jarak);
+              /*$scope.ind++;*/
+
+            }      
           }) 
 
             $scope.displayDist = true;

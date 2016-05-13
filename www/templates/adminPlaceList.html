@@ -1,0 +1,66 @@
+<!-- <ion-nav-view> -->
+
+
+
+
+<ion-view title="{{asHeader.name}}">
+
+<ion-content>
+
+  
+  <ion-list>
+  <div class="search">
+        <label class="item item-input">
+             <i class="icon ion-search placeholder-icon"></i>
+            <input type="text" ng-model="search" placeholder="Search">
+        </label>
+    </div> 
+    <div class="row responsive-sm">
+      <div class="col">         
+          <ion-item dir-paginate="(id,place) in places | filter: {category: cat, status:'Approved'} | orderBy: 'rankVal' : true  | filter:search  | itemsPerPage: 5"  class="item-thumbnail-left listBox">    
+             <img ng-src="{{place.pic}}"/>
+              <div ng-click="data(place.$id)">
+              <h2>
+              <b> {{place.name}} </b>
+              </h2>
+              
+              <span ng-if="!place.rankVal">
+                <p>No review </p>
+              </span>
+              <span ng-if="place.rankVal"> 
+                  <!-- <p> Rank value : {{plc.rankVal}}</p> -->
+                  <span ng-repeat= "str in star(place.overallStar) track by $index">
+                    <i class="icon ion-android-star"></i>
+                  </span>
+                  <span ng-repeat= "str in star(5 - place.overallStar) track by $index">
+                    <i class="icon ion-android-star-outline"></i>
+                  </span>
+                   <span style="font-size: 13px">({{place.ratePerson}} reviews)</span>
+                </span>
+                </div>
+                <button class="button icon-left ion-trash-a subdued right_p" ng-click="delPlc(place.$id,place.name)">
+                  Delete
+                </button> 
+               
+                  <button class="button icon-left ion-android-create subdued right_p mar" ng-click="editPlc(place.$id)">
+                    Edit
+                  </button>
+        </ion-item>
+        </div>
+        </div>
+    <div class="row responsive-sm">
+        <dir-pagination-controls
+           max-size="5"
+           direction-links="true"
+           boundary-links="true" 
+           on-page-change="pageChangeHandler(newPageNumber)"
+           template-url="lib/angularUtils-pagination/dirPagination.tpl.html"
+           >
+        </dir-pagination-controls>
+      </div>
+  </ion-list>
+  
+</ion-content>
+</ion-view>
+<!-- <ion-nav-view>
+ -->

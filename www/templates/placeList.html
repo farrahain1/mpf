@@ -169,14 +169,14 @@
            <ion-item dir-paginate="(id,plc) in jarak | filter: {display:true} | filter: search | orderBy: predicate | itemsPerPage: pageSize" class="item-thumbnail-left listBox item-text-wrap"  >  
            <img ng-src="{{plc.place.pic}}"/>
            <div class="detailsList" ng-click = "data(plc.place.$id)">
-              <b>{{plc.place.name}}</b>
-              <span ng-if="currState == 'menu.list'">
+              <b>{{plc.place.name}}
+            
                   <span ng-if="plc.place.rankVal"> 
-                      <h4 class="right_p" style="margin-right: 10px;"># {{plc.pos}} of {{bil-1}} {{asHeader.name}}</h4>
+                      <h4 class="subdued right_p" style="padding: none;"># {{plc.pos}} of {{bil-1}} {{asHeader.name}}</h4>
                   </span>
-                </span>
+              </b>
 
-                 <span ng-if="currState == 'menu.list'">
+                 
                 <span ng-if="!plc.place.rankVal">
                   <p>No review</p>
                 </span>
@@ -198,20 +198,10 @@
                 <span ng-if="plc.display">
                 <p class="subdued right dist">{{plc.dist}} km </p>
                 </span>               
-              </span>
+             
 
               </div>
-              <span ng-if="currState == 'adminMenu.list' || plc.status == 'Pending'">
-                <button class="button icon-left ion-trash-a subdued right_p" ng-click="delPlc(plc.place.$id,plc.place.name)">
-                  Delete
-                </button> 
-
-                <span ng-if="plc.status != 'Pending'">
-                  <button class="button icon-left ion-android-create subdued right_p mar" ng-click="editPlc(plc.place.$id)">
-                    Edit
-                  </button>
-                </span>
-              </span>
+             
           </ion-item>
           
       </div>   

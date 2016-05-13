@@ -846,7 +846,7 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
   })
 })
 
-.controller('detailsCtrl', function($rootScope, $scope, $firebaseAuth, $state, $stateParams, $window, $ionicModal, $timeout, $ionicHistory, $ionicPopup, $cordovaGeolocation,  Place, review, profile, $ionicPlatform) {
+.controller('detailsCtrl', function($rootScope, $scope, $firebaseAuth, $state, $stateParams, $window, $ionicModal, $timeout, $ionicHistory, $ionicPopup, $cordovaGeolocation,  Place, review, profile, $ionicPlatform, $cordovaSocialSharing) {
   $ionicPlatform.ready(function() {
     $ionicHistory.clearCache();
     $ionicHistory.clearHistory();
@@ -864,6 +864,12 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
       $scope.det = $stateParams.id;
     }
 
+    /*************************** SHARE VIA SOCIAL MEDIA ***********************************/
+     $scope.shareAnywhere = function(name) {
+        $cordovaSocialSharing.share("I'm visiting " + name + "! Find nearby Muslim places via Muslim Places Finder apps!" , "MPF",  "www/img/mpflogo.png", null);
+    }
+
+    /****************************************************************/
     var ref = new Firebase("https://mpf.firebaseio.com/Place");
     var rev = new Firebase("https://mpf.firebaseio.com/review");
     var prof = new Firebase("https://mpf.firebaseio.com/profile");
@@ -1367,6 +1373,11 @@ angular.module('mpf.controllers', ['firebase', 'ionic-ratings', 'angularUtils.di
     };
 
      $scope.places = Place;
+
+     $scope.star=function(n){
+      if(n)
+       return new Array(n);
+    };
 
      $scope.editPlc = function(plcId){
        $state.go('adminMenu.editPlace', { id: plcId}); 

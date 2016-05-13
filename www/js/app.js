@@ -467,7 +467,7 @@ angular.module('mpf', ['ionic', 'firebase', 'mpf.controllers', 'ngCordova'])
       url: '/list/:id',
       views: {
         'adminMenu-mngPlc': {
-          templateUrl: 'templates/placeList.html',
+          templateUrl: 'templates/adminPlaceList.html',
           controller: 'adminPlcListCtrl'
         }
       },
